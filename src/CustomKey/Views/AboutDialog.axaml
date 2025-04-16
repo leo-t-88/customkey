@@ -1,0 +1,30 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="using:CustomKey.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="380" d:DesignHeight="135"
+             MinWidth="375" MinHeight="112"
+			 MaxWidth="375" MaxHeight="112"
+             Margin="0,-37,0, 0"
+             x:Class="CustomKey.AboutDialog"
+			 x:DataType="vm:MainWindowViewModel">
+	
+	<Grid Margin="0">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="5*" />
+		</Grid.ColumnDefinitions>
+
+		<!-- Logo Section -->
+		<Image Grid.Row="0" Grid.Column="0" Source="avares://CustomKey/CustomKey.ico"/>
+
+		<!-- About Section -->
+		<StackPanel Grid.Row="0" Grid.Column="1" Margin="7,0,0,0">
+			<TextBlock Text="CustomKey" FontWeight="Bold" FontSize="19"/>
+			<TextBlock TextWrapping="Wrap" Text="CustomKey is a customizable keyboard for Windows, Mac and Linux. Choose a keyboard layout and enter text in the app of your choice." FontSize="13"/>
+			<TextBlock Text="{Binding VersionNumber}" FontSize="13" FontWeight="Bold" />
+			<HyperlinkButton Content="Designed by Léo.t88" NavigateUri="https://github.com/leo-t-88/customkey" FontSize="12" Margin="0" Padding="0" ToolTip.Tip="Open Github project source"/>
+		</StackPanel>
+	</Grid>
+</UserControl>

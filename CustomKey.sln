@@ -1,0 +1,21 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomKey", "src\CustomKey\CustomKey.csproj", "{5B2429BD-17A6-4BA0-8A48-4C69391364C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomKey.Test", "src\CustomKey.Test\CustomKey.Test.csproj", "{3A386896-CCB8-43DF-8ADA-A15E0204393D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B2429BD-17A6-4BA0-8A48-4C69391364C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B2429BD-17A6-4BA0-8A48-4C69391364C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B2429BD-17A6-4BA0-8A48-4C69391364C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B2429BD-17A6-4BA0-8A48-4C69391364C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A386896-CCB8-43DF-8ADA-A15E0204393D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A386896-CCB8-43DF-8ADA-A15E0204393D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A386896-CCB8-43DF-8ADA-A15E0204393D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+EndGlobal

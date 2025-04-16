@@ -1,0 +1,165 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:CustomKey.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:ui="using:FluentAvalonia.UI.Controls"
+		xmlns:sty="using:FluentAvalonia.Styling"
+        mc:Ignorable="d" d:DesignWidth="750" d:DesignHeight="450"
+        x:Class="CustomKey.Views.SettingsWindow"
+        x:DataType="vm:SettingsWindowViewModel"
+        WindowStartupLocation="CenterScreen"
+        MinHeight="450" MinWidth="750" Height="450" Width="750"
+		Title="Configuration"
+        Background="{DynamicResource BackgroundColor}">
+	<Design.DataContext>
+		<vm:SettingsWindowViewModel/>
+	</Design.DataContext>
+
+	<Window.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.ThemeDictionaries>
+				<ResourceDictionary x:Key='Default'>
+					<SolidColorBrush x:Key="BackgroundColor" Color="#f3f3f3"/>
+				</ResourceDictionary>
+				<ResourceDictionary x:Key='Dark'>
+					<SolidColorBrush x:Key="BackgroundColor" Color="#202020"/>
+				</ResourceDictionary>
+			</ResourceDictionary.ThemeDictionaries>
+		</ResourceDictionary>
+	</Window.Resources>
+
+	<ScrollViewer>
+		<StackPanel Margin="15" Spacing="7">
+			<!-- Header -->
+			<Grid>
+				<Border CornerRadius="7" Height="110" Background="Transparent" ClipToBounds="True">
+					<Image x:Name="CurrentBG" Stretch="UniformToFill"/>
+				</Border>
+				<TextBlock Text="Configuration" FontSize="45" FontWeight="Bold"
+						   VerticalAlignment="Center"
+						   HorizontalAlignment="Left"
+						   Margin="10,0,0,0"/>
+			</Grid>
+			
+			<!-- App Theme -->
+			<ui:SettingsExpander Header="Theme"
+									 IconSource="DarkTheme"
+									 Description="Change application theme">
+				<ui:SettingsExpander.Footer>
+					<ComboBox ItemsSource="{Binding AppThemes}"
+					          SelectedItem="{Binding CurrentAppTheme}"
+					          MinWidth="150" />
+				</ui:SettingsExpander.Footer>
+			</ui:SettingsExpander>
+
+			<!-- Custom background image -->
+			<ui:SettingsExpander Header="Keyboard background image" IconSource="Image" Description="Set a custom background image to the keyboard" IsExpanded="False">
+				<ui:SettingsExpanderItem>
+					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Custom Background ?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
+				</ui:SettingsExpanderItem>
+				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
+					<Grid>
+						<!-- Définition des lignes -->
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/> <!-- Pour le texte -->
+							<RowDefinition Height="Auto"/> <!-- Pour les images -->
+							<RowDefinition Height="Auto"/> <!-- Pour le bouton -->
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Text="Your customized backgrounds" Margin="5 0 0 10"/>
+
+						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="CustomBG1" Stretch="UniformToFill"/>
+							</Border>
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="CustomBG2" Stretch="UniformToFill"/>
+							</Border>
+						</StackPanel>
+						
+						<Button Grid.Row="2" x:Name="UploadImageButton" Content="Add an image" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+					</Grid>
+				</ui:SettingsExpanderItem>
+				
+				<!-- Note : All images include internal images are loaded from the C#
+							with DecodeToWith in order to reduce memory usage drasticly -->
+				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
+					<Grid>
+						<!-- Définition des lignes -->
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/> <!-- Pour le texte -->
+							<RowDefinition Height="Auto"/> <!-- Pour les images -->
+						</Grid.RowDefinitions>
+
+						<TextBlock Grid.Row="0" Text="Predefined custom background" Margin="5 0 0 10"/>
+
+						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="BlueImage" Stretch="UniformToFill" />
+							</Border>
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="CurvesImage" Stretch="UniformToFill"/>
+							</Border>
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="GeoImage" Stretch="UniformToFill"/>
+							</Border>
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="GradientImage" Stretch="UniformToFill"/>
+							</Border>
+							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
+								<Image x:Name="RedImage" Stretch="UniformToFill"/>
+							</Border>
+						</StackPanel>
+					</Grid>
+				</ui:SettingsExpanderItem>
+			</ui:SettingsExpander>
+
+			<!-- App Languages (Not implemented) -->
+			<ui:SettingsExpander Header="Languages" IsVisible="False"
+									 IconSource="World"
+									 Description="Change language">
+				<ui:SettingsExpander.Footer>
+					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language}" MinWidth="150"/>
+				</ui:SettingsExpander.Footer>
+			</ui:SettingsExpander>
+			
+			<!-- Gestion Fichier -->
+			<ui:SettingsExpander Header="Keyboard layouts" IconSource="Keyboard" Description="Managing keyboard layouts" IsExpanded="True">
+				<ui:SettingsExpanderItem>
+					<Button x:Name="OpenLayout" FontFamily="{StaticResource SymbolThemeFontFamily}">Open layouts Folder &#xE838;</Button>
+				</ui:SettingsExpanderItem>
+			</ui:SettingsExpander>
+
+			<!-- Auto Updating -->
+			<ui:SettingsExpander Header="Automatic update checking" IconSource="Sync" Description="Automatically checks for updates when the application is launched" DockPanel.Dock="Left">
+				<ui:SettingsExpander.Footer>
+					<ToggleSwitch IsChecked="True"
+					              OffContent="Disable"
+					              OnContent="Enable"
+					              Name="TargetToggleSwitch"/>
+				</ui:SettingsExpander.Footer>
+			</ui:SettingsExpander>
+			
+			<!-- About -->
+			<ui:SettingsExpander Header="About" IconSource="M2 14C2 20.6274 7.37258 26 14 26C20.6274 26 26 20.6274 26 14C26 7.37258 20.6274 2 14 2C7.37258 2 2 7.37258 2 14ZM15.25 8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8C12.75 7.30964 13.3096 6.75 14 6.75C14.6904 6.75 15.25 7.30964 15.25 8ZM14 11C14.5523 11 15 11.4477 15 12L15 20C15 20.5523 14.5523 21 14 21C13.4477 21 13 20.5523 13 20L13 12C13 11.4477 13.4477 11 14 11Z">
+				<ui:SettingsExpanderItem>
+					<StackPanel Spacing="2">
+						<TextBlock Text="Designed by Léo.t88" />
+						<TextBlock Text="CustomKey is a customizable keyboard for Windows, Mac, and Linux." />
+						<TextBlock Text="Built with C#, using Avalonia UI for cross-platform UI and SharpHook for global input handling." />
+					</StackPanel>
+				</ui:SettingsExpanderItem>
+				<ui:SettingsExpanderItem Content="Found a bug? Want a new feature, control, or sample?"
+				                         ActionIconSource="Open"
+				                         IsClickEnabled="True"
+				                         Name="LaunchRepoLinkItem"/>
+				<ui:SettingsExpanderItem Content="(Temporary) Open Key ID getter"
+				                         ActionIconSource="ChevronRight"
+				                         IsClickEnabled="True"
+				                         Name="OpenGetKey"/>
+				<ui:SettingsExpanderItem Content="{Binding VersionNumber}"/>
+			</ui:SettingsExpander>
+		</StackPanel>
+	</ScrollViewer>
+</Window>

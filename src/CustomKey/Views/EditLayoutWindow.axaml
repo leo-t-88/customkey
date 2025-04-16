@@ -1,0 +1,22 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="CustomKey.Views.EditLayoutWindow"
+        mc:Ignorable="d" d:DesignWidth="525" d:DesignHeight="250"
+        MinHeight="250" MinWidth="525" MaxHeight="250" MaxWidth="525"
+        WindowStartupLocation="CenterScreen" Topmost="True"
+        Title="Manage Layout"
+        KeyDown="OnKeyDown">
+    
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="KeyPressedTextBlock"
+                       FontSize="25" 
+                       HorizontalAlignment="Center"
+                       Text="Press a key..."/>
+            <Button Content="Copy Key ID" 
+                    HorizontalAlignment="Center" 
+                    Margin="10" 
+                    Click="CopyKeyId"/>
+        </StackPanel>
+</Window>

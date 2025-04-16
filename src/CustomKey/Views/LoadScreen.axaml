@@ -1,0 +1,32 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="https://github.com/avaloniaui/avalonia"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:CustomKey.ViewModels"
+        mc:Ignorable="d"
+        x:Class="CustomKey.Views.LoadScreen"
+        x:DataType="viewModels:LoadScreenViewModel"
+        Icon="avares://CustomKey/CustomKey.ico" WindowStartupLocation="CenterScreen"
+        CanResize="False" Background="White" Height="250" Width="400"
+        ExtendClientAreaToDecorationsHint="True" ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaTitleBarHeightHint="-1">
+    
+    <Border CornerRadius="20" Background="White">
+        <Grid>
+            <!-- Grid Definitions -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="avares://CustomKey/Assets/CreatorLogo.png" Width="40" Height="40" HorizontalAlignment="Left" Grid.Row="0" Margin="10, 10, 0, 0"/>
+
+            <Grid Grid.Row="1">
+                <Image Source="avares://CustomKey/CustomKey.ico" Width="90" Height="90" HorizontalAlignment="Center"/>
+            </Grid>
+
+            <TextBlock Text="{Binding LoadingText}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="Black" FontSize="12" Margin="10" Grid.Row="2"/>
+        </Grid>
+    </Border>
+</Window>
+

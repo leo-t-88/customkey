@@ -1,5 +1,7 @@
 ﻿using Avalonia.Controls;
-using Avalonia.Input;
+using Avalonia.Threading;
+using SharpHook;
+using System;
 
 namespace CustomKey.Views
 {
@@ -7,22 +9,38 @@ namespace CustomKey.Views
     {
         private string _keyId;
         private TextBlock _keyPressedTextBlock;
+        //private IGlobalHook _hook;
 
         public EditLayoutWindow()
         {
             InitializeComponent();
             this.CanResize = false;
-            this.KeyDown += OnKeyDown; // Abonnement à l'événement KeyDown
+
             _keyPressedTextBlock = this.FindControl<TextBlock>("KeyPressedTextBlock");
+
+            //SetupGlobalHook();
         }
 
-        private void OnKeyDown(object sender, KeyEventArgs e)
+        /*private void SetupGlobalHook()
         {
-            _keyId = e.Key.ToString();
-            if (_keyPressedTextBlock != null)
+            _hook = new SimpleGlobalHook();
+            _hook.KeyPressed += HookOnKeyPressed;
+            _hook.RunAsync(); // Lance le hook en async
+        }*/
+
+        private void HookOnKeyPressed(object? sender, KeyboardHookEventArgs e)
+        {
+            // e.Data.KeyCode contient l’identifiant de la touche
+            _keyId = e.Data.KeyCode.ToString();
+
+            // Mise à jour de l'UI depuis le thread principal
+            Dispatcher.UIThread.Post(() =>
             {
-                _keyPressedTextBlock.Text = $"Key pressed ID: {_keyId}";
-            }
+                if (_keyPressedTextBlock != null)
+                {
+                    _keyPressedTextBlock.Text = $"Key pressed ID: {_keyId}";
+                }
+            });
         }
 
         private async void CopyKeyId(object sender, Avalonia.Interactivity.RoutedEventArgs e)
@@ -36,12 +54,11 @@ namespace CustomKey.Views
                 }
             }
         }
+
+        /*protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _hook?.Dispose(); // Libération du hook
+        }*/
     }
 }
-
-/*  Just a reminder to how Indented JSON (for better reading for raw edition)
-        in C# for when i will implement a real Keyboard disposition Editor
-
-    var options = new JsonSerializerOptions { WriteIndented = true };
-    string jsonString = JsonSerializer.Serialize(settings, options);
-    File.WriteAllText(jsonFilePath, jsonString);*/

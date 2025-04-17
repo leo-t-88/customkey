@@ -47,7 +47,10 @@
 					</StackPanel>
 
 					<!-- ComboBox in the center column -->
-					<ComboBox Width="200" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" MaxDropDownHeight="200" Height="32" ItemsSource="{Binding LayoutNames}" SelectedItem="{Binding SelectedLayout}"/>
+					<StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+						<ComboBox Width="200" MaxDropDownHeight="200" Height="32" ItemsSource="{Binding LayoutNames}" SelectedItem="{Binding SelectedLayout}"/>
+						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="32" Width="32" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="Disable/Enable Physical keyboard input">&#xE961;</ToggleButton>
+					</StackPanel>
 					
 					<!-- Button in the third column -->
 					<StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0">
@@ -66,163 +69,163 @@
 			<StackPanel Orientation="Vertical" Margin="0" Width="860">
 				<!-- Row 1 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-					<Button Width="30" Height="45" Margin="3">
+					<Button Width="30" Height="45" Margin="3" x:Name="Key1">
 						<Grid>
 							<TextBlock Text="{Binding [Key1]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key1Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key2">
 						<Grid>
 							<TextBlock Text="{Binding [Key2]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key2Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key3">
 						<Grid>
 							<TextBlock Text="{Binding [Key3]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key3Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key4">
 						<Grid>
 							<TextBlock Text="{Binding [Key4]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key4Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key5">
 						<Grid>
 							<TextBlock Text="{Binding [Key5]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key5Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key6">
 						<Grid>
 							<TextBlock Text="{Binding [Key6]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key6Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key7">
 						<Grid>
 							<TextBlock Text="{Binding [Key7]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key7Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key8">
 						<Grid>
 							<TextBlock Text="{Binding [Key8]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key8Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key9">
 						<Grid>
 							<TextBlock Text="{Binding [Key9]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key9Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key10">
 						<Grid>
 							<TextBlock Text="{Binding [Key10]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key10Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key11">
 						<Grid>
 							<TextBlock Text="{Binding [Key11]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key11Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key12">
 						<Grid>
 							<TextBlock Text="{Binding [Key12]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key12Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key13">
 						<Grid>
 							<TextBlock Text="{Binding [Key13]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key13Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Content="Backspc" Width="82" Height="45" Margin="3" VerticalContentAlignment="Center"/>
+					<Button Content="Backspc" Width="82" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Backspc"/>
 				</StackPanel>
 
 				<!-- Row 2 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-					<Button Content="tab" Width="63" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Content="tab" Width="63" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Tab"/>
+					<Button Width="45" Height="45" Margin="3" x:Name="Key14">
 						<Grid>
 							<TextBlock Text="{Binding [Key14]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key14Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key15">
 						<Grid>
 							<TextBlock Text="{Binding [Key15]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key15Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key16">
 						<Grid>
 							<TextBlock Text="{Binding [Key16]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key16Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key17">
 						<Grid>
 							<TextBlock Text="{Binding [Key17]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key17Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key18">
 						<Grid>
 							<TextBlock Text="{Binding [Key18]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key18Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key19">
 						<Grid>
 							<TextBlock Text="{Binding [Key19]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key19Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key20">
 						<Grid>
 							<TextBlock Text="{Binding [Key20]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key20Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key21">
 						<Grid>
 							<TextBlock Text="{Binding [Key21]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key21Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key22">
 						<Grid>
 							<TextBlock Text="{Binding [Key22]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key22Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key23">
 						<Grid>
 							<TextBlock Text="{Binding [Key23]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key23Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="46" Height="45" Margin="3">
+					<Button Width="46" Height="45" Margin="3" x:Name="Key24">
 						<Grid>
 							<TextBlock Text="{Binding [Key24]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key24Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="46" Height="45" Margin="3">
+					<Button Width="46" Height="45" Margin="3" x:Name="Key25">
 						<Grid>
 							<TextBlock Text="{Binding [Key25]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key25Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="46" Height="45" Margin="3">
+					<Button Width="46" Height="45" Margin="3" x:Name="Key26">
 						<Grid>
 							<TextBlock Text="{Binding [Key26]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key26Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
@@ -232,153 +235,153 @@
 
 				<!-- Row 3 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-					<Button Content="Caps" Width="75" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Content="Caps" Width="75" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Caps"/>
+					<Button Width="45" Height="45" Margin="3" x:Name="Key27">
 						<Grid>
 							<TextBlock Text="{Binding [Key27]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key27Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key28">
 						<Grid>
 							<TextBlock Text="{Binding [Key28]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key28Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key29">
 						<Grid>
 							<TextBlock Text="{Binding [Key29]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key29Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key30">
 						<Grid>
 							<TextBlock Text="{Binding [Key30]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key30Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key31">
 						<Grid>
 							<TextBlock Text="{Binding [Key31]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key31Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key32">
 						<Grid>
 							<TextBlock Text="{Binding [Key32]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key32Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key33">
 						<Grid>
 							<TextBlock Text="{Binding [Key33]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key33Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key34">
 						<Grid>
 							<TextBlock Text="{Binding [Key34]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key34Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key35">
 						<Grid>
 							<TextBlock Text="{Binding [Key35]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key35Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key36">
 						<Grid>
 							<TextBlock Text="{Binding [Key36]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key36Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key37">
 						<Grid>
 							<TextBlock Text="{Binding [Key37]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key37Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Content="Enter" Width="87" Height="45" Margin="3" VerticalContentAlignment="Center"/>
+					<Button Content="Enter" Width="87" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Enter"/>
 				</StackPanel>
 
 				<!-- Row 4 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
 					<Button Content="Shift" Width="100" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key38">
 						<Grid>
 							<TextBlock Text="{Binding [Key38]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key38Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key39">
 						<Grid>
 							<TextBlock Text="{Binding [Key39]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key39Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key40">
 						<Grid>
 							<TextBlock Text="{Binding [Key40]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key40Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key41">
 						<Grid>
 							<TextBlock Text="{Binding [Key41]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key41Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key42">
 						<Grid>
 							<TextBlock Text="{Binding [Key42]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key42Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key43">
 						<Grid>
 							<TextBlock Text="{Binding [Key43]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key43Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key44">
 						<Grid>
 							<TextBlock Text="{Binding [Key44]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key44Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key45">
 						<Grid>
 							<TextBlock Text="{Binding [Key45]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key45Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key46">
 						<Grid>
 							<TextBlock Text="{Binding [Key46]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key46Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Width="45" Height="45" Margin="3">
+					<Button Width="45" Height="45" Margin="3" x:Name="Key47">
 						<Grid>
 							<TextBlock Text="{Binding [Key47]}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center" />
 							<TextBlock Text="{Binding [Key47Shift]}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
 						</Grid>
 					</Button>
-					<Button Content="Shift" Width="113" Height="45" Margin="3" VerticalContentAlignment="Center"/>
+					<Button Content="Shift" Width="113" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Shift"/>
 				</StackPanel>
 
 				<!-- Row 5 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
 					<Button Content="Ctrl" Width="85" Height="45" Margin="3" VerticalContentAlignment="Center"/>
 					<Button Content="Alt" Width="65" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Content=" " Width="393" Height="45" Margin="3" />
+					<Button Content=" " Width="393" Height="45" Margin="3" x:Name="Space"/>
 					<Button Content="Alt Gr" Width="65" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Content="⮜" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Content="⮞" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center"/>
+					<Button Content="⮜" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Left"/>
+					<Button Content="⮞" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Right"/>
 				</StackPanel>
 			</StackPanel>
-			<TextBox Width="727" MaxHeight="55" AcceptsReturn="True" TextWrapping="Wrap"/>
+			<TextBox Width="727" MaxHeight="55" AcceptsReturn="True" TextWrapping="Wrap" x:Name="OutputBox"/>
 		</StackPanel>
 	</Grid>
 </Window>

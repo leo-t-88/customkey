@@ -6,8 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="525" d:DesignHeight="250"
         MinHeight="250" MinWidth="525" MaxHeight="250" MaxWidth="525"
         WindowStartupLocation="CenterScreen" Topmost="True"
-        Title="Manage Layout"
-        KeyDown="OnKeyDown">
+        Title="Manage Layout">
     
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="KeyPressedTextBlock"

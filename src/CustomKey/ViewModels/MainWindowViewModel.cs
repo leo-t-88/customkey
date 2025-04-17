@@ -9,8 +9,6 @@ namespace CustomKey.ViewModels
         private string _selectedLayout;
         private string _versionNumber;
 
-        public bool IsShift { get; set; } = false;
-
         public MainWindowViewModel()
         {
             // Charge les noms des layouts (propriété "Name" des fichiers JSON)
@@ -21,6 +19,8 @@ namespace CustomKey.ViewModels
             }
 
             VersionNumber = "Version " + Utility.GetAssemblyVersion();
+            
+            Keyboard.IsShiftChanged += () => OnPropertyChanged("");
         }
 
         public string SelectedLayout
@@ -35,7 +35,7 @@ namespace CustomKey.ViewModels
                     {
                         LayoutInit.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
                     }
-                    OnPropertyChanged("");
+                    OnPropertyChanged(""); //Update the Keyboard
                 }
             }
         }
@@ -49,17 +49,23 @@ namespace CustomKey.ViewModels
                 OnPropertyChanged(nameof(VersionNumber));
             }
         }
+        
+        public bool InputOn
+        {
+            get => Keyboard._inputOn;
+            set
+            {
+                if (RaiseAndSetIfChanged(ref SettingsReader._autoUpdate, value))
+                {
+                    Keyboard._inputOn = value;
+                }
+            }
+        }
 
         // Key Bindings for Keyboard
         public string this[string key]
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(key)) return "";
-                return key.EndsWith("Shift")
-                    ? (IsShift ? "" : LayoutInit.KeyVal[key.Replace("Shift", "")].shiftChar)
-                    : LayoutInit.GetChar(key, IsShift);
-            }
+            get => LayoutInit.GetChar(key);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using Avalonia.Input;
 
 namespace CustomKey.Common;
 
@@ -36,21 +37,40 @@ public static class LayoutInit
                 rawDict.TryGetValue($"Shift{i}_Char", out string shiftVal);
                 rawDict.TryGetValue($"{keyName}_ID", out string idVal);
 
-                KeyVal[keyName] = (charVal ?? "", shiftVal ?? "", idVal ?? "");
+                // If no value : set to ASCII code "\r", which result to do a toUpperCase of the charVal when shift/caps is on
+                // For exemple if you set Key1_Char to "m" and don't set Shift1_Char in the json when shift is enable it will show "M" and not "\r" or ""
+                // In order to don't do a ToUpperCase you should set a value to "" for Shift_Char in json layout
+                KeyVal[keyName] = (charVal ?? "", shiftVal ?? "\r", idVal ?? "");
             }
-
-            Console.WriteLine($"Layout chargé : {jsonFileName}");
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine($"Erreur lors du chargement du layout : {ex.Message}");
+            Console.WriteLine($"Error when loading layout : {e.Message}");
         }
     }
-
-    public static string GetChar(string keyName, bool isShift)
+    
+    public static string GetChar(string key)
     {
-        if (KeyVal.TryGetValue(keyName, out var val))
-            return isShift ? val.shiftChar : val.keyChar;
-        return string.Empty;
+        if (string.IsNullOrWhiteSpace(key)) return "";
+
+        if (key.EndsWith("Shift"))
+        {
+            if (!Keyboard.IsShift)
+            {
+                var baseKey = key.Replace("Shift", "");
+                if (KeyVal.TryGetValue(baseKey, out var keyData)) return keyData.shiftChar;
+            }
+            return "";
+        }
+
+        if (!KeyVal.TryGetValue(key, out var keyInfo)) return "";
+
+        if (Keyboard.IsShift)
+        {
+            if (keyInfo.shiftChar == "\r") return keyInfo.keyChar.ToUpper();
+            return keyInfo.shiftChar;
+        }
+
+        return keyInfo.keyChar;
     }
 }

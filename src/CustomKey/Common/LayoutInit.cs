@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
-using Avalonia.Input;
 
 namespace CustomKey.Common;
 
 public static class LayoutInit
 {
     // Dictionnaire statique contenant les données du layout
-    public static Dictionary<string, (string keyChar, string shiftChar, string keyId)> KeyVal { get; private set; } = new();
+    public static Dictionary<string, (string keyChar, string shiftChar, string keyId)> KeyVal { get; private set; } =
+        new();
 
     public static void LoadLayoutFromFile(string jsonFileName)
     {
         try
         {
             string exePath = AppContext.BaseDirectory;
-            string layoutPath = Path.Combine(exePath, "Key", jsonFileName);
+            string layoutPath = Path.Combine(exePath, "key", jsonFileName);
 
             if (!File.Exists(layoutPath))
             {
@@ -48,24 +48,25 @@ public static class LayoutInit
             Console.WriteLine($"Error when loading layout : {e.Message}");
         }
     }
-    
+
     public static string GetChar(string key)
     {
         if (string.IsNullOrWhiteSpace(key)) return "";
 
         if (key.EndsWith("Shift"))
         {
-            if (!Keyboard.IsShift)
+            if (!Utility.IsShift)
             {
                 var baseKey = key.Replace("Shift", "");
                 if (KeyVal.TryGetValue(baseKey, out var keyData)) return keyData.shiftChar;
             }
+
             return "";
         }
 
         if (!KeyVal.TryGetValue(key, out var keyInfo)) return "";
 
-        if (Keyboard.IsShift)
+        if (Utility.IsShift)
         {
             if (keyInfo.shiftChar == "\r") return keyInfo.keyChar.ToUpper();
             return keyInfo.shiftChar;
@@ -73,4 +74,10 @@ public static class LayoutInit
 
         return keyInfo.keyChar;
     }
+
+    public static String[,] SharpAvaKeyID =
+    {
+        { "OemQuotes", "D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8", "D9", "D0", "Oem4", "OemPlus", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "OemCloseBrackets", "OemSemicolon", "OemPipe", "Oem3", "OemComma", "OemPeriod", "OemQuestion", "Oem8" },
+        { "VcQuote", "Vc1", "Vc2", "Vc3", "Vc4", "Vc5", "Vc6", "Vc7", "Vc8", "Vc9", "Vc0", "VcOpenBracket", "VcEquals", "VcA", "VcB", "VcC", "VcD", "VcE", "VcF", "VcG", "VcH", "VcI", "VcJ", "VcK", "VcL", "VcM", "VcN", "VcO", "VcP", "VcQ", "VcR", "VcS", "VcT", "VcU", "VcV", "VcW", "VcX", "VcY", "VcZ", "VcCloseBracket", "VcSemicolon", "VcBackslash", "VcBackQuote", "VcComma", "VcPeriod", "VcSlash", "VcMisc" }
+    };
 }

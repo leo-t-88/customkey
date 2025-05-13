@@ -373,8 +373,8 @@
 
 				<!-- Row 5 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
-					<Button Content="Ctrl" Width="85" Height="45" Margin="3" VerticalContentAlignment="Center"/>
-					<Button Content="Alt" Width="65" Height="45" Margin="3" VerticalContentAlignment="Center"/>
+					<Button Content="Ctrl" Width="85" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Ctrl"/>
+					<Button Content="Alt" Width="65" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Alt"/>
 					<Button Content=" " Width="393" Height="45" Margin="3" x:Name="Space"/>
 					<Button Content="Alt Gr" Width="65" Height="45" Margin="3" VerticalContentAlignment="Center"/>
 					<Button Content="⮜" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Left"/>

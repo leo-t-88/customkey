@@ -7,6 +7,11 @@ namespace CustomKey.Common
 {
     public static class Utility
     {
+        // Événement déclenché lorsque l'état de Shift change
+        public static event Action? IsShiftChanged;
+        public static bool _isShift;
+        public static bool _inputOn = true;
+        
         public static string GetAssemblyVersion()
         {
             String version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
@@ -29,6 +34,19 @@ namespace CustomKey.Common
             catch
             {
                 Console.WriteLine("Unable to open " + url + " on this platform.");
+            }
+        }
+        
+        public static bool IsShift
+        {
+            get => _isShift;
+            set
+            {
+                if (_isShift != value)
+                {
+                    _isShift = value;
+                    IsShiftChanged?.Invoke(); // Notifie les abonnés que l'état a changé
+                }
             }
         }
     }

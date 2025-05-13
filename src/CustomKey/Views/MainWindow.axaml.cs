@@ -1,31 +1,37 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using CustomKey.ViewModels;
 using FluentAvalonia.UI.Controls;
 using System;
 using System.IO;
 using CustomKey.Common;
+using CustomKey.ViewModels;
 
 namespace CustomKey.Views
 {
     public partial class MainWindow : Window
     {
-        // Ajout d'une variable pour suivre l'état de CapsLock
-        private bool _isCapsLockActive = false;
-        private bool isShiftPressed = false;
+        public static MainWindow? Instance { get; private set; }
+        public static bool isCapsLockActive = false;
+        public static bool isShiftPressed = false;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
+            Instance = this;
 
             settingsButton.Click += OpenSettingsWindow;
             aboutIco.PointerReleased += OpenAbout;
+
+            if (OperatingSystem.IsLinux())
+            {
+                this.KeyDown += OnKeyDown;
+                this.KeyUp += OnKeyUp;
+            }
 
             LoadBackgroundSettings();
             
@@ -47,84 +53,17 @@ namespace CustomKey.Views
             Space.Click += (s, e) => OnButtonClick("Space");
             Left.Click += (s, e) => OnButtonClick("Left");
             Right.Click += (s, e) => OnButtonClick("Right");
-            
-            this.AddHandler(KeyDownEvent, OnKeyDown, handledEventsToo: true);
-            this.AddHandler(KeyUpEvent, OnKeyUp, handledEventsToo: true);
-        }
-        
-        private void OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
-            {
-                isShiftPressed = true;
-                Keyboard.IsShift = true;
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                {
-                    Shift.Background = (IBrush)Application.Current.FindResource("ButtonBackgroundMed");
-                });
-            }
-            else if (e.Key == Key.CapsLock)
-            {
-                _isCapsLockActive = !_isCapsLockActive;
-                Keyboard.IsShift = _isCapsLockActive || isShiftPressed;
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                {
-                    CapsStyle();
-                });
-            }
-            else
-            {
-                if (Keyboard._inputOn)
-                {
-                    foreach (var entry in LayoutInit.KeyVal)
-                    {
-                        var (keyChar, shiftChar, keyId) = entry.Value;
-
-                        // keyId est une string (genre "A"), keyCode est un enum (ex: VcA)
-                        if (e.Key.ToString().Equals(keyId, StringComparison.OrdinalIgnoreCase))
-                        {
-                            string inputChar = LayoutInit.GetChar(entry.Key);
-
-                            if (!string.IsNullOrEmpty(inputChar))
-                            {
-                                e.Handled = true;
-                                Keyboard.CharInput(inputChar);
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
         }
 
-        private void OnKeyUp(object sender, KeyEventArgs e)
+        public void capsDown()
         {
-            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
-            {
-                isShiftPressed = false;
-                Keyboard.IsShift = _isCapsLockActive;
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
-                {
-                    Shift.Background = (IBrush)Application.Current.FindResource("ButtonBackgroundLow");
-                });
-            }
-            else if (e.Key == Key.CapsLock)
-            {
-                Keyboard.IsShift = _isCapsLockActive || isShiftPressed;
-            }
-        }
-        
-        private void CapsStyle()
-        {
-            if (_isCapsLockActive)
+            if (isCapsLockActive)
             {
                 Caps.RenderTransform = new ScaleTransform(0.95, 0.95);
-                Caps.Background = (IBrush)Application.Current.FindResource("ButtonBackgroundMed");
             }
             else
             {
                 Caps.RenderTransform = new ScaleTransform(1, 1);
-                Caps.Background = (IBrush)Application.Current.FindResource("ButtonBackgroundLow");
             }
         }
 
@@ -150,9 +89,9 @@ namespace CustomKey.Views
                     InsertText("\t");
                     break;
                 case "Caps":
-                    _isCapsLockActive = !_isCapsLockActive;
-                    Keyboard.IsShift = _isCapsLockActive || isShiftPressed;
-                    CapsStyle();
+                    isCapsLockActive = !isCapsLockActive;
+                    Utility.IsShift = isCapsLockActive || isShiftPressed;
+                    capsDown();
                     break;
                 case "Enter":
                     InsertText("\n");
@@ -232,6 +171,50 @@ namespace CustomKey.Views
                 }
             } else {
                 backgroundImage.IsVisible = false;
+            }
+        }
+        
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                isShiftPressed = true;
+                Utility.IsShift = true;
+            }
+            else if (e.Key == Key.CapsLock)
+            {
+                isCapsLockActive = !isCapsLockActive;
+                Utility.IsShift = isCapsLockActive || isShiftPressed;
+                capsDown();
+            }
+            else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
+                     e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
+                     e.Key == Key.LWin || e.Key == Key.RWin)
+            {
+                App.isCtrlAltPressed = true;
+            }
+            else if (Utility._inputOn && !App.isCtrlAltPressed)
+            {
+                //To do
+            }
+        }
+        
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
+            {
+                isShiftPressed = false;
+                Utility.IsShift = isCapsLockActive;
+            }
+            else if (e.Key == Key.CapsLock)
+            {
+                Utility.IsShift = isCapsLockActive || isShiftPressed;
+            }
+            else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
+                     e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
+                     e.Key == Key.LWin || e.Key == Key.RWin)
+            {
+                App.isCtrlAltPressed = false;
             }
         }
     }

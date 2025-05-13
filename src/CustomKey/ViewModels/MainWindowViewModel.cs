@@ -20,7 +20,7 @@ namespace CustomKey.ViewModels
 
             VersionNumber = "Version " + Utility.GetAssemblyVersion();
             
-            Keyboard.IsShiftChanged += () => OnPropertyChanged("");
+            Utility.IsShiftChanged += () => OnPropertyChanged("");
         }
 
         public string SelectedLayout
@@ -35,7 +35,7 @@ namespace CustomKey.ViewModels
                     {
                         LayoutInit.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
                     }
-                    OnPropertyChanged(""); //Update the Keyboard
+                    OnPropertyChanged(""); //Update the Visual Keyboard
                 }
             }
         }
@@ -52,12 +52,12 @@ namespace CustomKey.ViewModels
         
         public bool InputOn
         {
-            get => Keyboard._inputOn;
+            get => Utility._inputOn;
             set
             {
                 if (RaiseAndSetIfChanged(ref SettingsReader._autoUpdate, value))
                 {
-                    Keyboard._inputOn = value;
+                    Utility._inputOn = value;
                 }
             }
         }

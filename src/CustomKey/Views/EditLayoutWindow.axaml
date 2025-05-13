@@ -10,9 +10,9 @@
     
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="KeyPressedTextBlock"
+                       Text="Press a key..."
                        FontSize="25" 
-                       HorizontalAlignment="Center"
-                       Text="Press a key..."/>
+                       HorizontalAlignment="Center"/>
             <Button Content="Copy Key ID" 
                     HorizontalAlignment="Center" 
                     Margin="10" 

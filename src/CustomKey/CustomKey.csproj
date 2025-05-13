@@ -17,7 +17,7 @@
   <ItemGroup>
     <AvaloniaResource Include="CustomKey.ico" />
     <AvaloniaResource Include="Assets\**" />
-    <Content Include="Key\**" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="key\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

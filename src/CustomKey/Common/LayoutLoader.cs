@@ -13,7 +13,7 @@ namespace CustomKey.Common
         public static string[] GetLayoutNames()
         {
             var layoutNames = new List<string>();
-            string keyDir = Path.Combine(AppContext.BaseDirectory, "Key");
+            string keyDir = Path.Combine(AppContext.BaseDirectory, "key");
 
             if (!Directory.Exists(keyDir))
                 return layoutNames.ToArray();

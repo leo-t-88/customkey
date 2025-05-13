@@ -27,7 +27,7 @@ namespace CustomKey.Views
             );
             
             LaunchRepoLinkItem.Click += (sender, args) => { Utility.OpenURL("https://github.com/leo-t-88/customkey"); };
-            OpenLayout.Click += (sender, args) => { Utility.OpenURL(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "")); };
+            OpenLayout.Click += (sender, args) => { Utility.OpenURL(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key")); };
             OpenGetKey.Click += OpenGetKeyClick;
             UploadImageButton.Click += OnUploadImageClick;
             DataContext = _viewModel;

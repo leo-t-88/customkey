@@ -116,7 +116,7 @@
 			</ui:SettingsExpander>
 
 			<!-- App Languages (Not implemented) -->
-			<ui:SettingsExpander Header="Languages" IsVisible="False"
+			<ui:SettingsExpander Header="Languages"
 									 IconSource="World"
 									 Description="Change language">
 				<ui:SettingsExpander.Footer>
@@ -131,8 +131,8 @@
 				</ui:SettingsExpanderItem>
 			</ui:SettingsExpander>
 
-			<!-- Auto Updating -->
-			<ui:SettingsExpander Header="Automatic update checking" IconSource="Sync" Description="Automatically checks for updates when the application is launched" DockPanel.Dock="Left">
+			<!-- Auto Updating (Not implemented)  -->
+			<ui:SettingsExpander IsVisible="False" Header="Automatic update checking" IconSource="Sync" Description="Automatically checks for updates when the application is launched" DockPanel.Dock="Left">
 				<ui:SettingsExpander.Footer>
 					<ToggleSwitch IsChecked="True"
 					              OffContent="Disable"

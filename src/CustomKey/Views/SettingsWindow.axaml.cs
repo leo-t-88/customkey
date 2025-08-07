@@ -17,7 +17,7 @@ namespace CustomKey.Views
             _viewModel = new SettingsWindowViewModel();
             _viewModel.InitializeImages(CustomBG1, CustomBG2, CurrentBG);
             
-            // Attachement des événements de clicd
+            // Attaching click events
             _viewModel.AttachImageClickEvents(
                 this.FindControl<Image>("BlueImage"),
                 this.FindControl<Image>("CurvesImage"),

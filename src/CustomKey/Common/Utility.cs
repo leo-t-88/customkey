@@ -7,10 +7,10 @@ namespace CustomKey.Common
 {
     public static class Utility
     {
-        // Événement déclenché lorsque l'état de Shift change
+        // Event triggered when the Shift state changes
         public static event Action? IsShiftChanged;
-        public static bool _isShift;
-        public static bool _inputOn = true;
+        public static bool IsShiftPending;
+        public static bool IsInputEnabled = true;
         
         public static string GetAssemblyVersion()
         {
@@ -39,13 +39,13 @@ namespace CustomKey.Common
         
         public static bool IsShift
         {
-            get => _isShift;
+            get => IsShiftPending;
             set
             {
-                if (_isShift != value)
+                if (IsShiftPending != value)
                 {
-                    _isShift = value;
-                    IsShiftChanged?.Invoke(); // Notifie les abonnés que l'état a changé
+                    IsShiftPending = value;
+                    IsShiftChanged?.Invoke(); // Notifies that the status has changed
                 }
             }
         }

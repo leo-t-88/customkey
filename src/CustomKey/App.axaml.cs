@@ -17,12 +17,11 @@ namespace CustomKey
     public partial class App : Application
     {
         // Windows and macOS - Not use on Linux
-        private IEventSimulator outputInjector = new EventSimulator();
+        private IEventSimulator _outputInjector = new EventSimulator();
         private SimpleGlobalHook _hook = new();
         // =================================
-        private string _currentAppTheme;
         private MainWindow? _mainWindow;
-        public static bool isCtrlAltPressed;
+        public static bool IsCtrlAltPressed;
 
         public override void Initialize()
         {
@@ -41,28 +40,26 @@ namespace CustomKey
                 string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
                 if (!File.Exists(jsonFilePath))
                 {
-                    var settings = new { theme = "System", custombg = false, bgpath = "avares://CustomKey/Assets/background/gradient.jpg", custombgpath = "", custombgpath2 = "", language = "English", autoupdate = true };
+                    var settings = new { Theme = "System", CustomBg = false, BgPath = "avares://CustomKey/Assets/background/gradient.jpg", CustomBgPath = "", CustomBgPath2 = "", Language = "English", AutoUpdate = true };
                     string jsonString = JsonSerializer.Serialize(settings);
                     File.WriteAllText(jsonFilePath, jsonString);
                 }
                 
                 // Load settings and apply theme
                 SettingsReader.LoadSettings();
-                SettingsReader.ApplyTheme(SettingsReader._currentAppTheme);
+                SettingsReader.ApplyTheme(SettingsReader.ThemeValue);
 
                 var viewModel = (LoadScreenViewModel)splashScreen.DataContext;
                 
                 Task.Run(async () =>
                 {
                     await viewModel.SimulateLoadingAsync();
-                    // Assure que la fermeture de l'écran de chargement et l'ouverture de la fenêtre principale se fassent sur le thread UI.
+                    // Ensures that the oading screen closes and the MainWindow opens on the UI thread.
                     await Dispatcher.UIThread.InvokeAsync(() =>
                     {
                         _mainWindow = new MainWindow { DataContext = new MainWindowViewModel() };
                         desktop.MainWindow = _mainWindow;
                         _mainWindow.Show();
-                        /*EditLayoutWindow layoutWindow = new EditLayoutWindow();
-                        layoutWindow.Show();*/
                         splashScreen.Close();
 
                         // Global Hook and Text Simulation are very limited and low on Linux
@@ -92,28 +89,28 @@ namespace CustomKey
             {
                 MainWindow.isCapsLockActive = !MainWindow.isCapsLockActive;
                 Utility.IsShift = MainWindow.isCapsLockActive || MainWindow.isShiftPressed;
-                Dispatcher.UIThread.Post(() => { _mainWindow.capsDown(); });
+                Dispatcher.UIThread.Post(() => { _mainWindow.CapsDown(); });
             }
             else if (e.Data.KeyCode == KeyCode.VcLeftControl || e.Data.KeyCode == KeyCode.VcRightControl ||
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||
                      e.Data.KeyCode == KeyCode.VcLeftMeta || e.Data.KeyCode == KeyCode.VcRightMeta)
             {
-                isCtrlAltPressed = true;
+                IsCtrlAltPressed = true;
             }
-            else if (Utility._inputOn && !isCtrlAltPressed)
+            else if (Utility.IsInputEnabled && !IsCtrlAltPressed)
             {
-                foreach (var entry in LayoutInit.KeyVal)
+                foreach (var entry in LayoutLoader.KeyVal)
                 {
                     var (keyChar, shiftChar, keyId) = entry.Value;
                     
                     if (e.Data.KeyCode.ToString().Equals(keyId, StringComparison.OrdinalIgnoreCase))
                     {
-                        string inputChar = LayoutInit.GetChar(entry.Key);
+                        string inputChar = LayoutLoader.GetChar(entry.Key);
 
                         if (!string.IsNullOrEmpty(inputChar))
                         {
                             e.SuppressEvent = true;
-                            outputInjector.SimulateTextEntry(inputChar);
+                            _outputInjector.SimulateTextEntry(inputChar);
                         }
                         break;
                     } 
@@ -136,7 +133,7 @@ namespace CustomKey
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||
                      e.Data.KeyCode == KeyCode.VcLeftMeta || e.Data.KeyCode == KeyCode.VcRightMeta)
             {
-                isCtrlAltPressed = false;
+                IsCtrlAltPressed = false;
             }
         }
     }

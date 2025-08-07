@@ -21,13 +21,13 @@ public static class SettingsReader
 
             if (settings != null)
             {
-                _currentAppTheme = settings.theme;
-                _customBg = settings.custombg;
-                _Bgpath = settings.bgpath;
-                _customBgpath = settings.custombgpath;
-                _customBgpath2 = settings.custombgpath2;
-                _language = settings.language;
-                _autoUpdate = settings.autoupdate;
+                ThemeValue = settings.Theme;
+                CustomBgEnabled = settings.CustomBg;
+                BackgroundPath = settings.BgPath;
+                CustomBackgroundPath = settings.CustomBgPath;
+                CustomBackgroundPath2 = settings.CustomBgPath2;
+                LanguageCode = settings.Language;
+                AutoUpdateEnabled = settings.AutoUpdate;
             }
         }
     }
@@ -71,13 +71,13 @@ public static class SettingsReader
         string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
         var settings = new Settings
         {
-            theme = _currentAppTheme,
-            custombg = _customBg,
-            bgpath = _Bgpath,
-            custombgpath = _customBgpath,
-            custombgpath2 = _customBgpath2,
-            language = _language,
-            autoupdate = _autoUpdate
+            Theme = ThemeValue,
+            CustomBg = CustomBgEnabled,
+            BgPath = BackgroundPath,
+            CustomBgPath = CustomBackgroundPath,
+            CustomBgPath2 = CustomBackgroundPath2,
+            Language = LanguageCode,
+            AutoUpdate = AutoUpdateEnabled
         };
         string jsonString = JsonSerializer.Serialize(settings);
         File.WriteAllText(jsonFilePath, jsonString);
@@ -86,20 +86,20 @@ public static class SettingsReader
         
     private class Settings
     {
-        public string theme { get; set; }     
-        public bool custombg { get; set; }
-        public string bgpath { get; set; }
-        public string custombgpath { get; set; }
-        public string custombgpath2 { get; set; }
-        public string language { get; set; }
-        public bool autoupdate { get; set; }
+        public string Theme { get; set; }
+        public bool CustomBg { get; set; }
+        public string BgPath { get; set; }
+        public string CustomBgPath { get; set; }
+        public string CustomBgPath2 { get; set; }
+        public string Language { get; set; }
+        public bool AutoUpdate { get; set; }
     }
     
-    public static string _currentAppTheme;
-    public static bool _customBg;
-    public static string _Bgpath;
-    public static string _customBgpath;
-    public static string _customBgpath2;
-    public static string _language;
-    public static bool _autoUpdate;
+    public static string ThemeValue = "System";
+    public static bool CustomBgEnabled;
+    public static string BackgroundPath = "avares://CustomKey/Assets/background/gradient.jpg";
+    public static string CustomBackgroundPath = "";
+    public static string CustomBackgroundPath2 = "";
+    public static string LanguageCode = "English";
+    public static bool AutoUpdateEnabled = true;
 }

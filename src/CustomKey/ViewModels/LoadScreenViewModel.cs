@@ -24,7 +24,7 @@ namespace CustomKey.ViewModels
 
         public LoadScreenViewModel()
         {
-            LoadingText = "Checking for Update...";
+            LoadingText = "Loading...";
         }
 
         public async Task SimulateLoadingAsync()

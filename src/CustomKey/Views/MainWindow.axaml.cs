@@ -55,7 +55,7 @@ namespace CustomKey.Views
             Right.Click += (s, e) => OnButtonClick("Right");
         }
 
-        public void capsDown()
+        public void CapsDown()
         {
             if (isCapsLockActive)
             {
@@ -91,7 +91,7 @@ namespace CustomKey.Views
                 case "Caps":
                     isCapsLockActive = !isCapsLockActive;
                     Utility.IsShift = isCapsLockActive || isShiftPressed;
-                    capsDown();
+                    CapsDown();
                     break;
                 case "Enter":
                     InsertText("\n");
@@ -106,7 +106,7 @@ namespace CustomKey.Views
                     OutputBox.CaretIndex += 1;
                     break;
                 default:
-                    var charToInsert = LayoutInit.GetChar(btnName);
+                    var charToInsert = LayoutLoader.GetChar(btnName);
                     InsertText(charToInsert);
                     break;
             }
@@ -152,17 +152,17 @@ namespace CustomKey.Views
         private void LoadBackgroundSettings()
         {
             var backgroundImage = this.FindControl<Image>("BackgroundImage");
-            if (SettingsReader._customBg && !string.IsNullOrEmpty(SettingsReader._Bgpath)) {
+            if (SettingsReader.CustomBgEnabled && !string.IsNullOrEmpty(SettingsReader.BackgroundPath)) {
                 backgroundImage.IsVisible = true;
                 try {
-                    if (SettingsReader._Bgpath.StartsWith("avares://")) {
-                        Stream asset = AssetLoader.Open(new Uri(SettingsReader._Bgpath));
+                    if (SettingsReader.BackgroundPath.StartsWith("avares://")) {
+                        Stream asset = AssetLoader.Open(new Uri(SettingsReader.BackgroundPath));
                         backgroundImage.Source = asset != null ? new Bitmap(asset) : null; // No Decode needed because they are already in 720p
-                    } else if (File.Exists(SettingsReader._Bgpath) &&
-                              (SettingsReader._Bgpath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || SettingsReader._Bgpath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                               SettingsReader._Bgpath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || SettingsReader._Bgpath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase)))
+                    } else if (File.Exists(SettingsReader.BackgroundPath) &&
+                              (SettingsReader.BackgroundPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || SettingsReader.BackgroundPath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                               SettingsReader.BackgroundPath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || SettingsReader.BackgroundPath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase)))
                     {
-                        backgroundImage.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader._Bgpath), 1280, BitmapInterpolationMode.LowQuality);
+                        backgroundImage.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 1280, BitmapInterpolationMode.LowQuality);
                     } else {
                         backgroundImage.Source = null;
                     }
@@ -185,17 +185,37 @@ namespace CustomKey.Views
             {
                 isCapsLockActive = !isCapsLockActive;
                 Utility.IsShift = isCapsLockActive || isShiftPressed;
-                capsDown();
+                CapsDown();
             }
             else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
                      e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
                      e.Key == Key.LWin || e.Key == Key.RWin)
             {
-                App.isCtrlAltPressed = true;
+                App.IsCtrlAltPressed = true;
             }
-            else if (Utility._inputOn && !App.isCtrlAltPressed)
+            else if (Utility.IsInputEnabled && !App.IsCtrlAltPressed)
             {
-                //To do
+                string vcKey = LayoutLoader.ConvertToVcKey(e.Key.ToString());
+
+                if (vcKey != null)
+                {
+                    foreach (var entry in LayoutLoader.KeyVal)
+                    {
+                        var (keyChar, shiftChar, keyId) = entry.Value;
+                    
+                        if (vcKey.Equals(keyId, StringComparison.OrdinalIgnoreCase))
+                        {
+                            string inputChar = LayoutLoader.GetChar(entry.Key);
+
+                            if (!string.IsNullOrEmpty(inputChar))
+                            {
+                                e.Handled = true;
+                                InsertText(inputChar);
+                            }
+                            break;
+                        } 
+                    }
+                }
             }
         }
         
@@ -214,7 +234,7 @@ namespace CustomKey.Views
                      e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
                      e.Key == Key.LWin || e.Key == Key.RWin)
             {
-                App.isCtrlAltPressed = false;
+                App.IsCtrlAltPressed = false;
             }
         }
     }

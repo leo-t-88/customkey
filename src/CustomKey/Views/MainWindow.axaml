@@ -3,12 +3,12 @@
         xmlns:vm="using:CustomKey.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="860" d:DesignHeight="345"
+        mc:Ignorable="d" d:DesignWidth="865" d:DesignHeight="365"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
         x:Class="CustomKey.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         WindowStartupLocation="CenterScreen"
-        MinHeight="320" MinWidth="860" Height="320" Width="860" Topmost="True"
+        Height="360" Width="865" Topmost="True" CanResize="False"
         Title="CustomKey"
         TransparencyLevelHint="AcrylicBlur"
 		Background="{DynamicResource RegionColor}"
@@ -25,13 +25,13 @@
 		       IsHitTestVisible="False"
 		       x:Name="BackgroundImage"/>
 		<!-- Custom Title Bar doesn't work on Linux -->
-		<StackPanel Orientation="Vertical" Margin="{OnPlatform Default='0,25,0,0', Linux='0,0,0,0'}">
+		<StackPanel Orientation="Vertical" Margin="{OnPlatform Default='0,29,0,0', Linux='0,0,0,0'}">
 			<!-- Top Bar with rounded corners and margin -->
 			<Border Background="{DynamicResource ButtonBackgroundLow}"
-	                Margin="15,5"
+	                Margin="15,1"
 	                CornerRadius="15"
 	                HorizontalAlignment="Stretch"
-	                Height="42">
+	                Height="40">
 				<!-- Grid to organize the layout -->
 				<Grid VerticalAlignment="Center">
 					<Grid.ColumnDefinitions>
@@ -41,15 +41,15 @@
 					</Grid.ColumnDefinitions>
 
 					<!-- Image and TextBlock in the first column -->
-					<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" Margin="6" ToolTip.Tip="{Binding VersionNumber}">
+					<StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center" Margin="5" ToolTip.Tip="{Binding VersionNumber}">
 						<Image Source="avares://CustomKey/CustomKey.ico" Height="30"/>
 						<TextBlock Text="CustomKey" Margin="5" FontWeight="Bold" FontSize="15"/>
 					</StackPanel>
 
 					<!-- ComboBox in the center column -->
 					<StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-						<ComboBox Width="200" MaxDropDownHeight="200" Height="32" ItemsSource="{Binding LayoutNames}" SelectedItem="{Binding SelectedLayout}"/>
-						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="32" Width="32" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="Disable/Enable Physical keyboard input">&#xE961;</ToggleButton>
+						<ComboBox Width="200" MaxDropDownHeight="200" Height="31" ItemsSource="{Binding LayoutNames}" SelectedItem="{Binding SelectedLayout}"/>
+						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="Disable/Enable Physical keyboard input">&#xE961;</ToggleButton>
 					</StackPanel>
 					
 					<!-- Button in the third column -->
@@ -57,7 +57,7 @@
 						<Button x:Name="settingsButton" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0">
 							<StackPanel Orientation="Horizontal">
 								<TextBlock Text="Settings"/>
-								<TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xF8B0;" Margin="2"/>
+								<TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xF8B0;" Margin="3"/>
 							</StackPanel>
 						</Button>
 						<TextBlock x:Name="aboutIco" FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xF167;" Margin="8,0" VerticalAlignment="Center" Cursor="Hand" FontSize="22" ToolTip.Tip="About"/>
@@ -381,8 +381,7 @@
 					<Button Content="⮞" Width="45" Height="45" Margin="3" VerticalContentAlignment="Center" x:Name="Right"/>
 				</StackPanel>
 			</StackPanel>
-			<TextBox Width="727" MaxHeight="55" AcceptsReturn="True" TextWrapping="Wrap" x:Name="OutputBox"/>
+			<TextBox MinHeight="26" MaxHeight="31" Width="727" FontSize="13.5" Padding="3, 1" TextWrapping="Wrap" AcceptsReturn="True" x:Name="OutputBox"/>
 		</StackPanel>
 	</Grid>
 </Window>
-

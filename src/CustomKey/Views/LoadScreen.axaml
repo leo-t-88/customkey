@@ -10,23 +10,29 @@
         CanResize="False" Background="White" Height="250" Width="400"
         ExtendClientAreaToDecorationsHint="True" ExtendClientAreaChromeHints="NoChrome" ExtendClientAreaTitleBarHeightHint="-1">
     
-    <Border CornerRadius="20" Background="White">
-        <Grid>
-            <!-- Grid Definitions -->
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-            <Image Source="avares://CustomKey/Assets/CreatorLogo.png" Width="40" Height="40" HorizontalAlignment="Left" Grid.Row="0" Margin="10, 10, 0, 0"/>
+        <Border Grid.Row="0" HorizontalAlignment="Left" CornerRadius="4" Background="#337bec6a" Height="25" Width="95" Margin="7" Padding="6,0">
+            <DockPanel>
+                <Image Source="avares://CustomKey/Assets/CreatorLogo.png" Width="20" Height="20"/>
+                <TextBlock VerticalAlignment="Center" Foreground="#cc60e04c" FontSize="17" FontFamily="Calibri">Léo.t88</TextBlock>
+            </DockPanel>
+        </Border>
 
-            <Grid Grid.Row="1">
-                <Image Source="avares://CustomKey/CustomKey.ico" Width="90" Height="90" HorizontalAlignment="Center"/>
-            </Grid>
-
-            <TextBlock Text="{Binding LoadingText}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="Black" FontSize="12" Margin="10" Grid.Row="2"/>
+        <Grid Grid.Row="1">
+            <Image Source="avares://CustomKey/CustomKey.ico" Width="85" Height="85" HorizontalAlignment="Center">
+                <Image.Effect>
+                    <DropShadowEffect Color="Black" BlurRadius="8" Opacity="0.3"/>
+                </Image.Effect>
+            </Image>
         </Grid>
-    </Border>
+
+        <TextBlock Text="{Binding LoadingText}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground="Black" FontSize="12" Margin="10" Grid.Row="2"/>
+    </Grid>
 </Window>
 

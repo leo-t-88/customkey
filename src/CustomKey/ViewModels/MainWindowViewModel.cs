@@ -11,15 +11,14 @@ namespace CustomKey.ViewModels
 
         public MainWindowViewModel()
         {
-            // Charge les noms des layouts (propriété "Name" des fichiers JSON)
+            // Loads the names of the layouts (the “Name” property of the JSON files)
             LayoutNames = LayoutLoader.GetLayoutNames();
             if (LayoutNames.Length > 0)
             {
-                SelectedLayout = LayoutNames[0]; // Initialise avec le premier layout
+                SelectedLayout = LayoutNames[0];
             }
 
             VersionNumber = "Version " + Utility.GetAssemblyVersion();
-            
             Utility.IsShiftChanged += () => OnPropertyChanged("");
         }
 
@@ -33,9 +32,9 @@ namespace CustomKey.ViewModels
                     this.RaiseAndSetIfChanged(ref _selectedLayout, value);
                     if (!string.IsNullOrEmpty(LayoutLoader.GetJsonFileName(value)))
                     {
-                        LayoutInit.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
+                        LayoutLoader.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
                     }
-                    OnPropertyChanged(""); //Update the Visual Keyboard
+                    OnPropertyChanged(""); // Update the Visual Keyboard
                 }
             }
         }
@@ -52,12 +51,12 @@ namespace CustomKey.ViewModels
         
         public bool InputOn
         {
-            get => Utility._inputOn;
+            get => Utility.IsInputEnabled;
             set
             {
-                if (RaiseAndSetIfChanged(ref SettingsReader._autoUpdate, value))
+                if (RaiseAndSetIfChanged(ref SettingsReader.AutoUpdateEnabled, value))
                 {
-                    Utility._inputOn = value;
+                    Utility.IsInputEnabled = value;
                 }
             }
         }
@@ -65,7 +64,7 @@ namespace CustomKey.ViewModels
         // Key Bindings for Keyboard
         public string this[string key]
         {
-            get => LayoutInit.GetChar(key);
+            get => LayoutLoader.GetChar(key);
         }
     }
 }

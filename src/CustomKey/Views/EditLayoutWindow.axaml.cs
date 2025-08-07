@@ -11,7 +11,7 @@ namespace CustomKey.Views
         {
             InitializeComponent();
             this.CanResize = false;
-            this.KeyDown += OnKeyDown; // Abonnement à l'événement KeyDown
+            this.KeyDown += OnKeyDown; // KeyDown event subscription
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

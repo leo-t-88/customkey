@@ -17,10 +17,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" HorizontalAlignment="Left" CornerRadius="4" Background="#337bec6a" Height="25" Width="95" Margin="7" Padding="6,0">
+        <Border Grid.Row="0" HorizontalAlignment="Left" CornerRadius="4" Background="#337bec6a" Height="25" Width="90" Margin="7" Padding="6,0">
             <DockPanel>
                 <Image Source="avares://CustomKey/Assets/CreatorLogo.png" Width="20" Height="20"/>
-                <TextBlock VerticalAlignment="Center" Foreground="#cc60e04c" FontSize="17" FontFamily="Calibri">Léo.t88</TextBlock>
+                <TextBlock VerticalAlignment="Center" Foreground="#bb60e04c" FontSize="17" FontFamily="Calibri">Léo.t88</TextBlock>
             </DockPanel>
         </Border>
 

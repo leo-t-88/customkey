@@ -20,9 +20,7 @@
 	
 	<Grid>
 		<!-- Image de fond -->
-		<Image Source="avares://CustomKey/Assets/background/red.jpg"
-		       Stretch="UniformToFill"
-		       IsHitTestVisible="False"
+		<Image Stretch="UniformToFill"
 		       x:Name="BackgroundImage"/>
 		<!-- Custom Title Bar doesn't work on Linux -->
 		<StackPanel Orientation="Vertical" Margin="{OnPlatform Default='0,29,0,0', Linux='0,0,0,0'}">

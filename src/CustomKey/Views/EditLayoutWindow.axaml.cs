@@ -1,5 +1,6 @@
 ﻿using Avalonia.Controls;
 using Avalonia.Input;
+using CustomKey.Common;
 
 namespace CustomKey.Views
 {
@@ -10,14 +11,20 @@ namespace CustomKey.Views
         public EditLayoutWindow()
         {
             InitializeComponent();
-            this.CanResize = false;
             this.KeyDown += OnKeyDown; // KeyDown event subscription
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            _keyId = e.Key.ToString();
-            KeyPressedTextBlock.Text = $"Key pressed ID: {_keyId}";
+            if (!Utility.IsInputEnabled)
+            {
+                _keyId = LayoutLoader.ConvertToVcKey(e.Key.ToString());
+                KeyPressedTextBlock.Text = $"Key pressed ID: {_keyId}";
+            }
+            else
+            {
+                KeyPressedTextBlock.Text = "Please disable the custom output\n(Keyboard icon button on the keyboard window)";
+            }
         }
 
         private async void CopyKeyId(object sender, Avalonia.Interactivity.RoutedEventArgs e)

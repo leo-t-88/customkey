@@ -17,7 +17,7 @@
 		<ResourceDictionary>
 			<ResourceDictionary.ThemeDictionaries>
 				<ResourceDictionary x:Key='Default'>
-					<SolidColorBrush x:Key="RegionColor" Color="{OnPlatform Default='#ceffffff', Linux='#f3f3f3'}"/>
+					<SolidColorBrush x:Key="RegionColor" Color="{OnPlatform Default='#beffffff', Linux='#f3f3f3'}"/>
 					<SolidColorBrush x:Key="ButtonBackgroundLow" Color="#BBFFFFFF"/>
 					<SolidColorBrush x:Key="ButtonBackgroundMed" Color="#55FFFFFF"/>
 					<SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{DynamicResource RegionColor}"/>

@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
-		xmlns:sty="using:FluentAvalonia.Styling"
         mc:Ignorable="d" d:DesignWidth="750" d:DesignHeight="450"
         x:Class="CustomKey.Views.SettingsWindow"
         x:DataType="vm:SettingsWindowViewModel"
@@ -53,21 +52,20 @@
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
 
-			<!-- Custom background image -->
-			<ui:SettingsExpander Header="Keyboard background image" IconSource="Image" Description="Set a custom background image to the keyboard" IsExpanded="False">
+			<!-- Background image -->
+			<ui:SettingsExpander Header="Keyboard background image" IconSource="Image" Description="Set a background image to the keyboard" IsExpanded="False">
 				<ui:SettingsExpanderItem>
-					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Custom Background ?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
+					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Image Background ?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
 				</ui:SettingsExpanderItem>
 				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
-						<!-- Définition des lignes -->
 						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/> <!-- Pour le texte -->
-							<RowDefinition Height="Auto"/> <!-- Pour les images -->
-							<RowDefinition Height="Auto"/> <!-- Pour le bouton -->
+							<RowDefinition Height="Auto"/> <!-- Text -->
+							<RowDefinition Height="Auto"/> <!-- Images -->
+							<RowDefinition Height="Auto"/> <!-- Buttons -->
 						</Grid.RowDefinitions>
 
-						<TextBlock Grid.Row="0" Text="Your customized backgrounds" Margin="5 0 0 10"/>
+						<TextBlock Grid.Row="0" Text="Your custom image backgrounds" Margin="5 0 0 10"/>
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
@@ -86,13 +84,12 @@
 							with DecodeToWith in order to reduce memory usage drasticly -->
 				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
-						<!-- Définition des lignes -->
 						<Grid.RowDefinitions>
-							<RowDefinition Height="Auto"/> <!-- Pour le texte -->
-							<RowDefinition Height="Auto"/> <!-- Pour les images -->
+							<RowDefinition Height="Auto"/> <!-- Text -->
+							<RowDefinition Height="Auto"/> <!-- Images -->
 						</Grid.RowDefinitions>
 
-						<TextBlock Grid.Row="0" Text="Predefined custom background" Margin="5 0 0 10"/>
+						<TextBlock Grid.Row="0" Text="Predefined image backgrounds" Margin="5 0 0 10"/>
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
@@ -124,7 +121,7 @@
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
 			
-			<!-- Gestion Fichier -->
+			<!-- Layouts manager -->
 			<ui:SettingsExpander Header="Keyboard layouts" IconSource="Keyboard" Description="Managing keyboard layouts" IsExpanded="True">
 				<ui:SettingsExpanderItem>
 					<Button x:Name="OpenLayout" FontFamily="{StaticResource SymbolThemeFontFamily}">Open layouts Folder &#xE838;</Button>

@@ -23,7 +23,7 @@ namespace CustomKey.Views
             InitializeComponent();
             DataContext = new MainWindowViewModel();
             Instance = this;
-
+            
             settingsButton.Click += OpenSettingsWindow;
             aboutIco.PointerReleased += OpenAbout;
 

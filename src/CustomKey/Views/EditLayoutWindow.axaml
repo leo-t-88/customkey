@@ -4,14 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:Class="CustomKey.Views.EditLayoutWindow"
         mc:Ignorable="d" d:DesignWidth="525" d:DesignHeight="250"
-        MinHeight="250" MinWidth="525" MaxHeight="250" MaxWidth="525"
+        Height="250" Width="525" CanResize="False"
         WindowStartupLocation="CenterScreen" Topmost="True"
         Title="Manage Layout">
     
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <TextBlock x:Name="KeyPressedTextBlock"
-                       Text="Press a key..."
-                       FontSize="25" 
+                       Text="Click on this window and Press a key..."
+                       FontSize="24" 
                        HorizontalAlignment="Center"/>
             <Button Content="Copy Key ID" 
                     HorizontalAlignment="Center" 

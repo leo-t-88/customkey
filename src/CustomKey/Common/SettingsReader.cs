@@ -27,7 +27,6 @@ public static class SettingsReader
                 CustomBackgroundPath = settings.CustomBgPath;
                 CustomBackgroundPath2 = settings.CustomBgPath2;
                 LanguageCode = settings.Language;
-                AutoUpdateEnabled = settings.AutoUpdate;
             }
         }
     }
@@ -76,8 +75,7 @@ public static class SettingsReader
             BgPath = BackgroundPath,
             CustomBgPath = CustomBackgroundPath,
             CustomBgPath2 = CustomBackgroundPath2,
-            Language = LanguageCode,
-            AutoUpdate = AutoUpdateEnabled
+            Language = LanguageCode
         };
         string jsonString = JsonSerializer.Serialize(settings);
         File.WriteAllText(jsonFilePath, jsonString);
@@ -92,7 +90,6 @@ public static class SettingsReader
         public string CustomBgPath { get; set; }
         public string CustomBgPath2 { get; set; }
         public string Language { get; set; }
-        public bool AutoUpdate { get; set; }
     }
     
     public static string ThemeValue = "System";
@@ -101,5 +98,4 @@ public static class SettingsReader
     public static string CustomBackgroundPath = "";
     public static string CustomBackgroundPath2 = "";
     public static string LanguageCode = "English";
-    public static bool AutoUpdateEnabled = true;
 }

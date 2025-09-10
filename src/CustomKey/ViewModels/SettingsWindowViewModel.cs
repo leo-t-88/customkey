@@ -154,18 +154,6 @@ namespace CustomKey.ViewModels
             }
         }
 
-        public bool AutoUpdate
-        {
-            get => SettingsReader.AutoUpdateEnabled;
-            set
-            {
-                if (RaiseAndSetIfChanged(ref SettingsReader.AutoUpdateEnabled, value))
-                {
-                    SettingsReader.SaveSettings();
-                }
-            }
-        }
-
         // New references for images
         private Image _customBG1;
         private Image _customBG2;

@@ -54,10 +54,7 @@ namespace CustomKey.ViewModels
             get => Utility.IsInputEnabled;
             set
             {
-                if (RaiseAndSetIfChanged(ref SettingsReader.AutoUpdateEnabled, value))
-                {
-                    Utility.IsInputEnabled = value;
-                }
+                Utility.IsInputEnabled = value;
             }
         }
 

@@ -55,7 +55,7 @@
 			<!-- Background image -->
 			<ui:SettingsExpander Header="Keyboard background image" IconSource="Image" Description="Set a background image to the keyboard" IsExpanded="False">
 				<ui:SettingsExpanderItem>
-					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Image Background ?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
+					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Image Background?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
 				</ui:SettingsExpanderItem>
 				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>

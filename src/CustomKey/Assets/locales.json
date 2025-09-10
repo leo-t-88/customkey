@@ -1,277 +1,174 @@
 {
-  "Languages": [
-    "de_DE",
-    "en_US",
-    "es_ES",
-    "fr_FR",
-    "it_IT",
-    "ja_JP",
-    "ru_RU"
-  ],
-  "Locales": [
-    {
-      "ID": "Language",
-      "Translations": {
-        "de_DE": "Deutsch",
-        "en_US": "English",
-        "es_ES": "Español",
-        "fr_FR": "Français",
-        "it_IT": "Italiano",
-        "ja_JP": "日本語",
-        "ru_RU": "Русский"
-      }
-    },
-    {
-      "ID": "SettingsButton",
-      "Translations": {
-        "de_DE": "Einstellungen",
-        "en_US": "Settings",
-        "es_ES": "Ajustes",
-        "fr_FR": "Paramètres",
-        "it_IT": "Impostazioni",
-        "ja_JP": "設定",
-        "ru_RU": "Настройки"
-      }
-    },
-    {
-      "ID": "About",
-      "Translations": {
-        "de_DE": "Über",
-        "en_US": "About",
-        "es_ES": "Acerca de",
-        "fr_FR": "A propos",
-        "it_IT": "Circa",
-        "ja_JP": "について",
-        "ru_RU": "О программе"
-      }
-    },
-    {
-      "ID": "AboutContent",
-      "Translations": {
-        "de_DE": "CustomKey ist eine anpassbare Tastatur für Windows, Mac und Linux. Wählen Sie ein Tastaturlayout und geben Sie Text in die App Ihrer Wahl ein.",
-        "en_US": "CustomKey is a customizable keyboard for Windows, Mac and Linux. Choose a keyboard layout and enter text in the app of your choice.",
-        "es_ES": "CustomKey es un teclado personalizable para Windows, Mac y Linux. Elige una distribución de teclado e introduce texto en la aplicación que prefieras.",
-        "fr_FR": "CustomKey est un clavier personnalisable pour Windows, Mac et Linux. Choisissez une disposition de clavier et saisissez du texte dans l'app de votre choix.",
-        "it_IT": "CustomKey è una tastiera personalizzabile per Windows, Mac e Linux. Scegliete un layout di tastiera e inserite il testo nell'applicazione di vostra scelta.",
-        "ja_JP": "CustomKeyはWindows、Mac、Linux用のカスタマイズ可能なキーボードです。キーボードレイアウトを選択し、お好みのアプリでテキストを入力できます。",
-        "ru_RU": "CustomKey - это настраиваемая клавиатура для Windows, Mac и Linux. Выберите раскладку клавиатуры и вводите текст в выбранном вами приложении."
-      }
-    },
-    {
-      "ID": "DesignedBy",
-      "Translations": {
-        "de_DE": "Erstellt von Leo.t88",
-        "en_US": "Designed by Léo.t88",
-        "es_ES": "Diseñado por Léo.t88",
-        "fr_FR": "Conçu par Léo.t88",
-        "it_IT": "Creato da Léo.t88",
-        "ja_JP": "デザイン：Léo.t88",
-        "ru_RU": "Разработано Léo.t88"
-      }
-    },
-    {
-      "ID": "Configuration",
-      "Translations": {
-        "de_DE": "Konfiguration",
-        "en_US": "Configuration",
-        "es_ES": "Configuración",
-        "fr_FR": "",
-        "it_IT": "Configurazione",
-        "ja_JP": "構成",
-        "ru_RU": "Конфигурация"
-      }
-    },
-    {
-      "ID": "Theme",
-      "Translations": {
-        "de_DE": "Thema",
-        "en_US": "Theme",
-        "es_ES": "Tema",
-        "fr_FR": "Thème",
-        "it_IT": "Tema",
-        "ja_JP": "テーマ",
-        "ru_RU": "Тема"
-      }
-    },
-    {
-      "ID": "ThemeDesc",
-      "Translations": {
-        "de_DE": "Das Thema der Anwendung ändern",
-        "en_US": "Change application theme",
-        "es_ES": "Cambiar el tema de la aplicación",
-        "fr_FR": "Modifier le thème de l'application",
-        "it_IT": "Modificare il tema dell'applicazione",
-        "ja_JP": "アプリケーションテーマの変更",
-        "ru_RU": "Изменение темы приложения"
-      }
-    },
-    {
-      "ID": "KeyboardBg",
-      "Translations": {
-        "de_DE": "Hintergrundbild der Tastatur",
-        "en_US": "Keyboard background image",
-        "es_ES": "Imagen de fondo del teclado",
-        "fr_FR": "Image d'arrière-plan du clavier",
-        "it_IT": "Immagine di sfondo della tastiera",
-        "ja_JP": "キーボードの背景画像",
-        "ru_RU": "Фоновые изображения клавиатуры"
-      }
-    },
-    {
-      "ID": "KeyboardBgDesc",
-      "Translations": {
-        "de_DE": "Festlegen eines benutzerdefinierten Hintergrundbildes für die Tastatur",
-        "en_US": "Set a custom background image to the keyboard",
-        "es_ES": "Establecer una imagen de fondo personalizada para el teclado",
-        "fr_FR": "Définir une image d'arrière-plan personnalisée pour le clavier",
-        "it_IT": "Impostare un'immagine di sfondo personalizzata per la tastiera",
-        "ja_JP": "キーボードのカスタム背景画像を設定する",
-        "ru_RU": "Установка пользовательского фонового изображения для клавиатуры"
-      }
-    },
-    {
-      "ID": "KeyboardBgCheckbox",
-      "Translations": {
-        "de_DE": "Benutzerdefinierten Hintergrund aktivieren ?",
-        "en_US": "Enable custom background ?",
-        "es_ES": "Activar fondo personalizado ?",
-        "fr_FR": "Activer l'arrière-plan personnalisé ?",
-        "it_IT": "Abilitare lo sfondo personalizzato?",
-        "ja_JP": "カスタム背景を有効にするか？",
-        "ru_RU": "Включить пользовательские фоны?"
-      }
-    },
-    {
-      "ID": "KeyboardBgYour",
-      "Translations": {
-        "de_DE": "Ihre individuellen Hintergründe",
-        "en_US": "Your customized backgrounds",
-        "es_ES": "Sus fondos personalizados",
-        "fr_FR": "Vos arrière-plans personnalisés",
-        "it_IT": "Sfondi personalizzati",
-        "ja_JP": "カスタマイズされた背景",
-        "ru_RU": "Ваши индивидуальные фоны"
-      }
-    },
-    {
-      "ID": "KeyboardBgUpload",
-      "Translations": {
-        "de_DE": "Ein Bild hinzufügen",
-        "en_US": "Add an image",
-        "es_ES": "Añadir una imagen",
-        "fr_FR": "Ajouter une image",
-        "it_IT": "Aggiungere un'immagine",
-        "ja_JP": "画像を追加する",
-        "ru_RU": "Добавить изображение"
-      }
-    },
-    {
-      "ID": "KeyboardBgPreset",
-      "Translations": {
-        "de_DE": "Vordefinierter benutzerdefinierter Hintergrund",
-        "en_US": "Predefined custom background",
-        "es_ES": "Fondo personalizado predefinido",
-        "fr_FR": "Arrière-plan personnalisé prédéfini",
-        "it_IT": "Sfondo personalizzato predefinito",
-        "ja_JP": "定義済みのカスタム背景",
-        "ru_RU": "Предустановленный пользовательский фон"
-      }
-    },
-    {
-      "ID": "Languages",
-      "Translations": {
-        "de_DE": "Sprachen",
-        "en_US": "Languages",
-        "es_ES": "Idiomas",
-        "fr_FR": "Langues",
-        "it_IT": "Le lingue",
-        "ja_JP": "言語",
-        "ru_RU": "Языки"
-      }
-    },
-    {
-      "ID": "LanguageChange",
-      "Translations": {
-        "de_DE": "Sprache ändern",
-        "en_US": "Change language",
-        "es_ES": "Cambiare la lingua",
-        "fr_FR": "Modifier la langue",
-        "it_IT": "Le lingue",
-        "ja_JP": "言語の変更",
-        "ru_RU": "Изменить язык"
-      }
-    },
-    {
-      "ID": "Layouts",
-      "Translations": {
-        "de_DE": "Tastatur-Layouts",
-        "en_US": "Keyboard layouts",
-        "es_ES": "Distribución del teclado",
-        "fr_FR": "Dispositions de clavier",
-        "it_IT": "Layout della tastiera",
-        "ja_JP": "キーボードレイアウト",
-        "ru_RU": "Раскладки клавиатуры"
-      }
-    },
-    {
-      "ID": "LayoutsDesc",
-      "Translations": {
-        "de_DE": "Verwaltet Tastaturlayouts",
-        "en_US": "Manages keyboard layouts",
-        "es_ES": "Gestiona las distribuciones de teclado",
-        "fr_FR": "Gère les dispositions de clavier",
-        "it_IT": "Gestione dei layout di tastiera",
-        "ja_JP": "キーボードレイアウトの管理",
-        "ru_RU": "Управление раскладками клавиатуры"
-      }
-    },
-    {
-      "ID": "AutoUpdate",
-      "Translations": {
-        "de_DE": "Automatische Überprüfung auf Aktualisierungen",
-        "en_US": "Automatic update checking",
-        "es_ES": "Comprobación automática de actualizaciones",
-        "fr_FR": "Vérification automatique des mises à jour",
-        "it_IT": "Controllo automatico degli aggiornamenti",
-        "ja_JP": "アップデートの自動チェック",
-        "ru_RU": "Автоматическая проверка обновлений"
-      }
-    },
-    {
-      "ID": "AutoUpdateDesc",
-      "Translations": {
-        "de_DE": "Sucht beim Start der Anwendung automatisch nach Updates",
-        "en_US": "Automatically checks for updates when the application is launched",
-        "es_ES": "Comprobación automática de actualizaciones al iniciar la aplicación",
-        "fr_FR": "Recherche automatiquement les mises à jour au lancement de l'application",
-        "it_IT": "Controlla automaticamente la presenza di aggiornamenti all'avvio dell'applicazione",
-        "ja_JP": "アプリケーションの起動時に自動的にアップデートをチェックします",
-        "ru_RU": "Автоматически проверяет наличие обновлений при запуске приложения"
-      }
-    },
-    {
-      "ID": "ToggleSwitchEnable",
-      "Translations": {
-        "de_DE": "Aktiviert",
-        "en_US": "Enable",
-        "es_ES": "Activar",
-        "fr_FR": "Activé",
-        "it_IT": "Abilitazione",
-        "ja_JP": "有効にする",
-        "ru_RU": "Включить"
-      }
-    },
-    {
-      "ID": "ToggleSwitchDisble",
-      "Translations": {
-        "de_DE": "Ausgeschaltet",
-        "en_US": "Disable",
-        "es_ES": "Desactivado",
-        "fr_FR": "Desactivé",
-        "it_IT": "Disattivato",
-        "ja_JP": "使用不能",
-        "ru_RU": "отключен"
-      }
-    }
-  ]
+  "Deutsch": {
+    "InputButton": "Deaktivieren/Aktivieren der geänderten Eingabe",
+    "SettingsButton": "Einstellungen",
+    "About": "Über",
+    "AboutContent": "CustomKey ist eine anpassbare Tastatur für Windows, Mac und Linux. Wählen Sie ein Tastaturlayout und geben Sie Text in die App Ihrer Wahl ein.",
+    "DesignedBy": "Entworfen von Léo.t88",
+    "Configuration": "Konfiguration",
+    "Theme": "Design",
+    "ThemeDesc": "Anwendungsthema ändern",
+    "KeyboardBg": "Hintergrundbild der Tastatur",
+    "KeyboardBgDesc": "Hintergrundbild für die Tastatur festlegen",
+    "KeyboardBgCheckbox": "Benutzerdefinierten Hintergrund aktivieren?",
+    "KeyboardBgYour": "Ihre individuellen Bildhintergründe",
+    "KeyboardBgUpload": "Bild hinzufügen",
+    "KeyboardBgPreset": "Vordefinierte Hintergrundbilder",
+    "Languages": "Sprachen",
+    "LanguageChange": "Sprache ändern",
+    "Layouts": "Tastaturlayouts",
+    "LayoutsDesc": "Verwaltet Tastaturlayouts",
+    "LayoutsFolder": "Offene Layouts Ordner &#xE838;",
+    "ToggleSwitchEnable": "Aktivieren",
+    "ToggleSwitchDisble": "Deaktivieren"
+  },
+  "English": {
+    "InputButton": "Disable/Enable modified input",
+    "SettingsButton": "Settings",
+    "About": "About",
+    "AboutContent": "CustomKey is a customizable keyboard for Windows, Mac and Linux. Choose a keyboard layout and enter text in the app of your choice.",
+    "DesignedBy": "Designed by Léo.t88",
+    "Configuration": "Configuration",
+    "Theme": "Theme",
+    "ThemeDesc": "Change application theme",
+    "KeyboardBg": "Keyboard background image",
+    "KeyboardBgDesc": "Set a background image to the keyboard",
+    "KeyboardBgCheckbox": "Enable custom background?",
+    "KeyboardBgYour": "Your custom image backgrounds",
+    "KeyboardBgUpload": "Add an image",
+    "KeyboardBgPreset": "Predefined background images",
+    "Languages": "Languages",
+    "LanguageChange": "Change language",
+    "Layouts": "Keyboard layouts",
+    "LayoutsDesc": "Manages keyboard layouts",
+    "LayoutsFolder": "Open layouts Folder &#xE838;",
+    "ToggleSwitchEnable": "Enable",
+    "ToggleSwitchDisable": "Disable"
+  },
+  "Español": {
+    "InputButton": "Desactivar/Activar la entrada modificada",
+    "SettingsButton": "Configuración",
+    "About": "Acerca de",
+    "AboutContent": "CustomKey es un teclado personalizable para Windows, Mac y Linux. Elija una distribución de teclado e introduzca texto en la aplicación que desee.",
+    "DesignedBy": "Diseñado por Léo.t88",
+    "Configuration": "Configuración",
+    "Theme": "Tema",
+    "ThemeDesc": "Cambia el tema de la aplicación",
+    "KeyboardBg": "Fondo del teclado",
+    "KeyboardBgDesc": "Establece una imagen de fondo personalizada para el teclado",
+    "KeyboardBgCheckbox": "¿Activar el fondo personalizado?",
+    "KeyboardBgYour": "Tus fondos personalizados",
+    "KeyboardBgUpload": "Añadir una imagen",
+    "KeyboardBgPreset": "Imágenes de fondo predefinidas",
+    "Languages": "Idiomas",
+    "LanguageChange": "Cambiar idioma",
+    "Layouts": "Diseños de teclado",
+    "LayoutsDesc": "Gestionar diseños de teclado",
+    "LayoutsFolder": "Abrir la carpeta de diseños &#xE838;"
+  },
+  "Français": {
+    "InputButton": "Désactiver/Activer la saisie modifié",
+    "SettingsButton": "Paramètres",
+    "About": "A Propos",
+    "AboutContent": "CustomKey est un clavier customisable pour Windows, Mac et Linux. Choisissez une disposition de clavier et saisissez du texte dans l'application de votre choix.",
+    "DesignedBy": "Crée par Léo.t88",
+    "Configuration": "Configuration",
+    "Theme": "Thème",
+    "ThemeDesc": "Change le thème de l'application",
+    "KeyboardBg": "Arrière plan du clavier",
+    "KeyboardBgDesc": "Définir une image d'arrière plan personnalisée pour le clavier",
+    "KeyboardBgCheckbox": "Activer l'arrière plan personnalisé ?",
+    "KeyboardBgYour": "Vos arrière-plans personnalisés",
+    "KeyboardBgUpload": "Ajouter une image",
+    "KeyboardBgPreset": "Images d'arrière-plan prédéfini",
+    "Languages": "Langues",
+    "LanguageChange": "Changer la langue",
+    "Layouts": "Dispositions de clavier",
+    "LayoutsDesc": "Gérer les dispositions de clavier",
+    "LayoutsFolder": "Ouvrir le dossier des dispositions &#xE838;"
+  },
+  "Italiano": {
+    "InputButton": "Disattiva/Attiva immissione modificata",
+    "SettingsButton": "Impostazioni",
+    "About": "Informazioni",
+    "AboutContent": "CustomKey è una tastiera personalizzabile per Windows, Mac e Linux. Scegli una disposizione della tastiera e inserisci il testo nell'applicazione che preferisci.",
+    "DesignedBy": "Creato da Léo.t88",
+    "Configuration": "Configurazione",
+    "Theme": "Tema",
+    "ThemeDesc": "Cambia il tema dell'applicazione",
+    "KeyboardBg": "Sfondo della tastiera",
+    "KeyboardBgDesc": "Imposta un'immagine di sfondo personalizzata per la tastiera",
+    "KeyboardBgCheckbox": "Attiva lo sfondo personalizzato?",
+    "KeyboardBgYour": "I tuoi sfondi personalizzati",
+    "KeyboardBgUpload": "Aggiungi un'immagine",
+    "KeyboardBgPreset": "Immagini di sfondo predefinite",
+    "Languages": "Lingue",
+    "LanguageChange": "Cambia lingua",
+    "Layouts": "Layout tastiera",
+    "LayoutsDesc": "Gestisci layout tastiera",
+    "LayoutsFolder": "Apri cartella layout &#xE838;"
+  },
+  "日本語": {
+    "InputButton": "変更された入力を無効化/有効化",
+    "SettingsButton": "設定",
+    "About": "アプリについて",
+    "AboutContent": "CustomKey は、Windows、Mac、Linux 用のカスタマイズ可能なキーボードです。キーボードのレイアウトを選択し、お好みのアプリケーションでテキストを入力してください。",
+    "DesignedBy": "Léo.t88 によって作成",
+    "Configuration": "設定",
+    "Theme": "テーマ",
+    "ThemeDesc": "アプリケーションのテーマを変更",
+    "KeyboardBg": "キーボードの背景",
+    "KeyboardBgDesc": "キーボードのカスタム背景画像を定義します",
+    "KeyboardBgCheckbox": "カスタム背景を有効にしますか？",
+    "KeyboardBgYour": "カスタム背景",
+    "KeyboardBgUpload": "画像を追加",
+    "KeyboardBgPreset": "プリセット背景画像",
+    "Languages": "言語",
+    "LanguageChange": "言語を変更する",
+    "Layouts": "キーボードレイアウト",
+    "LayoutsDesc": "キーボードレイアウトを管理する",
+    "LayoutsFolder": "レイアウトフォルダを開く"
+  },
+  "Русский": {
+    "InputButton": "Отключить/Включить измененный ввод",
+    "SettingsButton": "Настройки",
+    "About": "О программе",
+    "AboutContent": "CustomKey — это настраиваемая клавиатура для Windows, Mac и Linux. Выберите раскладку клавиатуры и вводите текст в любом приложении.",
+    "DesignedBy": "Разработано Léo.t88",
+    "Configuration": "Настройки",
+    "Theme": "Тема",
+    "ThemeDesc": "Изменение темы приложения",
+    "KeyboardBg": "Фон клавиатуры",
+    "KeyboardBgDesc": "Установить пользовательское фоновое изображение для клавиатуры",
+    "KeyboardBgCheckbox": "Включить пользовательский фон?",
+    "KeyboardBgYour": "Ваши пользовательские фоны",
+    "KeyboardBgUpload": "Добавить изображение",
+    "KeyboardBgPreset": "Предустановленные фоновые изображения",
+    "Languages": "Языки",
+    "LanguageChange": "Изменить язык",
+    "Layouts": "Раскладки клавиатуры",
+    "LayoutsDesc": "Управление раскладками клавиатуры",
+    "LayoutsFolder": "Открыть папку с раскладками &#xE838;"
+  },
+  "简体中文": {
+    "InputButton": "关闭/开启修改输入",
+    "SettingsButton": "设置",
+    "About": "关于",
+    "AboutContent": "CustomKey 是适用于 Windows、Mac 和 Linux 的可定制键盘。选择键盘布局，在您喜欢的应用程序中输入文本。",
+    "DesignedBy": "由 Léo.t88 设计",
+    "Configuration": "配置",
+    "Theme": "主题",
+    "ThemeDesc": "更改应用程序主题",
+    "KeyboardBg": "键盘背景",
+    "KeyboardBgDesc": "为键盘设置自定义背景图片",
+    "KeyboardBgCheckbox": "启用自定义背景？",
+    "KeyboardBgYour": "您的自定义背景",
+    "KeyboardBgUpload": "添加图片",
+    "KeyboardBgPreset": "预设背景图片",
+    "Languages": "语言",
+    "LanguageChange": "更改语言",
+    "Layouts": "键盘布局",
+    "LayoutsDesc": "管理键盘布局",
+    "LayoutsFolder": "打开布局文件夹"
+  }
 }

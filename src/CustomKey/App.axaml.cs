@@ -40,7 +40,7 @@ namespace CustomKey
                 string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
                 if (!File.Exists(jsonFilePath))
                 {
-                    var settings = new { Theme = "System", CustomBg = false, BgPath = "avares://CustomKey/Assets/background/gradient.jpg", CustomBgPath = "", CustomBgPath2 = "", Language = "English", AutoUpdate = true };
+                    var settings = new { Theme = "System", CustomBg = false, BgPath = "avares://CustomKey/Assets/background/gradient.jpg", CustomBgPath = "", CustomBgPath2 = "", Language = "English"};
                     string jsonString = JsonSerializer.Serialize(settings);
                     File.WriteAllText(jsonFilePath, jsonString);
                 }

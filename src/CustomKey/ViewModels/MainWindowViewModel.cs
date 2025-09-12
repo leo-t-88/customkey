@@ -34,7 +34,7 @@ namespace CustomKey.ViewModels
                     {
                         LayoutLoader.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
                     }
-                    OnPropertyChanged(""); // Update the Visual Keyboard
+                    OnPropertyChanged(""); // Update keys value
                 }
             }
         }
@@ -56,12 +56,6 @@ namespace CustomKey.ViewModels
             {
                 Utility.IsInputEnabled = value;
             }
-        }
-
-        // Key Bindings for Keyboard
-        public string this[string key]
-        {
-            get => LayoutLoader.GetChar(key);
         }
     }
 }

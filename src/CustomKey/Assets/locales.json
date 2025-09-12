@@ -18,9 +18,7 @@
     "LanguageChange": "Sprache ändern",
     "Layouts": "Tastaturlayouts",
     "LayoutsDesc": "Verwaltet Tastaturlayouts",
-    "LayoutsFolder": "Offene Layouts Ordner &#xE838;",
-    "ToggleSwitchEnable": "Aktivieren",
-    "ToggleSwitchDisble": "Deaktivieren"
+    "LayoutsFolder": "Offene Layouts Ordner \uE838"
   },
   "English": {
     "InputButton": "Disable/Enable modified input",
@@ -41,9 +39,7 @@
     "LanguageChange": "Change language",
     "Layouts": "Keyboard layouts",
     "LayoutsDesc": "Manages keyboard layouts",
-    "LayoutsFolder": "Open layouts Folder &#xE838;",
-    "ToggleSwitchEnable": "Enable",
-    "ToggleSwitchDisable": "Disable"
+    "LayoutsFolder": "Open layouts Folder \uE838"
   },
   "Español": {
     "InputButton": "Desactivar/Activar la entrada modificada",
@@ -64,7 +60,7 @@
     "LanguageChange": "Cambiar idioma",
     "Layouts": "Diseños de teclado",
     "LayoutsDesc": "Gestionar diseños de teclado",
-    "LayoutsFolder": "Abrir la carpeta de diseños &#xE838;"
+    "LayoutsFolder": "Abrir la carpeta de diseños \uE838"
   },
   "Français": {
     "InputButton": "Désactiver/Activer la saisie modifié",
@@ -85,7 +81,7 @@
     "LanguageChange": "Changer la langue",
     "Layouts": "Dispositions de clavier",
     "LayoutsDesc": "Gérer les dispositions de clavier",
-    "LayoutsFolder": "Ouvrir le dossier des dispositions &#xE838;"
+    "LayoutsFolder": "Ouvrir le dossier des dispositions \uE838"
   },
   "Italiano": {
     "InputButton": "Disattiva/Attiva immissione modificata",
@@ -106,7 +102,7 @@
     "LanguageChange": "Cambia lingua",
     "Layouts": "Layout tastiera",
     "LayoutsDesc": "Gestisci layout tastiera",
-    "LayoutsFolder": "Apri cartella layout &#xE838;"
+    "LayoutsFolder": "Apri cartella layout \uE838"
   },
   "日本語": {
     "InputButton": "変更された入力を無効化/有効化",
@@ -127,7 +123,7 @@
     "LanguageChange": "言語を変更する",
     "Layouts": "キーボードレイアウト",
     "LayoutsDesc": "キーボードレイアウトを管理する",
-    "LayoutsFolder": "レイアウトフォルダを開く"
+    "LayoutsFolder": "レイアウトフォルダを開く \uE838"
   },
   "Русский": {
     "InputButton": "Отключить/Включить измененный ввод",
@@ -148,7 +144,7 @@
     "LanguageChange": "Изменить язык",
     "Layouts": "Раскладки клавиатуры",
     "LayoutsDesc": "Управление раскладками клавиатуры",
-    "LayoutsFolder": "Открыть папку с раскладками &#xE838;"
+    "LayoutsFolder": "Открыть папку с раскладками \uE838"
   },
   "简体中文": {
     "InputButton": "关闭/开启修改输入",
@@ -169,6 +165,6 @@
     "LanguageChange": "更改语言",
     "Layouts": "键盘布局",
     "LayoutsDesc": "管理键盘布局",
-    "LayoutsFolder": "打开布局文件夹"
+    "LayoutsFolder": "打开布局文件夹 \uE838"
   }
 }

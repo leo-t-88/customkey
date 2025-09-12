@@ -38,7 +38,7 @@ namespace CustomKey.Views
                 GC.WaitForPendingFinalizers();
             };
         }
-
+        
         private async void OpenGetKeyClick(object sender, RoutedEventArgs e)
         {
             EditLayoutWindow layoutWindow = new EditLayoutWindow();

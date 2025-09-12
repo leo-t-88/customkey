@@ -22,9 +22,9 @@
 		<!-- About Section -->
 		<StackPanel Grid.Row="0" Grid.Column="1" Margin="7,0,0,0">
 			<TextBlock Text="CustomKey" FontWeight="Bold" FontSize="19"/>
-			<TextBlock TextWrapping="Wrap" Text="CustomKey is a customizable keyboard for Windows, Mac and Linux. Choose a keyboard layout and enter text in the app of your choice." FontSize="13"/>
+			<TextBlock TextWrapping="Wrap" Text="{Binding [TradAboutContent]}" FontSize="13"/>
 			<TextBlock Text="{Binding VersionNumber}" FontSize="13" FontWeight="Bold" />
-			<HyperlinkButton Content="Designed by Léo.t88" NavigateUri="https://github.com/leo-t-88/customkey" FontSize="12" Margin="0" Padding="0"/>
+			<HyperlinkButton Content="{Binding [TradDesignedBy]}" NavigateUri="https://github.com/leo-t-88/customkey" FontSize="12" Margin="0" Padding="0"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

@@ -25,8 +25,7 @@ namespace CustomKey.Common
             {
                 try
                 {
-                    using var stream = File.OpenRead(file);
-                    using var doc = JsonDocument.Parse(stream);
+                    using var doc = JsonDocument.Parse(File.OpenRead(file));
 
                     if (doc.RootElement.TryGetProperty("Name", out var nameProp))
                     {
@@ -61,8 +60,7 @@ namespace CustomKey.Common
         {
             try
             {
-                string exePath = AppContext.BaseDirectory;
-                string layoutPath = Path.Combine(exePath, "key", jsonFileName);
+                string layoutPath = Path.Combine(AppContext.BaseDirectory, "key", jsonFileName);
 
                 if (!File.Exists(layoutPath))
                 {

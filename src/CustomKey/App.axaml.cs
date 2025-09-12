@@ -47,6 +47,7 @@ namespace CustomKey
                 
                 // Load settings and apply theme
                 SettingsReader.LoadSettings();
+                Translator.LoadLanguages();
                 SettingsReader.ApplyTheme(SettingsReader.ThemeValue);
 
                 var viewModel = (LoadScreenViewModel)splashScreen.DataContext;

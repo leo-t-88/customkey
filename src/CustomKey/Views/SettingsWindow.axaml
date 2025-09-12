@@ -9,7 +9,7 @@
         x:DataType="vm:SettingsWindowViewModel"
         WindowStartupLocation="CenterScreen"
         MinHeight="450" MinWidth="750" Height="450" Width="750"
-		Title="Configuration"
+		Title="{Binding [TradConfiguration]}"
         Background="{DynamicResource BackgroundColor}">
 	<Design.DataContext>
 		<vm:SettingsWindowViewModel/>
@@ -35,16 +35,16 @@
 				<Border CornerRadius="7" Height="110" Background="Transparent" ClipToBounds="True">
 					<Image x:Name="CurrentBG" Stretch="UniformToFill"/>
 				</Border>
-				<TextBlock Text="Configuration" FontSize="45" FontWeight="Bold"
+				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
 						   Margin="10,0,0,0"/>
 			</Grid>
 			
 			<!-- App Theme -->
-			<ui:SettingsExpander Header="Theme"
+			<ui:SettingsExpander Header="{Binding [TradTheme]}"
 									 IconSource="DarkTheme"
-									 Description="Change application theme">
+									 Description="{Binding [TradThemeDesc]}">
 				<ui:SettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding AppThemes}"
 					          SelectedItem="{Binding CurrentAppTheme}"
@@ -53,9 +53,9 @@
 			</ui:SettingsExpander>
 
 			<!-- Background image -->
-			<ui:SettingsExpander Header="Keyboard background image" IconSource="Image" Description="Set a background image to the keyboard" IsExpanded="False">
+			<ui:SettingsExpander Header="{Binding [TradKeyboardBg]}" IconSource="Image" Description="{Binding [TradKeyboardBgDesc]}" IsExpanded="False">
 				<ui:SettingsExpanderItem>
-					<CheckBox x:Name="CustomBgCheckBox" Content="Enable Image Background?" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
+					<CheckBox x:Name="CustomBgCheckBox" Content="{Binding [TradKeyboardBgCheckbox]}" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
 				</ui:SettingsExpanderItem>
 				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
@@ -65,7 +65,7 @@
 							<RowDefinition Height="Auto"/> <!-- Buttons -->
 						</Grid.RowDefinitions>
 
-						<TextBlock Grid.Row="0" Text="Your custom image backgrounds" Margin="5 0 0 10"/>
+						<TextBlock Grid.Row="0" Text="{Binding [TradKeyboardBgYour]}" Margin="5 0 0 10"/>
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
@@ -76,7 +76,7 @@
 							</Border>
 						</StackPanel>
 						
-						<Button Grid.Row="2" x:Name="UploadImageButton" Content="Add an image" HorizontalAlignment="Left" Margin="0 10 0 0"/>
+						<Button Grid.Row="2" x:Name="UploadImageButton" Content="{Binding [TradKeyboardBgUpload]}" HorizontalAlignment="Left" Margin="0 10 0 0"/>
 					</Grid>
 				</ui:SettingsExpanderItem>
 				
@@ -89,7 +89,7 @@
 							<RowDefinition Height="Auto"/> <!-- Images -->
 						</Grid.RowDefinitions>
 
-						<TextBlock Grid.Row="0" Text="Predefined image backgrounds" Margin="5 0 0 10"/>
+						<TextBlock Grid.Row="0" Text="{Binding [TradKeyboardBgPreset]}" Margin="5 0 0 10"/>
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
@@ -113,18 +113,18 @@
 			</ui:SettingsExpander>
 
 			<!-- App Languages (Not implemented) -->
-			<ui:SettingsExpander Header="Languages"
+			<ui:SettingsExpander Header="{Binding [TradLanguages]}"
 									 IconSource="World"
-									 Description="Change language">
+									 Description="{Binding [TradLanguageChange]}">
 				<ui:SettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language}" MinWidth="150"/>
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
 			
 			<!-- Layouts manager -->
-			<ui:SettingsExpander Header="Keyboard layouts" IconSource="Keyboard" Description="Managing keyboard layouts" IsExpanded="True">
+			<ui:SettingsExpander Header="{Binding [TradLayouts]}" IconSource="Keyboard" Description="{Binding [TradLayoutsDesc]}" IsExpanded="True">
 				<ui:SettingsExpanderItem>
-					<Button x:Name="OpenLayout" FontFamily="{StaticResource SymbolThemeFontFamily}">Open layouts Folder &#xE838;</Button>
+					<Button x:Name="OpenLayout" FontFamily="{StaticResource SymbolThemeFontFamily}" Content="{Binding [TradLayoutsFolder]}"/>
 				</ui:SettingsExpanderItem>
 			</ui:SettingsExpander>
 

@@ -27,7 +27,7 @@ namespace CustomKey.ViewModels
         }
         public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
         
-        public string[] Languages { get; } = new[] { "English" };
+        public string[] Languages { get; } = Translator.Languages;
 
         public string CurrentAppTheme
         {
@@ -150,6 +150,8 @@ namespace CustomKey.ViewModels
                 if (RaiseAndSetIfChanged(ref SettingsReader.LanguageCode, value))
                 {
                     SettingsReader.SaveSettings();
+                    Translator.LoadSelectedLanguage();
+                    OnPropertyChanged(""); // Update translation Binding
                 }
             }
         }

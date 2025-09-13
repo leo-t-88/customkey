@@ -3,6 +3,8 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using CustomKey.Common;
 
 namespace CustomKey.ViewModels
@@ -11,20 +13,10 @@ namespace CustomKey.ViewModels
     {
         public SettingsWindowViewModel()
         {
-            VersionNumber = "Version " + Utility.GetAssemblyVersion();
+            Utility.GlobalRefresh += () => OnPropertyChanged("");
         }
 
-        private string _versionNumber;
-
-        public string VersionNumber
-        {
-            get { return _versionNumber; }
-            set
-            {
-                _versionNumber = value;
-                OnPropertyChanged(nameof(VersionNumber));
-            }
-        }
+        public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
         public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
         
         public string[] Languages { get; } = Translator.Languages;
@@ -48,31 +40,31 @@ namespace CustomKey.ViewModels
         
         private void UpdateImageSources()
         {
-            if (_customBG1 != null && 
+            if (_customBg1 != null && 
                 !string.IsNullOrEmpty(SettingsReader.CustomBackgroundPath) && 
                 File.Exists(SettingsReader.CustomBackgroundPath) &&
                 ( SettingsReader.CustomBackgroundPath.EndsWith("png", StringComparison.OrdinalIgnoreCase) || 
                   SettingsReader.CustomBackgroundPath.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
                   SettingsReader.CustomBackgroundPath.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
                   SettingsReader.CustomBackgroundPath.EndsWith("webp", StringComparison.OrdinalIgnoreCase) )) {
-                _customBG1.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath), 180, BitmapInterpolationMode.LowQuality);
+                _customBg1.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath), 180, BitmapInterpolationMode.LowQuality);
             } else {
-                _customBG1.Source = null;
+                _customBg1.Source = null;
             }
 
-            if (_customBG2 != null && 
+            if (_customBg2 != null && 
                 !string.IsNullOrEmpty(SettingsReader.CustomBackgroundPath2) && 
                 File.Exists(SettingsReader.CustomBackgroundPath2) &&
                 ( SettingsReader.CustomBackgroundPath2.EndsWith("png", StringComparison.OrdinalIgnoreCase) || 
                   SettingsReader.CustomBackgroundPath2.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
                   SettingsReader.CustomBackgroundPath2.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
                   SettingsReader.CustomBackgroundPath2.EndsWith("webp", StringComparison.OrdinalIgnoreCase) )) {
-                _customBG2.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath2), 180, BitmapInterpolationMode.LowQuality);
+                _customBg2.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath2), 180, BitmapInterpolationMode.LowQuality);
             } else {
-                _customBG2.Source = null;
+                _customBg2.Source = null;
             }
 
-            if (_currentBG != null && 
+            if (_currentBg != null && 
                 !string.IsNullOrEmpty(SettingsReader.BackgroundPath) && 
                 ( SettingsReader.BackgroundPath.StartsWith("avares://") || 
                   ( File.Exists(SettingsReader.BackgroundPath) && 
@@ -86,15 +78,15 @@ namespace CustomKey.ViewModels
                 try {
                     if (SettingsReader.BackgroundPath.StartsWith("avares://")) {
                         Stream asset = AssetLoader.Open(new Uri(SettingsReader.BackgroundPath));
-                        _currentBG.Source = asset != null ? Bitmap.DecodeToWidth(asset, 960, BitmapInterpolationMode.LowQuality) : null;
+                        _currentBg.Source = asset != null ? Bitmap.DecodeToWidth(asset, 960, BitmapInterpolationMode.LowQuality) : null;
                     } else {
-                        _currentBG.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 960, BitmapInterpolationMode.LowQuality);
+                        _currentBg.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 960, BitmapInterpolationMode.LowQuality);
                     }
                 } catch {
-                    _currentBG.Source = null;
+                    _currentBg.Source = null;
                 }
             } else {
-                _currentBG.Source = null;
+                _currentBg.Source = null;
             }
             
             // Free unused memory
@@ -142,31 +134,44 @@ namespace CustomKey.ViewModels
             }
         }
         
+        private CancellationTokenSource? _langCts; // Token to prevent temporary UI memory leaks when changing language rapidly
         public string Language
         {
             get => SettingsReader.LanguageCode;
             set
             {
-                if (RaiseAndSetIfChanged(ref SettingsReader.LanguageCode, value))
+                if (!RaiseAndSetIfChanged(ref SettingsReader.LanguageCode, value)) return;
+
+                _langCts?.Cancel();
+                _langCts = new CancellationTokenSource();
+                var token = _langCts.Token;
+                
+                Task.Run(async () =>
                 {
-                    SettingsReader.SaveSettings();
-                    Translator.LoadSelectedLanguage();
-                    OnPropertyChanged(""); // Update translation Binding
-                }
+                    await Task.Delay(70, token);
+                    if (token.IsCancellationRequested) return;
+                    
+                    Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                    {
+                        SettingsReader.SaveSettings();
+                        Translator.LoadSelectedLanguage();
+                        Utility.RaiseGlobalRefresh(); // refresh translation bindings
+                    });
+                });
             }
         }
 
         // New references for images
-        private Image _customBG1;
-        private Image _customBG2;
-        private Image _currentBG;
+        private Image _customBg1;
+        private Image _customBg2;
+        private Image _currentBg;
 
         // Method for initializing images in the view
-        public void InitializeImages(Image customBG1, Image customBG2, Image CurrentBG)
+        public void InitializeImages(Image customBg1, Image customBg2, Image currentBg)
         {
-            _customBG1 = customBG1;
-            _customBG2 = customBG2;
-            _currentBG = CurrentBG;
+            _customBg1 = customBg1;
+            _customBg2 = customBg2;
+            _currentBg = currentBg;
             
             UpdateImageSources();
         }
@@ -188,8 +193,8 @@ namespace CustomKey.ViewModels
             redImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/red.jpg");
 
             // Added click events for custom images
-            _customBG1.PointerPressed += (sender, e) => OnImageClicked("CustomBG1");
-            _customBG2.PointerPressed += (sender, e) => OnImageClicked("CustomBG2");
+            _customBg1.PointerPressed += (sender, e) => OnImageClicked("CustomBG1");
+            _customBg2.PointerPressed += (sender, e) => OnImageClicked("CustomBG2");
         }
 
         private void OnImageClicked(string imageName)

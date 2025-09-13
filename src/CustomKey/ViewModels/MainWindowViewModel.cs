@@ -5,9 +5,7 @@ namespace CustomKey.ViewModels
     public partial class MainWindowViewModel : ViewModelBase
     {
         public string[] LayoutNames { get; }
-
         private string _selectedLayout;
-        private string _versionNumber;
 
         public MainWindowViewModel()
         {
@@ -17,9 +15,8 @@ namespace CustomKey.ViewModels
             {
                 SelectedLayout = LayoutNames[0];
             }
-
-            VersionNumber = "Version " + Utility.GetAssemblyVersion();
-            Utility.IsShiftChanged += () => OnPropertyChanged("");
+            
+            Utility.GlobalRefresh += () => OnPropertyChanged("");
         }
 
         public string SelectedLayout
@@ -39,15 +36,7 @@ namespace CustomKey.ViewModels
             }
         }
 
-        public string VersionNumber
-        {
-            get => _versionNumber;
-            set
-            {
-                _versionNumber = value;
-                OnPropertyChanged(nameof(VersionNumber));
-            }
-        }
+        public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
         
         public bool InputOn
         {

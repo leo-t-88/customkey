@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
-        mc:Ignorable="d" d:DesignWidth="750" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="455"
         x:Class="CustomKey.Views.SettingsWindow"
         x:DataType="vm:SettingsWindowViewModel"
         WindowStartupLocation="CenterScreen"
-        MinHeight="450" MinWidth="750" Height="450" Width="750"
+        MinHeight="455" MinWidth="760" Height="455" Width="760"
 		Title="{Binding [TradConfiguration]}"
         Background="{DynamicResource BackgroundColor}">
 	<Design.DataContext>
@@ -112,7 +112,7 @@
 				</ui:SettingsExpanderItem>
 			</ui:SettingsExpander>
 
-			<!-- App Languages (Not implemented) -->
+			<!-- App Languages -->
 			<ui:SettingsExpander Header="{Binding [TradLanguages]}"
 									 IconSource="World"
 									 Description="{Binding [TradLanguageChange]}">
@@ -139,15 +139,15 @@
 			</ui:SettingsExpander>
 			
 			<!-- About -->
-			<ui:SettingsExpander Header="About" IconSource="M2 14C2 20.6274 7.37258 26 14 26C20.6274 26 26 20.6274 26 14C26 7.37258 20.6274 2 14 2C7.37258 2 2 7.37258 2 14ZM15.25 8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8C12.75 7.30964 13.3096 6.75 14 6.75C14.6904 6.75 15.25 7.30964 15.25 8ZM14 11C14.5523 11 15 11.4477 15 12L15 20C15 20.5523 14.5523 21 14 21C13.4477 21 13 20.5523 13 20L13 12C13 11.4477 13.4477 11 14 11Z">
+			<ui:SettingsExpander Header="{Binding [TradAbout]}" IconSource="M2 14C2 20.6274 7.37258 26 14 26C20.6274 26 26 20.6274 26 14C26 7.37258 20.6274 2 14 2C7.37258 2 2 7.37258 2 14ZM15.25 8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8C12.75 7.30964 13.3096 6.75 14 6.75C14.6904 6.75 15.25 7.30964 15.25 8ZM14 11C14.5523 11 15 11.4477 15 12L15 20C15 20.5523 14.5523 21 14 21C13.4477 21 13 20.5523 13 20L13 12C13 11.4477 13.4477 11 14 11Z">
 				<ui:SettingsExpanderItem>
 					<StackPanel Spacing="2">
-						<TextBlock Text="Designed by Léo.t88" />
-						<TextBlock Text="CustomKey is a customizable keyboard for Windows, Mac, and Linux." />
-						<TextBlock Text="Built with C#, using Avalonia UI for cross-platform UI and SharpHook for global input handling." />
+						<TextBlock Text="{Binding [TradDesignedBy]}" />
+						<TextBlock Text="{Binding [TradAboutApp]}" />
+						<TextBlock Text="{Binding [TradAboutBuild]}" />
 					</StackPanel>
 				</ui:SettingsExpanderItem>
-				<ui:SettingsExpanderItem Content="Found a bug? Want a new feature, control, or sample?"
+				<ui:SettingsExpanderItem Content="{Binding [TradAboutReport]}"
 				                         ActionIconSource="Open"
 				                         IsClickEnabled="True"
 				                         Name="LaunchRepoLinkItem"/>

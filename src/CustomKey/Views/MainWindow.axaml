@@ -46,7 +46,7 @@
 					<!-- ComboBox in the center column -->
 					<StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
 						<ComboBox Width="200" MaxDropDownHeight="200" Height="31" ItemsSource="{Binding LayoutNames}" SelectedItem="{Binding SelectedLayout}"/>
-						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="Disable/Enable Physical keyboard input">&#xE961;</ToggleButton>
+						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="{Binding [TradInputButton]}">&#xE961;</ToggleButton>
 					</StackPanel>
 					
 					<!-- Button in the third column -->

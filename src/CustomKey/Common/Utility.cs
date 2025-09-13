@@ -8,7 +8,7 @@ namespace CustomKey.Common
     public static class Utility
     {
         // Event triggered when the Shift state changes
-        public static event Action? IsShiftChanged;
+        public static event Action? GlobalRefresh;
         public static bool IsShiftPending;
         public static bool IsInputEnabled = true;
         
@@ -45,9 +45,14 @@ namespace CustomKey.Common
                 if (IsShiftPending != value)
                 {
                     IsShiftPending = value;
-                    IsShiftChanged?.Invoke(); // Notifies that the status has changed
+                    GlobalRefresh?.Invoke(); // Notifies that the status has changed
                 }
             }
+        }
+        
+        public static void RaiseGlobalRefresh()
+        {
+            GlobalRefresh?.Invoke();
         }
     }
 }

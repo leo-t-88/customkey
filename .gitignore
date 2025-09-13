@@ -7,7 +7,6 @@
 *.sln.docstates
 .vs
 .vscode
-todo.md
 
 # Rider is a Visual Studio alternative
 *.idea

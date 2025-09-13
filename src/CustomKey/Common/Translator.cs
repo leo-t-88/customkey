@@ -42,14 +42,11 @@ public static class Translator
         LoadSelectedLanguage();
     }
     
+    /*
+     * Update _tradBinding with the values of the selected language
+     */
     public static void LoadSelectedLanguage()
     {
-        if (LoadLanguagesJSON().TryGetValue(SettingsReader.LanguageCode, out var selected))
-        {
-            _tradBinding = selected.ToDictionary(
-                kvp => $"Trad{kvp.Key}",  // Add Trad prefix
-                kvp => kvp.Value
-            );
-        }
+        if (LoadLanguagesJSON().TryGetValue(SettingsReader.LanguageCode, out var selected)) _tradBinding = new Dictionary<string, string>(selected);
     }
 }

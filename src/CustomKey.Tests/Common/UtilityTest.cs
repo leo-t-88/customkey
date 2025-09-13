@@ -19,7 +19,7 @@ namespace CustomKey.Tests
         [Test]
         public void IsShift_SetSameValue_DoesNotTriggerEvent()
         {
-            Utility.IsShiftChanged += () => _eventTriggered = true;
+            Utility.GlobalRefresh += () => _eventTriggered = true;
 
             Utility.IsShift = false;
             Assert.IsFalse(_eventTriggered);
@@ -28,7 +28,7 @@ namespace CustomKey.Tests
         [Test]
         public void IsShift_SetDifferentValue_TriggersEvent()
         {
-            Utility.IsShiftChanged += () => _eventTriggered = true;
+            Utility.GlobalRefresh += () => _eventTriggered = true;
 
             Utility.IsShift = true;
             Assert.IsTrue(_eventTriggered);

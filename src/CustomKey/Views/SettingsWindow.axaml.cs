@@ -19,7 +19,6 @@ namespace CustomKey.Views
             
             // Attaching click events
             _viewModel.AttachImageClickEvents(
-                this.FindControl<Image>("BlueImage"),
                 this.FindControl<Image>("CurvesImage"),
                 this.FindControl<Image>("GeoImage"),
                 this.FindControl<Image>("GradientImage"),

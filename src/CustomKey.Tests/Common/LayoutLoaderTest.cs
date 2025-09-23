@@ -1,4 +1,5 @@
-﻿using CustomKey.Common;
+﻿using System.Runtime.CompilerServices;
+using CustomKey.Common;
 
 namespace CustomKey.Tests.Common
 {
@@ -15,14 +16,14 @@ namespace CustomKey.Tests.Common
         public void ConvertToVcKey_Correct_Value()
         {
             string result = LayoutLoader.ConvertToVcKey("D1");
-            Assert.AreEqual("Vc1", result);
+            Assert.That(result, Is.EqualTo("Vc1"));
         }
 
         [Test]
         public void ConvertToVcKey_Null_If_Not_Found()
         {
             string result = LayoutLoader.ConvertToVcKey("UnknownKey");
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
 
         [Test]
@@ -32,7 +33,7 @@ namespace CustomKey.Tests.Common
             Utility.IsShift = false;
 
             string result = LayoutLoader.GetChar("Key1");
-            Assert.AreEqual("a", result);
+            Assert.That(result, Is.EqualTo("a"));
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace CustomKey.Tests.Common
             Utility.IsShift = true;
 
             string result = LayoutLoader.GetChar("Key1");
-            Assert.AreEqual("A", result);
+            Assert.That(result, Is.EqualTo("A"));
         }
 
         [Test]
@@ -52,7 +53,7 @@ namespace CustomKey.Tests.Common
             Utility.IsShift = true;
 
             string result = LayoutLoader.GetChar("Key1");
-            Assert.AreEqual("B", result);
+            Assert.That(result, Is.EqualTo("B"));
         }
 
         [Test]
@@ -60,7 +61,7 @@ namespace CustomKey.Tests.Common
         {
             Utility.IsShift = false;
             string result = LayoutLoader.GetChar("Key999");
-            Assert.AreEqual("", result);
+            Assert.That(result, Is.EqualTo(""));
         }
 
         [Test]
@@ -69,8 +70,8 @@ namespace CustomKey.Tests.Common
             string result1 = LayoutLoader.GetChar(null);
             string result2 = LayoutLoader.GetChar("   ");
 
-            Assert.AreEqual("", result1);
-            Assert.AreEqual("", result2);
+            Assert.That(result1, Is.EqualTo(""));
+            Assert.That(result2, Is.EqualTo(""));
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace CustomKey.Tests.Common
             Utility.IsShift = false;
 
             string result = LayoutLoader.GetChar("Key1Shift");
-            Assert.AreEqual("Y", result);
+            Assert.That(result, Is.EqualTo("Y"));
         }
 
         [Test]
@@ -90,14 +91,14 @@ namespace CustomKey.Tests.Common
             Utility.IsShift = true;
 
             string result = LayoutLoader.GetChar("Key1Shift");
-            Assert.AreEqual("", result);
+            Assert.That(result, Is.EqualTo(""));
         }
 
         [Test]
         public void GetJsonFileName_Null_If_Not_Found()
         {
             string result = LayoutLoader.GetJsonFileName("UnknownLayout");
-            Assert.IsNull(result);
+            Assert.That(result, Is.Null);
         }
     }
 }

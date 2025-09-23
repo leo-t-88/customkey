@@ -18,7 +18,6 @@ namespace CustomKey.ViewModels
 
         public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
         public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
-        
         public string[] Languages { get; } = Translator.Languages;
 
         public string CurrentAppTheme
@@ -148,7 +147,7 @@ namespace CustomKey.ViewModels
                 
                 Task.Run(async () =>
                 {
-                    await Task.Delay(70, token);
+                    await Task.Delay(100, token);
                     if (token.IsCancellationRequested) return;
                     
                     Avalonia.Threading.Dispatcher.UIThread.Post(() =>
@@ -177,16 +176,14 @@ namespace CustomKey.ViewModels
         }
 
         // Method for attaching click events to images
-        public void AttachImageClickEvents(Image blueImage, Image curvesImage, Image geoImage, Image gradientImage, Image redImage)
+        public void AttachImageClickEvents(Image curvesImage, Image geoImage, Image gradientImage, Image redImage)
         {
             // Load image source at the same time
-            blueImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/blue.jpg")), 200, BitmapInterpolationMode.LowQuality);
             curvesImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/curves.jpg")), 200, BitmapInterpolationMode.LowQuality);
             geoImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/geo.jpg")), 200, BitmapInterpolationMode.LowQuality);
             gradientImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/gradient.jpg")), 200, BitmapInterpolationMode.LowQuality);
             redImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/red.jpg")), 200, BitmapInterpolationMode.LowQuality);
             
-            blueImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/blue.jpg");
             curvesImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/curves.jpg");
             geoImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/geo.jpg");
             gradientImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/gradient.jpg");

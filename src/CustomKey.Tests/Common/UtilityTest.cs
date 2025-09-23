@@ -1,6 +1,6 @@
 ﻿using CustomKey.Common;
 
-namespace CustomKey.Tests
+namespace CustomKey.Tests.Common
 {
     [TestFixture]
     public class UtilityTests
@@ -22,7 +22,7 @@ namespace CustomKey.Tests
             Utility.GlobalRefresh += () => _eventTriggered = true;
 
             Utility.IsShift = false;
-            Assert.IsFalse(_eventTriggered);
+            Assert.That(_eventTriggered, Is.False);
         }
 
         [Test]
@@ -31,17 +31,17 @@ namespace CustomKey.Tests
             Utility.GlobalRefresh += () => _eventTriggered = true;
 
             Utility.IsShift = true;
-            Assert.IsTrue(_eventTriggered);
+            Assert.That(_eventTriggered, Is.True);
         }
 
         [Test]
         public void IsInputEnabled_CanBeModified()
         {
             Utility.IsInputEnabled = false;
-            Assert.IsFalse(Utility.IsInputEnabled);
+            Assert.That(Utility.IsInputEnabled, Is.False);
 
             Utility.IsInputEnabled = true;
-            Assert.IsTrue(Utility.IsInputEnabled);
+            Assert.That(Utility.IsInputEnabled, Is.True);
         }
 
         [Test]

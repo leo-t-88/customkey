@@ -93,9 +93,6 @@
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
-								<Image x:Name="BlueImage" Stretch="UniformToFill" />
-							</Border>
-							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
 								<Image x:Name="CurvesImage" Stretch="UniformToFill"/>
 							</Border>
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">

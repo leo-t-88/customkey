@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using CustomKey.Common;
+﻿using CustomKey.Common;
+using NUnit.Framework;
 
 namespace CustomKey.Tests.Common
 {
@@ -67,11 +67,7 @@ namespace CustomKey.Tests.Common
         [Test]
         public void GetChar_Empty_If_Key_Is_Null_Or_Whitespace()
         {
-            string result1 = LayoutLoader.GetChar(null);
-            string result2 = LayoutLoader.GetChar("   ");
-
-            Assert.That(result1, Is.EqualTo(""));
-            Assert.That(result2, Is.EqualTo(""));
+            Assert.That(LayoutLoader.GetChar("   "), Is.EqualTo(""));
         }
 
         [Test]

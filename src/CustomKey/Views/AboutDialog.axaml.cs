@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using CustomKey.ViewModels;
 
-namespace CustomKey;
+namespace CustomKey.Views;
 
 public partial class AboutDialog : UserControl
 {

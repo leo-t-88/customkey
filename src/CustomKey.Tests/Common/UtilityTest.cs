@@ -1,4 +1,5 @@
 ﻿using CustomKey.Common;
+using NUnit.Framework;
 
 namespace CustomKey.Tests.Common
 {

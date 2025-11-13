@@ -35,7 +35,7 @@
 				<Border CornerRadius="7" Height="110" Background="Transparent" ClipToBounds="True">
 					<Image x:Name="CurrentBG" Stretch="UniformToFill"/>
 				</Border>
-				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold"
+				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold" FontFamily="Arial"
 						   VerticalAlignment="Center"
 						   HorizontalAlignment="Left"
 						   Margin="10,0,0,0"/>

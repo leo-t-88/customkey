@@ -1,7 +1,7 @@
 <table align="center">
     <tr>
         <td align="center" width="25%">
-            <img src="src/CustomKey/Assets/CreatorLogo.png" alt="CustomKey">
+            <img src="https://github.com/leo-t-88/leo-t-88.github.io/blob/main/assets/favicon.png" alt="Leo-t-88 logo">
         </td>
         <td align="center" width="75%"> 
   <h1><img src="src/CustomKey/CustomKey.ico" height="30px" alt="CustomKey"> CustomKey</h1>
@@ -27,7 +27,7 @@ CustomKey is a customizable keyboard, written in C# for Windows, macOS and Linux
 ### Credits
 - [Avalonia UI](https://github.com/AvaloniaUI/Avalonia) & [Fluent Avalonia](https://github.com/amwx/FluentAvalonia) : Cross-platform UI framework
 - [Sharp Hook](https://github.com/TolikPylypchuk/SharpHook) : Cross-platform global hook and text injection
-- [Microsoft Office 2024](https://www.microsoft.com/microsoft-365/) : Inspiration for the app logo
+- [Microsoft Office 2021](https://www.microsoft.com/microsoft-365/) : Inspiration for the app logo
 
 ### Licence
 This software is licensed under the terms of the [MIT license](https://github.com/leo-t-88/customkey/blob/main/LICENSE).

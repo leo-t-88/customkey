@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace CustomKey.Common;
 
@@ -11,13 +10,13 @@ public static class Translator
 {
     public static string[] Languages = Array.Empty<string>();
     public static Dictionary<string, string> _tradBinding = new();
-    private static Uri jsonTrad = new("avares://CustomKey/Assets/locales.json");
+    private static Uri _jsonTrad = new("avares://CustomKey/Assets/locales.json");
 
     private static Dictionary<string, Dictionary<string, string>> LoadLanguagesJSON()
     {
-        if (!AssetLoader.Exists(jsonTrad)) return null;
+        if (!AssetLoader.Exists(_jsonTrad)) return null;
 
-        using Stream stream = AssetLoader.Open(jsonTrad);
+        using Stream stream = AssetLoader.Open(_jsonTrad);
         using StreamReader reader = new(stream);
         string json = reader.ReadToEnd();
 

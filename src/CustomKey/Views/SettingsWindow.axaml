@@ -47,7 +47,7 @@
 									 Description="{Binding [TradThemeDesc]}">
 				<ui:SettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding AppThemes}"
-					          SelectedItem="{Binding CurrentAppTheme}"
+					          SelectedValue="{Binding CurrentAppTheme, Mode=TwoWay}"
 					          MinWidth="150" />
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
@@ -114,7 +114,7 @@
 									 IconSource="World"
 									 Description="{Binding [TradLanguageChange]}">
 				<ui:SettingsExpander.Footer>
-					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language}" MinWidth="150"/>
+					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language, Mode=TwoWay}" MinWidth="150"/>
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
 			

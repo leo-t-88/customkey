@@ -15,18 +15,14 @@ namespace CustomKey.ViewModels
         {
             Utility.GlobalRefresh += () => OnPropertyChanged("");
         }
-
+        
         public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
-        public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
         public string[] Languages { get; } = Translator.Languages;
+        public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
 
         public string CurrentAppTheme
         {
-            get
-            {
-                Console.WriteLine($"Loaded theme: {SettingsReader.ThemeValue}");
-                return SettingsReader.ThemeValue;
-            }
+            get => SettingsReader.ThemeValue;
             set
             {
                 if (RaiseAndSetIfChanged(ref SettingsReader.ThemeValue, value))

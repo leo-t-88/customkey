@@ -142,7 +142,7 @@ namespace CustomKey.Views
             {
                 PrimaryButtonText = string.Empty,
                 SecondaryButtonText = string.Empty,
-                CloseButtonText = "Close",
+                CloseButtonText = "OK",
                 Content = new AboutDialog()
             };
 

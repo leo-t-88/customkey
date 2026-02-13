@@ -3,45 +3,51 @@
              x:Class="CustomKey.App"
              xmlns:local="using:CustomKey"
 			 xmlns:sty="using:FluentAvalonia.Styling"
-			 xmlns:ui="using:FluentAvalonia.UI.Controls"
-			 xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 	
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-
-	<!--  -->
+	
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.ThemeDictionaries>
 				<ResourceDictionary x:Key='Default'>
-					<SolidColorBrush x:Key="RegionColor" Color="{OnPlatform Default='#beffffff', Linux='#f3f3f3'}"/>
-					<SolidColorBrush x:Key="ButtonBackgroundLow" Color="#BBFFFFFF"/>
+					<SolidColorBrush x:Key="RegionColor" Color="{OnPlatform Default='#aeffffff', Linux='#f3f3f3'}"/>
+					<SolidColorBrush x:Key="ButtonBackgroundLow" Color="#99FFFFFF"/>
 					<SolidColorBrush x:Key="ButtonBackgroundMed" Color="#55FFFFFF"/>
 					<SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{DynamicResource RegionColor}"/>
 					<Thickness x:Key="ContentDialogPadding">8</Thickness>
 				</ResourceDictionary>
 				<ResourceDictionary x:Key='Dark'>
 					<SolidColorBrush x:Key="RegionColor" Color="{OnPlatform Default='#b5000000', Linux='#101010'}"/>
-					<SolidColorBrush x:Key="ButtonBackgroundLow" Color="#AA454545"/>
+					<SolidColorBrush x:Key="ButtonBackgroundLow" Color="#99454545"/>
 					<SolidColorBrush x:Key="ButtonBackgroundMed" Color="#55777777"/>
 					<SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{DynamicResource RegionColor}"/>
 				</ResourceDictionary>
 			</ResourceDictionary.ThemeDictionaries>
 		</ResourceDictionary>
 	</Application.Resources>
-
-	<!-- Mdofication for Keyboard button -->
+	
 	<Application.Styles>
-		<Style Selector="StackPanel StackPanel Button">
+		<Style Selector="StackPanel.Keyboard StackPanel Button">
+			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+			<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+			<Setter Property="ContentTemplate">
+				<DataTemplate x:DataType="x:String">
+					<Grid>
+						<TextBlock Text="{Binding Tag, RelativeSource={RelativeSource AncestorType=Button}}" FontSize="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+						<TextBlock Text="{Binding}" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					</Grid>
+				</DataTemplate>
+			</Setter>
 			<Setter Property="Background" Value="{DynamicResource ButtonBackgroundLow}" />
 			<Setter Property="Padding" Value="8,5,8,6" />
-			<Setter Property="BorderThickness" Value="1"/>
-			<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-			<Setter Property="VerticalContentAlignment" Value="Stretch" />
 			<Setter Property="Focusable" Value="False" />
+			<Setter Property="Width" Value="45"/>
+			<Setter Property="Height" Value="45"/>
+			<Setter Property="Margin" Value="3"/>
 			<Setter Property="Transitions">
 				<Transitions>
 					<TransformOperationsTransition Property="RenderTransform" Duration="0:0:.075" />
@@ -49,17 +55,15 @@
 			</Setter>
 		</Style>
 
-		<Style Selector="StackPanel StackPanel Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+		<Style Selector="StackPanel.Keyboard StackPanel Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
 			<Setter Property="Background" Value="{DynamicResource ButtonBackgroundMed}" />
 			<Setter Property="RenderTransform" Value="scale(0.99)" />
 		</Style>
 		
-		<Style Selector="StackPanel StackPanel Button:pressed">
+		<Style Selector="StackPanel.Keyboard StackPanel Button:pressed">
 			<Setter Property="RenderTransform" Value="scale(0.95)" />
 		</Style>
-	</Application.Styles>
-	
-	<Application.Styles>
+		
 		<sty:FluentAvaloniaTheme PreferUserAccentColor="True" />
 	</Application.Styles>
 </Application>

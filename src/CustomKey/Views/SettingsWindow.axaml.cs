@@ -1,21 +1,22 @@
-﻿using System;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Interactivity;
-using CustomKey.ViewModels;
-using System.IO;
+using Avalonia.Platform.Storage;
 using CustomKey.Common;
+using CustomKey.ViewModels;
+using System;
+using System.IO;
 
 namespace CustomKey.Views
 {
     public partial class SettingsWindow : Window
     {
-        private SettingsWindowViewModel _viewModel;
+        private readonly SettingsWindowViewModel _viewModel;
 
         public SettingsWindow()
         {
             InitializeComponent();
             _viewModel = new SettingsWindowViewModel();
-            _viewModel.InitializeImages(CustomBG1, CustomBG2, CurrentBG);
+            _viewModel.InitializeImages(CustomBg1, CustomBg2, CurrentBg);
             
             // Attaching click events
             _viewModel.AttachImageClickEvents(
@@ -24,44 +25,47 @@ namespace CustomKey.Views
                 this.FindControl<Image>("GradientImage"),
                 this.FindControl<Image>("RedImage")
             );
-            
-            LaunchRepoLinkItem.Click += (sender, args) => { Utility.OpenURL("https://github.com/leo-t-88/customkey"); };
-            OpenLayout.Click += (sender, args) => { Utility.OpenURL(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "key")); };
-            OpenGetKey.Click += OpenGetKeyClick;
+            Layout.ItemsSource = LayoutLoader.GetLayoutNames();
             UploadImageButton.Click += OnUploadImageClick;
             DataContext = _viewModel;
             
-            this.Closed += (sender, args) =>
+            this.Closed += (_, _) =>
             {
                 GC.Collect(); // Clean memory (mainly used by images) when this windows is closed
                 GC.WaitForPendingFinalizers();
             };
         }
         
-        private async void OpenGetKeyClick(object sender, RoutedEventArgs e)
+        private async void OpenEditLayoutClick(object? sender, RoutedEventArgs e)
         {
-            EditLayoutWindow layoutWindow = new EditLayoutWindow();
-            await layoutWindow.ShowDialog(this);
+            if (sender is Button btn && btn.DataContext is string layoutName)
+            {
+                EditLayoutWindow layoutWindow = new EditLayoutWindow(layoutName);
+                await layoutWindow.ShowDialog(this);
+            }
+        }
+        
+        private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            //To do
         }
 
-        private async void OnUploadImageClick(object sender, RoutedEventArgs e)
+        private async void OnUploadImageClick(object? sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog
+            var files = await this.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
             {
                 AllowMultiple = false,
-                Filters = new()
-                {
-                    new FileDialogFilter() { Name = "Image Files", Extensions = { "png", "jpg", "jpeg", "webp" } }
-                }
-            };
+                FileTypeFilter = [new FilePickerFileType("Image Files") { Patterns = ["*.png", "*.jpg", "*.jpeg", "*.webp"] }]
+            });
 
-            var result = await openFileDialog.ShowAsync(this);
-            if (result != null && result.Length > 0)
+            if (files.Count > 0)
             {
-                var imagePath = result[0];
-                if (File.Exists(imagePath))
+                var file = files[0];
+                var path = file.Path.LocalPath;
+
+                if (File.Exists(path))
                 {
-                    _viewModel.UploadImage(imagePath);
+                    _viewModel.UploadImage(path);
                 }
             }
         }

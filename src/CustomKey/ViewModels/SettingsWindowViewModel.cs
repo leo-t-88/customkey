@@ -5,20 +5,21 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia.Media;
 using CustomKey.Common;
 
 namespace CustomKey.ViewModels
 {
-    public partial class SettingsWindowViewModel : ViewModelBase
+    public class SettingsWindowViewModel : ViewModelBase
     {
         public SettingsWindowViewModel()
         {
-            Utility.GlobalRefresh += () => OnPropertyChanged("");
+            Utility.GlobalRefresh += () => OnPropertyChanged(string.Empty);
         }
         
         public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
         public string[] Languages { get; } = Translator.Languages;
-        public string[] AppThemes { get; } = new[] { "System", "Light", "Dark" };
+        public string[] AppThemes { get; } = ["System", "Light", "Dark"];
 
         public string CurrentAppTheme
         {
@@ -35,58 +36,36 @@ namespace CustomKey.ViewModels
         
         private void UpdateImageSources()
         {
-            if (_customBg1 != null && 
-                !string.IsNullOrEmpty(SettingsReader.CustomBackgroundPath) && 
-                File.Exists(SettingsReader.CustomBackgroundPath) &&
-                ( SettingsReader.CustomBackgroundPath.EndsWith("png", StringComparison.OrdinalIgnoreCase) || 
-                  SettingsReader.CustomBackgroundPath.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                  SettingsReader.CustomBackgroundPath.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
-                  SettingsReader.CustomBackgroundPath.EndsWith("webp", StringComparison.OrdinalIgnoreCase) )) {
-                _customBg1.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath), 180, BitmapInterpolationMode.LowQuality);
-            } else {
-                _customBg1.Source = null;
-            }
-
-            if (_customBg2 != null && 
-                !string.IsNullOrEmpty(SettingsReader.CustomBackgroundPath2) && 
-                File.Exists(SettingsReader.CustomBackgroundPath2) &&
-                ( SettingsReader.CustomBackgroundPath2.EndsWith("png", StringComparison.OrdinalIgnoreCase) || 
-                  SettingsReader.CustomBackgroundPath2.EndsWith("jpg", StringComparison.OrdinalIgnoreCase) ||
-                  SettingsReader.CustomBackgroundPath2.EndsWith("jpeg", StringComparison.OrdinalIgnoreCase) ||
-                  SettingsReader.CustomBackgroundPath2.EndsWith("webp", StringComparison.OrdinalIgnoreCase) )) {
-                _customBg2.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.CustomBackgroundPath2), 180, BitmapInterpolationMode.LowQuality);
-            } else {
-                _customBg2.Source = null;
-            }
-
-            if (_currentBg != null && 
-                !string.IsNullOrEmpty(SettingsReader.BackgroundPath) && 
-                ( SettingsReader.BackgroundPath.StartsWith("avares://") || 
-                  ( File.Exists(SettingsReader.BackgroundPath) && 
-                    ( SettingsReader.BackgroundPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) ||
-                      SettingsReader.BackgroundPath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
-                      SettingsReader.BackgroundPath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
-                      SettingsReader.BackgroundPath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase) )
-                  )
-                )) 
+            IImage? TryLoad(string? path, int width, bool allowAvares = false)
             {
-                try {
-                    if (SettingsReader.BackgroundPath.StartsWith("avares://")) {
-                        Stream asset = AssetLoader.Open(new Uri(SettingsReader.BackgroundPath));
-                        _currentBg.Source = asset != null ? Bitmap.DecodeToWidth(asset, 960, BitmapInterpolationMode.LowQuality) : null;
-                    } else {
-                        _currentBg.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 960, BitmapInterpolationMode.LowQuality);
+                if (string.IsNullOrEmpty(path)) return null;
+
+                try
+                {
+                    if (allowAvares && path.StartsWith("avares://", StringComparison.OrdinalIgnoreCase))
+                    {
+                        using var asset = AssetLoader.Open(new Uri(path));
+                        return Bitmap.DecodeToWidth(asset, width, BitmapInterpolationMode.LowQuality);
                     }
-                } catch {
-                    _currentBg.Source = null;
+
+                    if (!File.Exists(path)) return null;
+
+                    if (!(path.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || path.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                          path.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || path.EndsWith(".webp", StringComparison.OrdinalIgnoreCase)))
+                        return null;
+
+                    using var stream = File.OpenRead(path);
+                    return Bitmap.DecodeToWidth(stream, width, BitmapInterpolationMode.LowQuality);
                 }
-            } else {
-                _currentBg.Source = null;
+                catch
+                {
+                    return null;
+                }
             }
-            
-            // Free unused memory
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
+
+            if (_customBg1 != null) _customBg1.Source = TryLoad(SettingsReader.CustomBackgroundPath, 180);
+            if (_customBg2 != null) _customBg2.Source = TryLoad(SettingsReader.CustomBackgroundPath2, 180);
+            if (_currentBg != null) _currentBg.Source = TryLoad(SettingsReader.BackgroundPath, 960, allowAvares: true);
         }
 
         // Added new properties for other parameters
@@ -104,29 +83,19 @@ namespace CustomKey.ViewModels
         
         public string Bgpath
         {
-            get => SettingsReader.BackgroundPath;
-            set
-            {
-                if (RaiseAndSetIfChanged(ref SettingsReader.BackgroundPath, value));
-            }
-        }
-        
-        public string CustomBgpath
-        {
-            get => SettingsReader.CustomBackgroundPath;
-            set
-            {
-                if (RaiseAndSetIfChanged(ref SettingsReader.CustomBackgroundPath, value));
-            }
+            set => RaiseAndSetIfChanged(ref SettingsReader.BackgroundPath, value);
         }
 
-        public string CustomBgpath2
+        private string CustomBgpath
+        {
+            get => SettingsReader.CustomBackgroundPath;
+            set => RaiseAndSetIfChanged(ref SettingsReader.CustomBackgroundPath, value);
+        }
+
+        private string CustomBgpath2
         {
             get => SettingsReader.CustomBackgroundPath2;
-            set
-            {
-                if (RaiseAndSetIfChanged(ref SettingsReader.CustomBackgroundPath2, value));
-            }
+            set => RaiseAndSetIfChanged(ref SettingsReader.CustomBackgroundPath2, value);
         }
         
         private CancellationTokenSource? _langCts; // Token to prevent temporary UI memory leaks when changing language rapidly
@@ -157,9 +126,9 @@ namespace CustomKey.ViewModels
         }
 
         // New references for images
-        private Image _customBg1;
-        private Image _customBg2;
-        private Image _currentBg;
+        private Image? _customBg1;
+        private Image? _customBg2;
+        private Image? _currentBg;
 
         // Method for initializing images in the view
         public void InitializeImages(Image customBg1, Image customBg2, Image currentBg)
@@ -172,22 +141,22 @@ namespace CustomKey.ViewModels
         }
 
         // Method for attaching click events to images
-        public void AttachImageClickEvents(Image curvesImage, Image geoImage, Image gradientImage, Image redImage)
+        public void AttachImageClickEvents(Image? curvesImage, Image? geoImage, Image? gradientImage, Image? redImage)
         {
             // Load image source at the same time
-            curvesImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/curves.jpg")), 200, BitmapInterpolationMode.LowQuality);
-            geoImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/geo.jpg")), 200, BitmapInterpolationMode.LowQuality);
-            gradientImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/gradient.jpg")), 200, BitmapInterpolationMode.LowQuality);
-            redImage.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/red.jpg")), 200, BitmapInterpolationMode.LowQuality);
+            curvesImage?.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/curves.jpg")), 200, BitmapInterpolationMode.LowQuality);
+            geoImage?.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/geo.jpg")), 200, BitmapInterpolationMode.LowQuality);
+            gradientImage?.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/gradient.jpg")), 200, BitmapInterpolationMode.LowQuality);
+            redImage?.Source = Bitmap.DecodeToWidth(AssetLoader.Open(new Uri("avares://CustomKey/Assets/background/red.jpg")), 200, BitmapInterpolationMode.LowQuality);
             
-            curvesImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/curves.jpg");
-            geoImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/geo.jpg");
-            gradientImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/gradient.jpg");
-            redImage.PointerPressed += (sender, e) => OnImageClicked("avares://CustomKey/Assets/background/red.jpg");
+            curvesImage?.PointerPressed += (_, _) => OnImageClicked("avares://CustomKey/Assets/background/curves.jpg");
+            geoImage?.PointerPressed += (_, _) => OnImageClicked("avares://CustomKey/Assets/background/geo.jpg");
+            gradientImage?.PointerPressed += (_, _) => OnImageClicked("avares://CustomKey/Assets/background/gradient.jpg");
+            redImage?.PointerPressed += (_, _) => OnImageClicked("avares://CustomKey/Assets/background/red.jpg");
 
             // Added click events for custom images
-            _customBg1.PointerPressed += (sender, e) => OnImageClicked("CustomBG1");
-            _customBg2.PointerPressed += (sender, e) => OnImageClicked("CustomBG2");
+            _customBg1?.PointerPressed += (_, _) => OnImageClicked("CustomBG1");
+            _customBg2?.PointerPressed += (_, _) => OnImageClicked("CustomBG2");
         }
 
         private void OnImageClicked(string imageName)

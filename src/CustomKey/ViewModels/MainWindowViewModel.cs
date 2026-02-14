@@ -2,11 +2,11 @@
 
 namespace CustomKey.ViewModels
 {
-    public partial class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
     {
         public string[] LayoutNames { get; }
-        private string _selectedLayout;
-
+        private string _selectedLayout = "";
+        
         public MainWindowViewModel()
         {
             // Loads the names of the layouts (the “Name” property of the JSON files)
@@ -16,7 +16,7 @@ namespace CustomKey.ViewModels
                 SelectedLayout = LayoutNames[0];
             }
             
-            Utility.GlobalRefresh += () => OnPropertyChanged("");
+            Utility.GlobalRefresh += () => OnPropertyChanged(string.Empty);
         }
 
         public string SelectedLayout
@@ -29,9 +29,10 @@ namespace CustomKey.ViewModels
                     this.RaiseAndSetIfChanged(ref _selectedLayout, value);
                     if (!string.IsNullOrEmpty(LayoutLoader.GetJsonFileName(value)))
                     {
-                        LayoutLoader.LoadLayoutFromFile(LayoutLoader.GetJsonFileName(value));
+                        string? file = LayoutLoader.GetJsonFileName(value);
+                        if (file != null) LayoutLoader.LoadLayoutFromFile(file);
                     }
-                    OnPropertyChanged(""); // Update keys value
+                    OnPropertyChanged(string.Empty); // Update keys value
                 }
             }
         }

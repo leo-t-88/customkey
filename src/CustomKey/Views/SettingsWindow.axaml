@@ -4,9 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:ui="using:FluentAvalonia.UI.Controls"
-        mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="455"
         x:Class="CustomKey.Views.SettingsWindow"
         x:DataType="vm:SettingsWindowViewModel"
+        mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="455"
         WindowStartupLocation="CenterScreen"
         MinHeight="455" MinWidth="760" Height="455" Width="760"
 		Title="{Binding [TradConfiguration]}"
@@ -33,22 +33,15 @@
 			<!-- Header -->
 			<Grid>
 				<Border CornerRadius="7" Height="110" Background="Transparent" ClipToBounds="True">
-					<Image x:Name="CurrentBG" Stretch="UniformToFill"/>
+					<Image x:Name="CurrentBg" Stretch="UniformToFill"/>
 				</Border>
-				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold" FontFamily="Arial"
-						   VerticalAlignment="Center"
-						   HorizontalAlignment="Left"
-						   Margin="10,0,0,0"/>
+				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 			</Grid>
 			
 			<!-- App Theme -->
-			<ui:SettingsExpander Header="{Binding [TradTheme]}"
-									 IconSource="DarkTheme"
-									 Description="{Binding [TradThemeDesc]}">
+			<ui:SettingsExpander Header="{Binding [TradTheme]}" IconSource="DarkTheme" Description="{Binding [TradThemeDesc]}">
 				<ui:SettingsExpander.Footer>
-					<ComboBox ItemsSource="{Binding AppThemes}"
-					          SelectedValue="{Binding CurrentAppTheme, Mode=TwoWay}"
-					          MinWidth="150" />
+					<ComboBox ItemsSource="{Binding AppThemes}" SelectedValue="{Binding CurrentAppTheme}" MinWidth="150" />
 				</ui:SettingsExpander.Footer>
 			</ui:SettingsExpander>
 
@@ -69,10 +62,10 @@
 
 						<StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Cursor="Hand">
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
-								<Image x:Name="CustomBG1" Stretch="UniformToFill"/>
+								<Image x:Name="CustomBg1" Stretch="UniformToFill"/>
 							</Border>
 							<Border CornerRadius="4" Width="120" Height="68" ClipToBounds="True">
-								<Image x:Name="CustomBG2" Stretch="UniformToFill"/>
+								<Image x:Name="CustomBg2" Stretch="UniformToFill"/>
 							</Border>
 						</StackPanel>
 						
@@ -80,8 +73,7 @@
 					</Grid>
 				</ui:SettingsExpanderItem>
 				
-				<!-- Note : All images include internal images are loaded from the C#
-							with DecodeToWith in order to reduce memory usage drasticly -->
+				<!-- Note : All images include internal images are loaded from the C# with DecodeToWith in order to reduce memory usage drasticly -->
 				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
 						<Grid.RowDefinitions>
@@ -110,9 +102,7 @@
 			</ui:SettingsExpander>
 
 			<!-- App Languages -->
-			<ui:SettingsExpander Header="{Binding [TradLanguages]}"
-									 IconSource="World"
-									 Description="{Binding [TradLanguageChange]}">
+			<ui:SettingsExpander Header="{Binding [TradLanguages]}" IconSource="World" Description="{Binding [TradLanguageChange]}">
 				<ui:SettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language, Mode=TwoWay}" MinWidth="150"/>
 				</ui:SettingsExpander.Footer>
@@ -144,14 +134,14 @@
 						<TextBlock Text="{Binding [TradAboutBuild]}" />
 					</StackPanel>
 				</ui:SettingsExpanderItem>
-				<ui:SettingsExpanderItem Content="{Binding [TradAboutReport]}"
-				                         ActionIconSource="Open"
-				                         IsClickEnabled="True"
-				                         Name="LaunchRepoLinkItem"/>
-				<ui:SettingsExpanderItem Content="(Temporary) Open Key ID getter"
-				                         ActionIconSource="ChevronRight"
-				                         IsClickEnabled="True"
-				                         Name="OpenGetKey"/>
+				<ui:SettingsExpanderItem>
+					<HyperlinkButton NavigateUri="https://github.com/leo-t-88/customkey" HorizontalAlignment="Stretch" Padding="0">
+						<Grid ColumnDefinitions="*,Auto">
+							<TextBlock Text="{Binding [TradAboutReport]}" Grid.Column="0"/>
+							<ui:SymbolIcon Symbol="Open" Grid.Column="1"/>
+						</Grid>
+					</HyperlinkButton>
+				</ui:SettingsExpanderItem>
 				<ui:SettingsExpanderItem Content="{Binding VersionNumber}"/>
 			</ui:SettingsExpander>
 		</StackPanel>

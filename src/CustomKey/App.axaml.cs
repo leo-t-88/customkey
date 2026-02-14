@@ -31,7 +31,7 @@ namespace CustomKey
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // Verify if the settings json file existe, else it will create it with defaults settings
+                // Verify if the settings JSON file existe, else it will create it with defaults settings
                 string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
                 if (!File.Exists(jsonFilePath))
                 {
@@ -75,7 +75,7 @@ namespace CustomKey
             {
                 MainWindow.isCapsLockActive = !MainWindow.isCapsLockActive;
                 Utility.IsShift = MainWindow.isCapsLockActive || MainWindow.isShiftPressed;
-                Dispatcher.UIThread.Post(() => { _mainWindow.CapsDown(); });
+                Dispatcher.UIThread.Post(() => { _mainWindow?.CapsDown(); });
             }
             else if (e.Data.KeyCode == KeyCode.VcLeftControl || e.Data.KeyCode == KeyCode.VcRightControl ||
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||
@@ -87,7 +87,7 @@ namespace CustomKey
             {
                 foreach (var entry in LayoutLoader.KeyVal)
                 {
-                    var (keyChar, shiftChar, keyId) = entry.Value;
+                    var (_, _, keyId) = entry.Value;
                     
                     if (e.Data.KeyCode.ToString().Equals(keyId, StringComparison.OrdinalIgnoreCase))
                     {

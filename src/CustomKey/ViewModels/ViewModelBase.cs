@@ -8,7 +8,7 @@ namespace CustomKey.ViewModels;
 
 public class ViewModelBase : ObservableObject
 {
-    public event PropertyChangedEventHandler PropertyChanged;
+    public new event PropertyChangedEventHandler? PropertyChanged;
     
     protected bool RaiseAndSetIfChanged<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
     {
@@ -21,11 +21,6 @@ public class ViewModelBase : ObservableObject
         return false;
     }
 
-    protected void RaisePropertyChanged(string propName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
-    }
-    
     public string this[string id]
     {
         get
@@ -34,7 +29,7 @@ public class ViewModelBase : ObservableObject
             if (id.StartsWith("Key")) return LayoutLoader.GetChar(id);
 
             // Translations Bindings
-            if (Translator._tradBinding.TryGetValue(id, out var value)) return value;
+            if (Translator.TradBinding.TryGetValue(id, out var value)) return value;
             
             return $"[undefined:{id}]";
         }

@@ -50,7 +50,7 @@ namespace CustomKey.Common
         }
 
         // Returns the name of the JSON file corresponding to a given layout.
-        public static string GetJsonFileName(string layoutName)
+        public static string? GetJsonFileName(string layoutName)
         {
             return _layoutNameToFileMap.TryGetValue(layoutName, out var fileName) ? fileName : null;
         }
@@ -69,7 +69,7 @@ namespace CustomKey.Common
                 }
 
                 string json = File.ReadAllText(layoutPath);
-                var rawDict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                Dictionary<string, string>? rawDict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
 
                 // Update KeyVal in place to avoid completely replacing the object.
                 KeyVal.Clear();
@@ -77,9 +77,10 @@ namespace CustomKey.Common
                 for (int i = 1; i <= 47; i++)
                 {
                     string keyName = $"Key{i}";
-                    rawDict.TryGetValue($"{keyName}_Char", out string charVal);
-                    rawDict.TryGetValue($"Shift{i}_Char", out string shiftVal);
-                    rawDict.TryGetValue($"{keyName}_ID", out string idVal);
+                    string? charVal = null, shiftVal = null, idVal = null;
+                    rawDict?.TryGetValue($"{keyName}_Char", out charVal);
+                    rawDict?.TryGetValue($"Shift{i}_Char", out shiftVal);
+                    rawDict?.TryGetValue($"{keyName}_ID", out idVal);
 
                     // If no value : set to ASCII code "\r", which result to do a toUpperCase of the charVal when shift/caps is on
                     // For exemple if you set Key1_Char to "m" and don't set Shift1_Char in the json when shift is enable it will show "M" and not "\r" or ""
@@ -126,7 +127,7 @@ namespace CustomKey.Common
             { "VcQuote", "Vc1", "Vc2", "Vc3", "Vc4", "Vc5", "Vc6", "Vc7", "Vc8", "Vc9", "Vc0", "VcOpenBracket", "VcEquals", "VcA", "VcB", "VcC", "VcD", "VcE", "VcF", "VcG", "VcH", "VcI", "VcJ", "VcK", "VcL", "VcM", "VcN", "VcO", "VcP", "VcQ", "VcR", "VcS", "VcT", "VcU", "VcV", "VcW", "VcX", "VcY", "VcZ", "VcCloseBracket", "VcSemicolon", "VcBackslash", "VcBackQuote", "VcComma", "VcPeriod", "VcSlash", "VcMisc" }
         };
         
-        public static string ConvertToVcKey(string sharpAvaKey)
+        public static string? ConvertToVcKey(string sharpAvaKey)
         {
             for (int i = 0; i < SharpAvaKeyId.GetLength(1); i++)
             {

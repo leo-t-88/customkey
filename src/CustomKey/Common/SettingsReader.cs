@@ -9,7 +9,7 @@ namespace CustomKey.Common;
 
 public static class SettingsReader
 {
-    public static event Action SettingsChanged;
+    public static event Action? SettingsChanged;
     
     public static void LoadSettings()
     {
@@ -34,25 +34,18 @@ public static class SettingsReader
     public static void ApplyTheme(string theme)
     {
         // Ensure FluentAvaloniaTheme is added to Application.Current.Styles
-        if (!(Application.Current.Styles[0] is FluentAvaloniaTheme faTheme))
+        if (!(Application.Current?.Styles[0] is FluentAvaloniaTheme faTheme))
         {
             faTheme = new FluentAvaloniaTheme();
-            Application.Current.Styles.Insert(0, faTheme);
+            Application.Current?.Styles.Insert(0, faTheme);
         }
 
         var newTheme = GetThemeVariant(theme);
-        if (newTheme != null)
-        {
-            Application.Current.RequestedThemeVariant = newTheme;
-            faTheme.PreferSystemTheme = false;
-        }
-        else
-        {
-            faTheme.PreferSystemTheme = true;
-        }
+        Application.Current?.RequestedThemeVariant = newTheme;
+        faTheme.PreferSystemTheme = false;
     }
     
-    private static ThemeVariant GetThemeVariant(string value)
+    private static ThemeVariant? GetThemeVariant(string value)
     {
         switch (value)
         {
@@ -84,12 +77,12 @@ public static class SettingsReader
         
     private class Settings
     {
-        public string Theme { get; set; }
+        public string Theme { get; set; } = "";
         public bool CustomBg { get; set; }
-        public string BgPath { get; set; }
-        public string CustomBgPath { get; set; }
-        public string CustomBgPath2 { get; set; }
-        public string Language { get; set; }
+        public string BgPath { get; set; } = "";
+        public string CustomBgPath { get; set; } = "";
+        public string CustomBgPath2 { get; set; } = "";
+        public string Language { get; set; } = "";
     }
     
     public static string ThemeValue = "System";

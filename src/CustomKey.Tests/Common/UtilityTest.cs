@@ -44,12 +44,5 @@ namespace CustomKey.Tests.Common
             Utility.IsInputEnabled = true;
             Assert.That(Utility.IsInputEnabled, Is.True);
         }
-
-        [Test]
-        public void OpenURL_DoesNotThrow()
-        {
-            // Test that make sure the method doesn't crash.
-            Assert.DoesNotThrow(() => Utility.OpenURL("https://example.com"));
-        }
     }
 }

@@ -9,21 +9,20 @@ namespace CustomKey.Common;
 public static class Translator
 {
     public static string[] Languages = Array.Empty<string>();
-    public static Dictionary<string, string> _tradBinding = new();
-    private static Uri _jsonTrad = new("avares://CustomKey/Assets/locales.json");
+    public static Dictionary<string, string> TradBinding = new();
+    private static readonly Uri JsonTrad = new("avares://CustomKey/Assets/locales.json");
 
-    private static Dictionary<string, Dictionary<string, string>> LoadLanguagesJSON()
+    private static Dictionary<string, Dictionary<string, string>> LoadLanguagesJson()
     {
-        if (!AssetLoader.Exists(_jsonTrad)) return null;
+        if (!AssetLoader.Exists(JsonTrad)) return new Dictionary<string, Dictionary<string, string>>();
 
-        using Stream stream = AssetLoader.Open(_jsonTrad);
+        using Stream stream = AssetLoader.Open(JsonTrad);
         using StreamReader reader = new(stream);
         string json = reader.ReadToEnd();
 
         var allTrad = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(json);
-        if (allTrad == null) return null;
         
-        return allTrad;
+        return allTrad ?? new Dictionary<string, Dictionary<string, string>>();
     }
 
     /**
@@ -32,7 +31,7 @@ public static class Translator
     public static void LoadLanguages()
     {
         var list = new List<string>();
-        foreach (var entry in LoadLanguagesJSON())
+        foreach (var entry in LoadLanguagesJson())
         {
             list.Add(entry.Key);
         }
@@ -46,6 +45,6 @@ public static class Translator
      */
     public static void LoadSelectedLanguage()
     {
-        if (LoadLanguagesJSON().TryGetValue(SettingsReader.LanguageCode, out var selected)) _tradBinding = new Dictionary<string, string>(selected);
+        if (LoadLanguagesJson().TryGetValue(SettingsReader.LanguageCode, out var selected)) TradBinding = new Dictionary<string, string>(selected);
     }
 }

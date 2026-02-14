@@ -25,6 +25,7 @@ namespace CustomKey.Views
                 this.FindControl<Image>("GradientImage"),
                 this.FindControl<Image>("RedImage")
             );
+            OpenGetKey.Click += OpenGetKeyClick;
             Layout.ItemsSource = LayoutLoader.GetLayoutNames();
             UploadImageButton.Click += OnUploadImageClick;
             DataContext = _viewModel;
@@ -36,6 +37,12 @@ namespace CustomKey.Views
             };
         }
         
+        private async void OpenGetKeyClick(object sender, RoutedEventArgs e)
+        {
+            EditLayoutWindow layoutWindow = new EditLayoutWindow();
+            await layoutWindow.ShowDialog(this);
+        }
+        
         private async void OpenEditLayoutClick(object? sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is string layoutName)
@@ -43,11 +50,6 @@ namespace CustomKey.Views
                 EditLayoutWindow layoutWindow = new EditLayoutWindow(layoutName);
                 await layoutWindow.ShowDialog(this);
             }
-        }
-        
-        private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
-        {
-            //To do
         }
 
         private async void OnUploadImageClick(object? sender, RoutedEventArgs e)

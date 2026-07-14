@@ -89,12 +89,5 @@ namespace CustomKey.Tests.Common
             string result = LayoutLoader.GetChar("Key1Shift");
             Assert.That(result, Is.EqualTo(""));
         }
-
-        [Test]
-        public void GetJsonFileName_Null_If_Not_Found()
-        {
-            string result = LayoutLoader.GetJsonFileName("UnknownLayout");
-            Assert.That(result, Is.Null);
-        }
     }
 }

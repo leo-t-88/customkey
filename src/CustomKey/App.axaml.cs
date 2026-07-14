@@ -35,8 +35,7 @@ namespace CustomKey
                 string jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.json");
                 if (!File.Exists(jsonFilePath))
                 {
-                    var settings = new { Theme = "System", CustomBg = false, BgPath = "avares://CustomKey/Assets/background/gradient.jpg", CustomBgPath = "", CustomBgPath2 = "", Language = "English"};
-                    string jsonString = JsonSerializer.Serialize(settings);
+                    string jsonString = JsonSerializer.Serialize(new { Theme = "System", CustomBg = false, BgPath = "avares://CustomKey/Assets/background/gradient.jpg", CustomBgPath = "", CustomBgPath2 = "", Language = "English"});
                     File.WriteAllText(jsonFilePath, jsonString);
                 }
                 
@@ -68,13 +67,13 @@ namespace CustomKey
         {
             if (e.Data.KeyCode == KeyCode.VcLeftShift || e.Data.KeyCode == KeyCode.VcRightShift)
             {
-                MainWindow.isShiftPressed = true;
+                MainWindow.IsShiftPressed = true;
                 Utility.IsShift = true;
             }
             else if (e.Data.KeyCode == KeyCode.VcCapsLock)
             {
-                MainWindow.isCapsLockActive = !MainWindow.isCapsLockActive;
-                Utility.IsShift = MainWindow.isCapsLockActive || MainWindow.isShiftPressed;
+                MainWindow.IsCapsLockActive = !MainWindow.IsCapsLockActive;
+                Utility.IsShift = MainWindow.IsCapsLockActive || MainWindow.IsShiftPressed;
                 Dispatcher.UIThread.Post(() => { _mainWindow?.CapsDown(); });
             }
             else if (e.Data.KeyCode == KeyCode.VcLeftControl || e.Data.KeyCode == KeyCode.VcRightControl ||
@@ -108,12 +107,12 @@ namespace CustomKey
         {
             if (e.Data.KeyCode == KeyCode.VcLeftShift || e.Data.KeyCode == KeyCode.VcRightShift)
             {
-                MainWindow.isShiftPressed = false;
-                Utility.IsShift = MainWindow.isCapsLockActive;
+                MainWindow.IsShiftPressed = false;
+                Utility.IsShift = MainWindow.IsCapsLockActive;
             }
             else if (e.Data.KeyCode == KeyCode.VcCapsLock)
             {
-                Utility.IsShift = MainWindow.isCapsLockActive || MainWindow.isShiftPressed;
+                Utility.IsShift = MainWindow.IsCapsLockActive || MainWindow.IsShiftPressed;
             }
             else if (e.Data.KeyCode == KeyCode.VcLeftControl || e.Data.KeyCode == KeyCode.VcRightControl ||
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||

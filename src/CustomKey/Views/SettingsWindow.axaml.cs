@@ -5,13 +5,15 @@ using CustomKey.Common;
 using CustomKey.ViewModels;
 using System;
 using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 namespace CustomKey.Views
 {
     public partial class SettingsWindow : Window
     {
         private readonly SettingsWindowViewModel _viewModel;
-
+            
         public SettingsWindow()
         {
             InitializeComponent();
@@ -25,33 +27,19 @@ namespace CustomKey.Views
                 this.FindControl<Image>("GradientImage"),
                 this.FindControl<Image>("RedImage")
             );
-            OpenGetKey.Click += OpenGetKeyClick;
-            Layout.ItemsSource = LayoutLoader.GetLayoutNames();
-            UploadImageButton.Click += OnUploadImageClick;
             DataContext = _viewModel;
+            
+            UploadImageButton.Click += OnUploadImageClick;
+            Layout.ItemsSource = LayoutLoader.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
             
             this.Closed += (_, _) =>
             {
+                if (Owner is MainWindow main && main.DataContext is MainWindowViewModel vmp) vmp.ReloadLayouts();
                 GC.Collect(); // Clean memory (mainly used by images) when this windows is closed
                 GC.WaitForPendingFinalizers();
             };
         }
         
-        private async void OpenGetKeyClick(object sender, RoutedEventArgs e)
-        {
-            EditLayoutWindow layoutWindow = new EditLayoutWindow();
-            await layoutWindow.ShowDialog(this);
-        }
-        
-        private async void OpenEditLayoutClick(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.DataContext is string layoutName)
-            {
-                EditLayoutWindow layoutWindow = new EditLayoutWindow(layoutName);
-                await layoutWindow.ShowDialog(this);
-            }
-        }
-
         private async void OnUploadImageClick(object? sender, RoutedEventArgs e)
         {
             var files = await this.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
@@ -62,14 +50,71 @@ namespace CustomKey.Views
 
             if (files.Count > 0)
             {
-                var file = files[0];
-                var path = file.Path.LocalPath;
-
-                if (File.Exists(path))
-                {
-                    _viewModel.UploadImage(path);
-                }
+                var path = files[0].Path.LocalPath;
+                if (File.Exists(path)) _viewModel.UploadImage(path);
             }
+        }
+        
+        private async void OpenEditLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LayoutItem item)
+            {
+                LayoutLoader.LoadLayoutFromFile(item.FileName);
+                this.Close();
+            }
+        }
+
+        private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LayoutItem item)
+            {
+                string path = Path.Combine(AppContext.BaseDirectory, "key", item.FileName);
+                if (File.Exists(path)) File.Delete(path);
+                Layout.ItemsSource = LayoutLoader.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
+            }
+        }
+        
+        private void CreateLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            Random random = Random.Shared;
+
+            string? fileName = null;
+            int attempts = 0;
+
+            while (attempts < 3 && fileName is null)
+            {
+                attempts++;
+                
+                char[] chars = new char[5];
+                for (int i = 0; i < 5; i++) chars[i] = random.Next(2) == 0 ? (char)('a' + random.Next(26)) : (char)('0' + random.Next(10));
+                string tempname = new string(chars) + ".json";
+
+                bool exists = LayoutLoader.GetLayouts().Values.Contains(tempname, StringComparer.OrdinalIgnoreCase);
+                if (!exists) fileName = tempname;
+            }
+
+            if (fileName is null) return;
+
+            string fullPath = Path.Combine(AppContext.BaseDirectory, "key", fileName);
+            var json = JsonSerializer.Serialize( new { Name = "Unkown " + Path.GetFileNameWithoutExtension(fileName) }, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(fullPath, json);
+            
+            LayoutLoader.LoadLayoutFromFile(fullPath);
+            this.Close();
+        }
+        
+        public class LayoutItem
+        {
+            public string Name { get; }
+            public string FileName { get; }
+
+            public LayoutItem(string name, string fileName)
+            {
+                Name = name;
+                FileName = fileName;
+            }
+
+            public override string ToString() => Name;
         }
     }
 }

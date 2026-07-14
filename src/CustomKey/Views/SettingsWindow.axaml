@@ -9,7 +9,7 @@
         mc:Ignorable="d" d:DesignWidth="760" d:DesignHeight="455"
         WindowStartupLocation="CenterScreen"
         MinHeight="455" MinWidth="760" Height="455" Width="760"
-		Title="{Binding [TradConfiguration]}"
+		Title="{Binding [TradSettings]}"
         Background="{DynamicResource BackgroundColor}">
 	<Design.DataContext>
 		<vm:SettingsWindowViewModel/>
@@ -35,22 +35,22 @@
 				<Border CornerRadius="7" Height="110" Background="Transparent" ClipToBounds="True">
 					<Image x:Name="CurrentBg" Stretch="UniformToFill"/>
 				</Border>
-				<TextBlock Text="{Binding [TradConfiguration]}" FontSize="45" FontWeight="Bold" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+				<TextBlock Text="{Binding [TradSettings]}" FontSize="45" FontWeight="Bold" FontFamily="Arial" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10,0,0,0"/>
 			</Grid>
 			
 			<!-- App Theme -->
-			<ui:SettingsExpander Header="{Binding [TradTheme]}" IconSource="DarkTheme" Description="{Binding [TradThemeDesc]}">
-				<ui:SettingsExpander.Footer>
+			<ui:FASettingsExpander Header="{Binding [TradTheme]}" IconSource="DarkTheme" Description="{Binding [TradThemeDesc]}">
+				<ui:FASettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding AppThemes}" SelectedValue="{Binding CurrentAppTheme}" MinWidth="150" />
-				</ui:SettingsExpander.Footer>
-			</ui:SettingsExpander>
+				</ui:FASettingsExpander.Footer>
+			</ui:FASettingsExpander>
 
 			<!-- Background image -->
-			<ui:SettingsExpander Header="{Binding [TradKeyboardBg]}" IconSource="Image" Description="{Binding [TradKeyboardBgDesc]}" IsExpanded="False">
-				<ui:SettingsExpanderItem>
+			<ui:FASettingsExpander Header="{Binding [TradKeyboardBg]}" IconSource="Image" Description="{Binding [TradKeyboardBgDesc]}" IsExpanded="False">
+				<ui:FASettingsExpanderItem>
 					<CheckBox x:Name="CustomBgCheckBox" Content="{Binding [TradKeyboardBgCheckbox]}" IsChecked="{Binding CustomBg, Mode=TwoWay}" HorizontalAlignment="Right" />
-				</ui:SettingsExpanderItem>
-				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
+				</ui:FASettingsExpanderItem>
+				<ui:FASettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/> <!-- Text -->
@@ -71,10 +71,10 @@
 						
 						<Button Grid.Row="2" x:Name="UploadImageButton" Content="{Binding [TradKeyboardBgUpload]}" HorizontalAlignment="Left" Margin="0 10 0 0"/>
 					</Grid>
-				</ui:SettingsExpanderItem>
+				</ui:FASettingsExpanderItem>
 				
 				<!-- Note : All images include internal images are loaded from the C# with DecodeToWith in order to reduce memory usage drasticly -->
-				<ui:SettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
+				<ui:FASettingsExpanderItem IsVisible="{Binding IsChecked, ElementName=CustomBgCheckBox}">
 					<Grid>
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/> <!-- Text -->
@@ -98,43 +98,57 @@
 							</Border>
 						</StackPanel>
 					</Grid>
-				</ui:SettingsExpanderItem>
-			</ui:SettingsExpander>
+				</ui:FASettingsExpanderItem>
+			</ui:FASettingsExpander>
 
 			<!-- App Languages -->
-			<ui:SettingsExpander Header="{Binding [TradLanguages]}" IconSource="World" Description="{Binding [TradLanguageChange]}">
-				<ui:SettingsExpander.Footer>
+			<ui:FASettingsExpander Header="{Binding [TradLanguages]}" IconSource="World" Description="{Binding [TradLanguageChange]}">
+				<ui:FASettingsExpander.Footer>
 					<ComboBox ItemsSource="{Binding Languages}" SelectedItem="{Binding Language, Mode=TwoWay}" MinWidth="150"/>
-				</ui:SettingsExpander.Footer>
-			</ui:SettingsExpander>
+				</ui:FASettingsExpander.Footer>
+			</ui:FASettingsExpander>
 			
 			<!-- Layouts manager -->
-			<ui:SettingsExpander Header="{Binding [TradLayouts]}" IconSource="Keyboard" Description="{Binding [TradLayoutsDesc]}" IsExpanded="True">
-				<ui:SettingsExpanderItem>
-					<Button x:Name="OpenLayout" FontFamily="{StaticResource SymbolThemeFontFamily}" Content="{Binding [TradLayoutsFolder]}"/>
-				</ui:SettingsExpanderItem>
-			</ui:SettingsExpander>
+			<ui:FASettingsExpander Header="{Binding [TradLayouts]}" IconSource="Keyboard" Description="{Binding [TradLayoutsDesc]}" IsExpanded="True">
+				<ListBox x:Name="Layout">
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Grid ColumnDefinitions="*,Auto,Auto">
+								<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+
+								<Button Grid.Column="1" Click="OpenEditLayoutClick">
+									<ui:FASymbolIcon Symbol="Edit"/>
+								</Button>
+
+								<Button Grid.Column="2" Click="DeleteLayoutClick" Margin="5">
+									<ui:FASymbolIcon Symbol="Delete"/>
+								</Button>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+				<Button Content="{Binding [TradLayoutsCreate]}" Click="CreateLayoutClick"/>
+			</ui:FASettingsExpander>
 			
 			<!-- About -->
-			<ui:SettingsExpander Header="{Binding [TradAbout]}" IconSource="M2 14C2 20.6274 7.37258 26 14 26C20.6274 26 26 20.6274 26 14C26 7.37258 20.6274 2 14 2C7.37258 2 2 7.37258 2 14ZM15.25 8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8C12.75 7.30964 13.3096 6.75 14 6.75C14.6904 6.75 15.25 7.30964 15.25 8ZM14 11C14.5523 11 15 11.4477 15 12L15 20C15 20.5523 14.5523 21 14 21C13.4477 21 13 20.5523 13 20L13 12C13 11.4477 13.4477 11 14 11Z">
-				<ui:SettingsExpanderItem>
+			<ui:FASettingsExpander Header="{Binding [TradAbout]}" IconSource="M2 14C2 20.6274 7.37258 26 14 26C20.6274 26 26 20.6274 26 14C26 7.37258 20.6274 2 14 2C7.37258 2 2 7.37258 2 14ZM15.25 8C15.25 8.69036 14.6904 9.25 14 9.25C13.3096 9.25 12.75 8.69036 12.75 8C12.75 7.30964 13.3096 6.75 14 6.75C14.6904 6.75 15.25 7.30964 15.25 8ZM14 11C14.5523 11 15 11.4477 15 12L15 20C15 20.5523 14.5523 21 14 21C13.4477 21 13 20.5523 13 20L13 12C13 11.4477 13.4477 11 14 11Z">
+				<ui:FASettingsExpanderItem>
 					<StackPanel Spacing="2">
 						<TextBlock Text="{Binding [TradDesignedBy]}" />
 						<TextBlock Text="{Binding [TradAboutApp]}" />
 						<TextBlock Text="{Binding [TradAboutBuild]}" />
 					</StackPanel>
-				</ui:SettingsExpanderItem>
-				<ui:SettingsExpanderItem>
+				</ui:FASettingsExpanderItem>
+				<ui:FASettingsExpanderItem>
 					<HyperlinkButton NavigateUri="https://github.com/leo-t-88/customkey" HorizontalAlignment="Stretch" Padding="0">
 						<Grid ColumnDefinitions="*,Auto">
 							<TextBlock Text="{Binding [TradAboutReport]}" Grid.Column="0"/>
-							<ui:SymbolIcon Symbol="Open" Grid.Column="1"/>
+							<ui:FASymbolIcon Symbol="Open" Grid.Column="1"/>
 						</Grid>
 					</HyperlinkButton>
-				</ui:SettingsExpanderItem>
-				<ui:SettingsExpanderItem Content="(Temporary) Open Key ID getter" ActionIconSource="ChevronRight" IsClickEnabled="True" Name="OpenGetKey"/>
-				<ui:SettingsExpanderItem Content="{Binding VersionNumber}"/>
-			</ui:SettingsExpander>
+				</ui:FASettingsExpanderItem>
+				<ui:FASettingsExpanderItem Content="{Binding VersionNumber}"/>
+			</ui:FASettingsExpander>
 		</StackPanel>
 	</ScrollViewer>
 </Window>

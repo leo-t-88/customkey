@@ -4,7 +4,6 @@ using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
-using FluentAvalonia.UI.Controls;
 using System;
 using System.IO;
 using CustomKey.Common;
@@ -14,19 +13,15 @@ namespace CustomKey.Views
 {
     public partial class MainWindow : Window
     {
-        public static MainWindow? Instance { get; private set; }
-        public static bool isCapsLockActive = false;
-        public static bool isShiftPressed = false;
+        public static bool IsCapsLockActive;
+        public static bool IsShiftPressed;
 
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainWindowViewModel();
-            Instance = this;
+            SettingsButton.Click += OpenSettingsWindow;
             
-            settingsButton.Click += OpenSettingsWindow;
-            aboutIco.PointerReleased += OpenAbout;
-
             if (OperatingSystem.IsLinux())
             {
                 this.KeyDown += OnKeyDown;
@@ -43,28 +38,22 @@ namespace CustomKey.Views
                 if (btn != null)
                 {
                     string capturedKey = keyName;
-                    btn.Click += (s, e) => OnButtonClick(capturedKey);
+                    btn.Click += (_, _) => OnButtonClick(capturedKey);
                 }
             }
-            Backspc.Click += (s, e) => OnButtonClick("Backspc");
-            Tab.Click += (s, e) => OnButtonClick("Tab");
-            Caps.Click += (s, e) => OnButtonClick("Caps");
-            Enter.Click += (s, e) => OnButtonClick("Enter");
-            Space.Click += (s, e) => OnButtonClick("Space");
-            Left.Click += (s, e) => OnButtonClick("Left");
-            Right.Click += (s, e) => OnButtonClick("Right");
+            
+            Backspc.Click += (_, _) => OnButtonClick("Backspc");
+            Tab.Click += (_, _) => OnButtonClick("Tab");
+            Caps.Click += (_, _) => OnButtonClick("Caps");
+            Enter.Click += (_, _) => OnButtonClick("Enter");
+            Space.Click += (_, _) => OnButtonClick("Space");
+            Left.Click += (_, _) => OnButtonClick("Left");
+            Right.Click += (_, _) => OnButtonClick("Right");
         }
 
         public void CapsDown()
         {
-            if (isCapsLockActive)
-            {
-                Caps.RenderTransform = new ScaleTransform(0.95, 0.95);
-            }
-            else
-            {
-                Caps.RenderTransform = new ScaleTransform(1, 1);
-            }
+            Caps.RenderTransform = IsCapsLockActive ? new ScaleTransform(0.95, 0.95) : new ScaleTransform(1, 1);
         }
 
         private void OnButtonClick(string btnName)
@@ -76,12 +65,12 @@ namespace CustomKey.Views
                     int end = Math.Max(OutputBox.SelectionStart, OutputBox.SelectionEnd);
                     if (end - start > 0)
                     {
-                        OutputBox.Text = OutputBox.Text.Remove(start, end - start);
+                        OutputBox.Text = OutputBox.Text?.Remove(start, end - start);
                         OutputBox.CaretIndex = start;
                     }
                     else if (start > 0)
                     {
-                        OutputBox.Text = OutputBox.Text.Remove(start - 1, 1);
+                        OutputBox.Text = OutputBox.Text?.Remove(start - 1, 1);
                         OutputBox.CaretIndex = start - 1;
                     }
                     break;
@@ -89,8 +78,8 @@ namespace CustomKey.Views
                     InsertText("\t");
                     break;
                 case "Caps":
-                    isCapsLockActive = !isCapsLockActive;
-                    Utility.IsShift = isCapsLockActive || isShiftPressed;
+                    IsCapsLockActive = !IsCapsLockActive;
+                    Utility.IsShift = IsCapsLockActive || IsShiftPressed;
                     CapsDown();
                     break;
                 case "Enter":
@@ -114,77 +103,62 @@ namespace CustomKey.Views
         
         private void InsertText(string text)
         {
-            if (OutputBox.Text == null)
-                OutputBox.Text = "";
+            OutputBox.Text ??= "";
 
             int start = Math.Min(OutputBox.SelectionStart, OutputBox.SelectionEnd);
             int end = Math.Max(OutputBox.SelectionStart, OutputBox.SelectionEnd);
             int length = end - start;
 
-            if (length > 0)
-                OutputBox.Text = OutputBox.Text.Remove(start, length);
+            if (length > 0) OutputBox.Text = OutputBox.Text.Remove(start, length);
 
             OutputBox.Text = OutputBox.Text.Insert(start, text);
             OutputBox.CaretIndex = start + text.Length;
         }
 
-        private async void OpenSettingsWindow(object sender, RoutedEventArgs e)
+        private async void OpenSettingsWindow(object? sender, RoutedEventArgs e)
         {
             var settingsWindow = new SettingsWindow();
             SettingsReader.SettingsChanged += LoadBackgroundSettings;
 
             await settingsWindow.ShowDialog(this);
         }
-
-        public async void OpenAbout(object sender, PointerReleasedEventArgs e)
-        {
-            ContentDialog dialog = new()
-            {
-                PrimaryButtonText = string.Empty,
-                SecondaryButtonText = string.Empty,
-                CloseButtonText = "OK",
-                Content = new AboutDialog()
-            };
-
-            await dialog.ShowAsync();
-        }
         
         private void LoadBackgroundSettings()
         {
             var backgroundImage = this.FindControl<Image>("BackgroundImage");
             if (SettingsReader.CustomBgEnabled && !string.IsNullOrEmpty(SettingsReader.BackgroundPath)) {
-                backgroundImage.IsVisible = true;
+                backgroundImage?.IsVisible = true;
                 try {
                     if (SettingsReader.BackgroundPath.StartsWith("avares://")) {
                         Stream asset = AssetLoader.Open(new Uri(SettingsReader.BackgroundPath));
-                        backgroundImage.Source = asset != null ? new Bitmap(asset) : null; // No Decode needed because they are already in 720p
+                        backgroundImage?.Source = new Bitmap(asset); // No Decode needed because they are already in 720p
                     } else if (File.Exists(SettingsReader.BackgroundPath) &&
                               (SettingsReader.BackgroundPath.EndsWith(".png", StringComparison.OrdinalIgnoreCase) || SettingsReader.BackgroundPath.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
                                SettingsReader.BackgroundPath.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || SettingsReader.BackgroundPath.EndsWith(".webp", StringComparison.OrdinalIgnoreCase)))
                     {
-                        backgroundImage.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 1280, BitmapInterpolationMode.LowQuality);
+                        backgroundImage?.Source = Bitmap.DecodeToWidth(File.OpenRead(SettingsReader.BackgroundPath), 1280, BitmapInterpolationMode.LowQuality);
                     } else {
-                        backgroundImage.Source = null;
+                        backgroundImage?.Source = null;
                     }
                 } catch {
-                    backgroundImage.Source = null;
+                    backgroundImage?.Source = null;
                 }
             } else {
-                backgroundImage.IsVisible = false;
+                backgroundImage?.IsVisible = false;
             }
         }
         
-        private void OnKeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
-                isShiftPressed = true;
+                IsShiftPressed = true;
                 Utility.IsShift = true;
             }
             else if (e.Key == Key.CapsLock)
             {
-                isCapsLockActive = !isCapsLockActive;
-                Utility.IsShift = isCapsLockActive || isShiftPressed;
+                IsCapsLockActive = !IsCapsLockActive;
+                Utility.IsShift = IsCapsLockActive || IsShiftPressed;
                 CapsDown();
             }
             else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
@@ -195,13 +169,13 @@ namespace CustomKey.Views
             }
             else if (Utility.IsInputEnabled && !App.IsCtrlAltPressed)
             {
-                string vcKey = LayoutLoader.ConvertToVcKey(e.Key.ToString());
+                string? vcKey = LayoutLoader.ConvertToVcKey(e.Key.ToString());
 
                 if (vcKey != null)
                 {
                     foreach (var entry in LayoutLoader.KeyVal)
                     {
-                        var (keyChar, shiftChar, keyId) = entry.Value;
+                        var (_, _, keyId) = entry.Value;
                     
                         if (vcKey.Equals(keyId, StringComparison.OrdinalIgnoreCase))
                         {
@@ -219,16 +193,16 @@ namespace CustomKey.Views
             }
         }
         
-        private void OnKeyUp(object sender, KeyEventArgs e)
+        private void OnKeyUp(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.LeftShift || e.Key == Key.RightShift)
             {
-                isShiftPressed = false;
-                Utility.IsShift = isCapsLockActive;
+                IsShiftPressed = false;
+                Utility.IsShift = IsCapsLockActive;
             }
             else if (e.Key == Key.CapsLock)
             {
-                Utility.IsShift = isCapsLockActive || isShiftPressed;
+                Utility.IsShift = IsCapsLockActive || IsShiftPressed;
             }
             else if (e.Key == Key.LeftCtrl || e.Key == Key.RightCtrl ||
                      e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||

@@ -7,52 +7,45 @@ namespace CustomKey.Common
 {
     public static class LayoutLoader
     {
-        private static Dictionary<string, string> _layoutNameToFileMap = new();
+        public static string? CurrentLayoutJson { get; private set; }
+        private static readonly Dictionary<string, string> LayoutFileMap = new();
         
         // Dictionnaire statique contenant les données du layout
         public static Dictionary<string, (string keyChar, string shiftChar, string keyId)> KeyVal { get; private set; } = new();
         
         // Retourne une liste des noms des layouts (propriété "Name" dans les fichiers JSON)
-        public static string[] GetLayoutNames()
+        public static Dictionary<string, string> GetLayouts()
         {
-            var layoutNames = new List<string>();
             string keyDir = Path.Combine(AppContext.BaseDirectory, "key");
+            LayoutFileMap.Clear();
 
-            if (!Directory.Exists(keyDir)) return layoutNames.ToArray();
+            if (!Directory.Exists(keyDir)) return LayoutFileMap;
 
             // Browse through the JSON files in the “key” folder.
             foreach (var file in Directory.GetFiles(keyDir, "*.json", SearchOption.TopDirectoryOnly))
             {
                 try
                 {
-                    using var doc = JsonDocument.Parse(File.OpenRead(file));
+                    using var stream = File.OpenRead(file);
+                    using var doc = JsonDocument.Parse(stream);
 
                     if (doc.RootElement.TryGetProperty("Name", out var nameProp))
                     {
                         string layoutName = nameProp.GetString() ?? "Unknown";
-                        layoutNames.Add(layoutName);
-                        _layoutNameToFileMap[layoutName] = Path.GetFileName(file); // Map the name to the file
+                        LayoutFileMap[layoutName] = Path.GetFileName(file); // Map the name to the file
                     }
                     else
                     {
-                        layoutNames.Add("Unknown");
-                        _layoutNameToFileMap["Unknown"] = Path.GetFileName(file);
+                        LayoutFileMap["Unknown"] = Path.GetFileName(file);
                     }
                 }
                 catch
                 {
-                    layoutNames.Add("Unknown");
-                    _layoutNameToFileMap["Unknown"] = Path.GetFileName(file);
+                    LayoutFileMap["Unknown"] = Path.GetFileName(file);
                 }
             }
 
-            return layoutNames.ToArray();
-        }
-
-        // Returns the name of the JSON file corresponding to a given layout.
-        public static string? GetJsonFileName(string layoutName)
-        {
-            return _layoutNameToFileMap.TryGetValue(layoutName, out var fileName) ? fileName : null;
+            return LayoutFileMap;
         }
         
         // Load a layout from a json file (and edit older loaded layout)
@@ -70,6 +63,7 @@ namespace CustomKey.Common
 
                 string json = File.ReadAllText(layoutPath);
                 Dictionary<string, string>? rawDict = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                CurrentLayoutJson = jsonFileName;
 
                 // Update KeyVal in place to avoid completely replacing the object.
                 KeyVal.Clear();
@@ -137,6 +131,11 @@ namespace CustomKey.Common
                 }
             }
             return null;
+        }
+        
+        public static void UpdateKey(string keyName, string keyChar, string shiftChar, string keyId)
+        {
+            KeyVal[keyName] = (keyChar, shiftChar, keyId);
         }
     }
 }

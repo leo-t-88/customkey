@@ -49,6 +49,27 @@ namespace CustomKey.Views
             Space.Click += (_, _) => OnButtonClick("Space");
             Left.Click += (_, _) => OnButtonClick("Left");
             Right.Click += (_, _) => OnButtonClick("Right");
+            
+            Utility.GlobalRefresh += () => Avalonia.Threading.Dispatcher.UIThread.Post(UpdateEditMode);
+        }
+        
+        private void UpdateEditMode()
+        {
+            var keys = new (Button btn, string normalText)[]
+            {
+                (Backspc, "Backspc"),
+                (Tab, "Tab"),
+                (Enter, "Enter \uEB97"),
+                (Shift, "\uE87F Shift"),
+                (Shift2, "Shift \uE87F"),
+                (Ctrl, "Ctrl"),
+                (Alt, "Alt"),
+                (AltGr, "Alt Gr"),
+                (Left, "⮜"),
+                (Right, "⮞")
+            };
+
+            foreach (var (btn, normalText) in keys) btn.Content = Utility.IsEditingEnabled ? "\uE72E" : normalText;
         }
 
         public void CapsDown()

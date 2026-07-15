@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using CustomKey.Common;
 
 namespace CustomKey.ViewModels
@@ -38,7 +39,7 @@ namespace CustomKey.ViewModels
 
             LayoutNames = layouts.Select(kv => kv.Key).ToArray();
             _layoutFiles = layouts.Select(kv => kv.Value).ToArray();
-
+            
             if (LayoutNames.Length > 0)
             {
                 SelectedLayoutIndex = 0;
@@ -47,13 +48,26 @@ namespace CustomKey.ViewModels
             }
         }
 
-
         public string VersionNumber => "Version " + Utility.GetAssemblyVersion();
         
-        public bool InputOn
+        public bool IsInputOn
         {
             get => Utility.IsInputEnabled;
             set => Utility.IsInputEnabled = value;
+        }
+        
+        public bool IsEditMode
+        {
+            get => Utility.IsEditingEnabled;
+            set
+            {
+                if (Utility.IsEditingEnabled != value)
+                {
+                    Utility.IsEditingEnabled = value;
+                    Utility.IsInputEnabled = !value;
+                    Utility.RaiseGlobalRefresh();
+                }
+            }
         }
     }
 }

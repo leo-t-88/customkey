@@ -10,11 +10,13 @@ namespace CustomKey.Common
         public static event Action? GlobalRefresh;
         public static bool IsShiftPending;
         public static bool IsInputEnabled = true;
+        public static bool IsEditingEnabled = false;
         
         public static string GetAssemblyVersion()
         {
             string version = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown version";
-            if (version == "0.0.1.0") version = "Dev Build";
+            
+            if (version.StartsWith("0.0.0")) return "Dev Build";
 
             string[] versionParts = version.Split('.');
             return string.Join(".", versionParts.Take(3));

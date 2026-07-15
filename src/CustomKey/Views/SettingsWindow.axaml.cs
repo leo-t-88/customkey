@@ -13,6 +13,7 @@ namespace CustomKey.Views
     public partial class SettingsWindow : Window
     {
         private readonly SettingsWindowViewModel _viewModel;
+        private bool _layoutToDelete;
             
         public SettingsWindow()
         {
@@ -34,7 +35,7 @@ namespace CustomKey.Views
             
             this.Closed += (_, _) =>
             {
-                if (Owner is MainWindow main && main.DataContext is MainWindowViewModel vmp) vmp.ReloadLayouts();
+                UpdateParent();
                 GC.Collect(); // Clean memory (mainly used by images) when this windows is closed
                 GC.WaitForPendingFinalizers();
             };
@@ -54,16 +55,23 @@ namespace CustomKey.Views
                 if (File.Exists(path)) _viewModel.UploadImage(path);
             }
         }
-        
-        private async void OpenEditLayoutClick(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.DataContext is LayoutItem item)
-            {
-                LayoutLoader.LoadLayoutFromFile(item.FileName);
-                this.Close();
-            }
-        }
 
+        private void UpdateParent(string? editLayoutFile = null)
+        {
+            if (_layoutToDelete && Owner is MainWindow main && main.DataContext is MainWindowViewModel vmp)
+            {
+                _layoutToDelete = false;
+                vmp.ReloadLayouts();
+            }
+            _layoutToDelete = false;
+
+            if (editLayoutFile == null) return;
+            LayoutLoader.LoadLayoutFromFile(editLayoutFile);
+            Utility.IsEditingEnabled = true;
+            Utility.RaiseGlobalRefresh();
+            this.Close();
+        }
+        
         private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
         {
             if (sender is Button btn && btn.DataContext is LayoutItem item)
@@ -71,7 +79,13 @@ namespace CustomKey.Views
                 string path = Path.Combine(AppContext.BaseDirectory, "key", item.FileName);
                 if (File.Exists(path)) File.Delete(path);
                 Layout.ItemsSource = LayoutLoader.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
+                _layoutToDelete = true;
             }
+        }
+        
+        private async void EditLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LayoutItem item) UpdateParent(item.FileName);
         }
         
         private void CreateLayoutClick(object? sender, RoutedEventArgs e)
@@ -98,9 +112,7 @@ namespace CustomKey.Views
             string fullPath = Path.Combine(AppContext.BaseDirectory, "key", fileName);
             var json = JsonSerializer.Serialize( new { Name = "Unkown " + Path.GetFileNameWithoutExtension(fileName) }, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(fullPath, json);
-            
-            LayoutLoader.LoadLayoutFromFile(fullPath);
-            this.Close();
+            UpdateParent(fullPath);
         }
         
         public class LayoutItem

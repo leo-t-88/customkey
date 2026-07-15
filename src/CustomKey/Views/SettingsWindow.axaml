@@ -11,9 +11,6 @@
         MinHeight="455" MinWidth="760" Height="455" Width="760"
 		Title="{Binding [TradSettings]}"
         Background="{DynamicResource BackgroundColor}">
-	<Design.DataContext>
-		<vm:SettingsWindowViewModel/>
-	</Design.DataContext>
 
 	<Window.Resources>
 		<ResourceDictionary>
@@ -116,7 +113,7 @@
 							<Grid ColumnDefinitions="*,Auto,Auto">
 								<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
 
-								<Button Grid.Column="1" Click="OpenEditLayoutClick">
+								<Button Grid.Column="1" Click="EditLayoutClick">
 									<ui:FASymbolIcon Symbol="Edit"/>
 								</Button>
 

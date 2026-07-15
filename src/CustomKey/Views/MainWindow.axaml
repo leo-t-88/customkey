@@ -3,6 +3,7 @@
         xmlns:vm="using:CustomKey.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
         x:Class="CustomKey.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         mc:Ignorable="d" d:DesignWidth="865" d:DesignHeight="365"
@@ -11,11 +12,10 @@
         TransparencyLevelHint="AcrylicBlur"
 		Background="{DynamicResource RegionColor}"
         ExtendClientAreaToDecorationsHint="True" WindowDecorations="Full" ExtendClientAreaTitleBarHeightHint="30">
-
-	<Design.DataContext>
+	<Window.DataContext>
 		<vm:MainWindowViewModel/>
-	</Design.DataContext>
-	
+	</Window.DataContext>
+
 	<Grid>
 		<!-- Background Image -->
 		<Image Stretch="UniformToFill" x:Name="BackgroundImage" IsHitTestVisible="False"/>
@@ -43,16 +43,20 @@
 
 					<!-- ComboBox in the center column -->
 					<StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
-						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding InputOn}" ToolTip.Tip="{Binding [TradInputButton]}">&#xE961;</ToggleButton>
+						<ToggleButton Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding IsInputOn}" ToolTip.Tip="{Binding [TradInputButton]}">
+							<ui:FASymbolIcon Symbol="Keyboard" />
+						</ToggleButton>
 						<ComboBox Width="200" MaxDropDownHeight="200" Height="31" ItemsSource="{Binding LayoutNames}" SelectedIndex="{Binding SelectedLayoutIndex, Mode=TwoWay}"/>
-						<ToggleButton FontFamily="{StaticResource SymbolThemeFontFamily}" Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="False" ToolTip.Tip="{Binding [TradInputButton]}">&#xE104;</ToggleButton>
+						<ToggleButton Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding IsEditMode}">
+							<ui:FASymbolIcon Symbol="Edit" />
+						</ToggleButton>
 					</StackPanel>
 					
 					<!-- Button in the third column -->
 					<Button Grid.Column="2" x:Name="SettingsButton" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,0">
 						<StackPanel Orientation="Horizontal">
 							<TextBlock Text="{Binding [TradSettings]}" />
-							<TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xF8B0;" Margin="3"/>
+							<TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}" Text="&#xF8B0;" Margin="3" />
 						</StackPanel>
 					</Button>
 				</Grid>
@@ -75,12 +79,12 @@
 					<Button x:Name="Key11" Content="{Binding [Key11]}" Tag="{Binding [Key11Shift]}" />
 					<Button x:Name="Key12" Content="{Binding [Key12]}" Tag="{Binding [Key12Shift]}" />
 					<Button x:Name="Key13" Content="{Binding [Key13]}" Tag="{Binding [Key13Shift]}" />
-					<Button Content="Backspc" Width="82" x:Name="Backspc"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Backspc" Width="82" x:Name="Backspc"/>
 				</StackPanel>
 
 				<!-- Row 2 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-					<Button Content="tab" Width="63" x:Name="Tab"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Tab" Width="63" x:Name="Tab"/>
 					<Button x:Name="Key14" Content="{Binding [Key14]}" Tag="{Binding [Key14Shift]}" />
 					<Button x:Name="Key15" Content="{Binding [Key15]}" Tag="{Binding [Key15Shift]}" />
 					<Button x:Name="Key16" Content="{Binding [Key16]}" Tag="{Binding [Key16Shift]}" />
@@ -110,12 +114,12 @@
 					<Button x:Name="Key35" Content="{Binding [Key35]}" Tag="{Binding [Key35Shift]}" />
 					<Button x:Name="Key36" Content="{Binding [Key36]}" Tag="{Binding [Key36Shift]}" />
 					<Button x:Name="Key37" Content="{Binding [Key37]}" Tag="{Binding [Key37Shift]}" />
-					<Button Content="Enter" Width="87" x:Name="Enter"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Enter &#xE751;" Width="87" x:Name="Enter"/>
 				</StackPanel>
 
 				<!-- Row 4 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0">
-					<Button Content="Shift" Width="100"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="&#xE87F; Shift" Width="100" x:Name="Shift"/>
 					<Button x:Name="Key38" Content="{Binding [Key38]}" Tag="{Binding [Key38Shift]}" />
 					<Button x:Name="Key39" Content="{Binding [Key39]}" Tag="{Binding [Key39Shift]}" />
 					<Button x:Name="Key40" Content="{Binding [Key40]}" Tag="{Binding [Key40Shift]}" />
@@ -126,17 +130,17 @@
 					<Button x:Name="Key45" Content="{Binding [Key45]}" Tag="{Binding [Key45Shift]}" />
 					<Button x:Name="Key46" Content="{Binding [Key46]}" Tag="{Binding [Key46Shift]}" />
 					<Button x:Name="Key47" Content="{Binding [Key47]}" Tag="{Binding [Key47Shift]}" />
-					<Button Content="Shift" Width="113" x:Name="Shift"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Shift &#xE87F;" Width="113" x:Name="Shift2"/>
 				</StackPanel>
 
 				<!-- Row 5 -->
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,3">
-					<Button Content="Ctrl" Width="85" x:Name="Ctrl"/>
-					<Button Content="Alt" Width="65" x:Name="Alt"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Ctrl" Width="85" x:Name="Ctrl"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Alt" Width="65" x:Name="Alt"/>
 					<Button Content=" " Width="393" x:Name="Space"/>
-					<Button Content="Alt Gr" Width="65"/>
-					<Button Content="⮜" x:Name="Left"/>
-					<Button Content="⮞" x:Name="Right"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="Alt Gr" Width="65" x:Name="AltGr"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="⮜" x:Name="Left"/>
+					<Button FontFamily="{StaticResource SymbolThemeFontFamily}" Content="⮞" x:Name="Right"/>
 				</StackPanel>
 			</StackPanel>
 			<TextBox MinHeight="26" MaxHeight="31" Width="727" FontSize="13.5" Padding="3, 1" TextWrapping="Wrap" AcceptsReturn="True" x:Name="OutputBox"/>

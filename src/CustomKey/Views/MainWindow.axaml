@@ -12,10 +12,10 @@
         TransparencyLevelHint="AcrylicBlur"
 		Background="{DynamicResource RegionColor}"
         ExtendClientAreaToDecorationsHint="True" WindowDecorations="Full" ExtendClientAreaTitleBarHeightHint="30">
-	<Window.DataContext>
+	<Design.DataContext>
 		<vm:MainWindowViewModel/>
-	</Window.DataContext>
-
+	</Design.DataContext>
+	
 	<Grid>
 		<!-- Background Image -->
 		<Image Stretch="UniformToFill" x:Name="BackgroundImage" IsHitTestVisible="False"/>
@@ -46,7 +46,8 @@
 						<ToggleButton Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding IsInputOn}" ToolTip.Tip="{Binding [TradInputButton]}">
 							<ui:FASymbolIcon Symbol="Keyboard" />
 						</ToggleButton>
-						<ComboBox Width="200" MaxDropDownHeight="200" Height="31" ItemsSource="{Binding LayoutNames}" SelectedIndex="{Binding SelectedLayoutIndex, Mode=TwoWay}"/>
+						<ComboBox x:Name="LayoutsList" Width="200" MaxDropDownHeight="200" Height="31" ItemsSource="{Binding LayoutNames}" SelectedIndex="{Binding SelectedLayoutIndex, Mode=TwoWay}"/>
+						<TextBox x:Name="LayoutNameEditor" Width="200" Height="31" Text="{Binding CurrentLayoutName, Mode=TwoWay}" IsVisible="False"/>
 						<ToggleButton Margin="3,0" Height="31" Width="31" Padding="0" IsChecked="{Binding IsEditMode}">
 							<ui:FASymbolIcon Symbol="Edit" />
 						</ToggleButton>

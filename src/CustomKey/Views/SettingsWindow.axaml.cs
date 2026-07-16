@@ -13,7 +13,7 @@ namespace CustomKey.Views
     public partial class SettingsWindow : Window
     {
         private readonly SettingsWindowViewModel _viewModel;
-        private bool _layoutToDelete;
+        private bool _layoutsToUpdate;
             
         public SettingsWindow()
         {
@@ -31,7 +31,7 @@ namespace CustomKey.Views
             DataContext = _viewModel;
             
             UploadImageButton.Click += OnUploadImageClick;
-            Layout.ItemsSource = LayoutLoader.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
+            Layout.ItemsSource = LayoutManager.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
             
             this.Closed += (_, _) =>
             {
@@ -58,34 +58,24 @@ namespace CustomKey.Views
 
         private void UpdateParent(string? editLayoutFile = null)
         {
-            if (_layoutToDelete && Owner is MainWindow main && main.DataContext is MainWindowViewModel vmp)
+            if (Owner is MainWindow main && main.DataContext is MainWindowViewModel vmp)
             {
-                _layoutToDelete = false;
-                vmp.ReloadLayouts();
+                if (_layoutsToUpdate)
+                {
+                    _layoutsToUpdate = false;
+                    vmp.ReloadLayouts();
+                }
+                
+                if (editLayoutFile != null)
+                {
+                    LayoutManager.LoadLayoutFromFile(editLayoutFile);
+                    
+                    int index = Array.IndexOf(vmp.LayoutNames, LayoutManager.GetCurrentLayoutName());
+                    if (index >= 0) vmp.SelectedLayoutIndex = index;
+                    
+                    vmp.IsEditMode = true;
+                }
             }
-            _layoutToDelete = false;
-
-            if (editLayoutFile == null) return;
-            LayoutLoader.LoadLayoutFromFile(editLayoutFile);
-            Utility.IsEditingEnabled = true;
-            Utility.RaiseGlobalRefresh();
-            this.Close();
-        }
-        
-        private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.DataContext is LayoutItem item)
-            {
-                string path = Path.Combine(AppContext.BaseDirectory, "key", item.FileName);
-                if (File.Exists(path)) File.Delete(path);
-                Layout.ItemsSource = LayoutLoader.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
-                _layoutToDelete = true;
-            }
-        }
-        
-        private async void EditLayoutClick(object? sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.DataContext is LayoutItem item) UpdateParent(item.FileName);
         }
         
         private void CreateLayoutClick(object? sender, RoutedEventArgs e)
@@ -103,7 +93,7 @@ namespace CustomKey.Views
                 for (int i = 0; i < 5; i++) chars[i] = random.Next(2) == 0 ? (char)('a' + random.Next(26)) : (char)('0' + random.Next(10));
                 string tempname = new string(chars) + ".json";
 
-                bool exists = LayoutLoader.GetLayouts().Values.Contains(tempname, StringComparer.OrdinalIgnoreCase);
+                bool exists = LayoutManager.GetLayouts().Values.Contains(tempname, StringComparer.OrdinalIgnoreCase);
                 if (!exists) fileName = tempname;
             }
 
@@ -112,7 +102,29 @@ namespace CustomKey.Views
             string fullPath = Path.Combine(AppContext.BaseDirectory, "key", fileName);
             var json = JsonSerializer.Serialize( new { Name = "Unkown " + Path.GetFileNameWithoutExtension(fileName) }, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(fullPath, json);
-            UpdateParent(fullPath);
+            _layoutsToUpdate = true;
+            UpdateParent(fileName);
+            this.Close();
+        }
+        
+        private void EditLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LayoutItem item)
+            {
+                UpdateParent(item.FileName);
+                this.Close();
+            }
+        }
+        
+        private void DeleteLayoutClick(object? sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.DataContext is LayoutItem item)
+            {
+                string path = Path.Combine(AppContext.BaseDirectory, "key", item.FileName);
+                if (File.Exists(path)) File.Delete(path);
+                Layout.ItemsSource = LayoutManager.GetLayouts().OrderBy(kv => kv.Key).Select(kv => new LayoutItem(kv.Key, kv.Value)).ToArray();
+                _layoutsToUpdate = true;
+            }
         }
         
         public class LayoutItem

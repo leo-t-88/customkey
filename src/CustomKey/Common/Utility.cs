@@ -6,11 +6,9 @@ namespace CustomKey.Common
 {
     public static class Utility
     {
-        // Event triggered when the Shift state changes
-        public static event Action? GlobalRefresh;
+        public static event Action? GlobalRefresh, EditModeChanged;
         public static bool IsShiftPending;
         public static bool IsInputEnabled = true;
-        public static bool IsEditingEnabled = false;
         
         public static string GetAssemblyVersion()
         {
@@ -30,7 +28,7 @@ namespace CustomKey.Common
                 if (IsShiftPending != value)
                 {
                     IsShiftPending = value;
-                    GlobalRefresh?.Invoke(); // Notifies that the status has changed
+                    GlobalRefresh?.Invoke();
                 }
             }
         }
@@ -38,6 +36,11 @@ namespace CustomKey.Common
         public static void RaiseGlobalRefresh()
         {
             GlobalRefresh?.Invoke();
+        }
+
+        public static void RaiseEditModeChanged()
+        {
+            EditModeChanged?.Invoke();
         }
     }
 }

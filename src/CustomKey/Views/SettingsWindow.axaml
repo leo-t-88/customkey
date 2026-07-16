@@ -11,6 +11,9 @@
         MinHeight="455" MinWidth="760" Height="455" Width="760"
 		Title="{Binding [TradSettings]}"
         Background="{DynamicResource BackgroundColor}">
+	<Design.DataContext>
+		<vm:SettingsWindowViewModel/>
+	</Design.DataContext>
 
 	<Window.Resources>
 		<ResourceDictionary>

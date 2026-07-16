@@ -26,7 +26,7 @@ public class ViewModelBase : ObservableObject
         get
         {
             // KeyID Bindings
-            if (id.StartsWith("Key")) return LayoutLoader.GetChar(id);
+            if (id.StartsWith("Key")) return LayoutManager.GetChar(id);
 
             // Translations Bindings
             if (Translator.TradBinding.TryGetValue(id, out var value)) return value;

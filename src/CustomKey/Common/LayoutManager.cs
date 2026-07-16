@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace CustomKey.Common
 {
-    public static class LayoutLoader
+    public static class LayoutManager
     {
         public static string? CurrentLayoutJson { get; private set; }
         private static readonly Dictionary<string, string> LayoutFileMap = new();
@@ -87,6 +87,15 @@ namespace CustomKey.Common
                 Console.WriteLine($"Error when loading layout : {e.Message}");
             }
         }
+        
+        public static string GetCurrentLayoutName()
+        {
+            if (CurrentLayoutJson == null) return "";
+            
+            foreach (var kv in LayoutFileMap) if (kv.Value == CurrentLayoutJson) return kv.Key;
+            
+            return "";
+        }
 
         public static string GetChar(string key)
         {
@@ -133,9 +142,56 @@ namespace CustomKey.Common
             return null;
         }
         
+        public static void UpdateLayoutName(string newName)
+        {
+            if (CurrentLayoutJson == null) return;
+
+            string? oldName = null;
+
+            foreach (var kv in LayoutFileMap)
+            {
+                if (kv.Value == CurrentLayoutJson)
+                {
+                    oldName = kv.Key;
+                    break;
+                }
+            }
+
+            if (oldName == null) return;
+            
+            LayoutFileMap.Remove(oldName);
+            LayoutFileMap[newName] = CurrentLayoutJson;
+        }
+        
         public static void UpdateKey(string keyName, string keyChar, string shiftChar, string keyId)
         {
             KeyVal[keyName] = (keyChar, shiftChar, keyId);
+        }
+        
+        public static void SaveCurrentLayout()
+        {
+            if (CurrentLayoutJson == null) return;
+            var dict = new Dictionary<string, string> { ["Name"] = GetCurrentLayoutName() };
+            
+            for (int i = 1; i <= 47; i++)
+            {
+                if (KeyVal.TryGetValue($"Key{i}", out var data))
+                {
+                    dict[$"Key{i}_Char"] = data.keyChar;
+                    dict[$"Key{i}_ID"] = data.keyId;
+                }
+                else
+                {
+                    dict[$"Key{i}_Char"] = "";
+                    dict[$"Key{i}_ID"] = "";
+                }
+            }
+            
+            for (int i = 1; i <= 47; i++) dict[$"Shift{i}_Char"] = KeyVal.TryGetValue($"Key{i}", out var data) ? data.shiftChar : "";
+
+            string filepath = Path.Combine(Path.Combine(AppContext.BaseDirectory, "key"), CurrentLayoutJson);
+            var json = JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filepath, json);
         }
     }
 }

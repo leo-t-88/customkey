@@ -15,11 +15,14 @@ namespace CustomKey.Views
     {
         public static bool IsCapsLockActive;
         public static bool IsShiftPressed;
+        private MainWindowViewModel _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+            _viewModel = new MainWindowViewModel();
+            DataContext = _viewModel;
+            
             SettingsButton.Click += OpenSettingsWindow;
             
             if (OperatingSystem.IsLinux())
@@ -50,7 +53,7 @@ namespace CustomKey.Views
             Left.Click += (_, _) => OnButtonClick("Left");
             Right.Click += (_, _) => OnButtonClick("Right");
             
-            Utility.GlobalRefresh += () => Avalonia.Threading.Dispatcher.UIThread.Post(UpdateEditMode);
+            Utility.EditModeChanged += () => Avalonia.Threading.Dispatcher.UIThread.Post(UpdateEditMode);
         }
         
         private void UpdateEditMode()
@@ -69,7 +72,10 @@ namespace CustomKey.Views
                 (Right, "⮞")
             };
 
-            foreach (var (btn, normalText) in keys) btn.Content = Utility.IsEditingEnabled ? "\uE72E" : normalText;
+            foreach (var (btn, normalText) in keys) btn.Content = _viewModel.IsEditMode ? "\uE72E" : normalText;
+            
+            LayoutNameEditor.IsVisible = _viewModel.IsEditMode;
+            LayoutsList.IsVisible = !_viewModel.IsEditMode;
         }
 
         public void CapsDown()
@@ -116,7 +122,7 @@ namespace CustomKey.Views
                     OutputBox.CaretIndex += 1;
                     break;
                 default:
-                    var charToInsert = LayoutLoader.GetChar(btnName);
+                    var charToInsert = LayoutManager.GetChar(btnName);
                     InsertText(charToInsert);
                     break;
             }
@@ -138,9 +144,10 @@ namespace CustomKey.Views
 
         private async void OpenSettingsWindow(object? sender, RoutedEventArgs e)
         {
+            ((MainWindowViewModel)DataContext!).IsEditMode = false;
+            
             var settingsWindow = new SettingsWindow();
             SettingsReader.SettingsChanged += LoadBackgroundSettings;
-
             await settingsWindow.ShowDialog(this);
         }
         
@@ -190,17 +197,17 @@ namespace CustomKey.Views
             }
             else if (Utility.IsInputEnabled && !App.IsCtrlAltPressed)
             {
-                string? vcKey = LayoutLoader.ConvertToVcKey(e.Key.ToString());
+                string? vcKey = LayoutManager.ConvertToVcKey(e.Key.ToString());
 
                 if (vcKey != null)
                 {
-                    foreach (var entry in LayoutLoader.KeyVal)
+                    foreach (var entry in LayoutManager.KeyVal)
                     {
                         var (_, _, keyId) = entry.Value;
                     
                         if (vcKey.Equals(keyId, StringComparison.OrdinalIgnoreCase))
                         {
-                            string inputChar = LayoutLoader.GetChar(entry.Key);
+                            string inputChar = LayoutManager.GetChar(entry.Key);
 
                             if (!string.IsNullOrEmpty(inputChar))
                             {

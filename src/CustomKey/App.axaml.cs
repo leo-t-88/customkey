@@ -2,7 +2,6 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Threading;
-using CustomKey.ViewModels;
 using CustomKey.Views;
 using SharpHook;
 using SharpHook.Data;
@@ -45,7 +44,7 @@ namespace CustomKey
                 SettingsReader.ApplyTheme(SettingsReader.ThemeValue);
                 
                 // Show the MainWindow
-                _mainWindow = new MainWindow { DataContext = new MainWindowViewModel() };
+                _mainWindow = new MainWindow();
                 desktop.MainWindow = _mainWindow;
                 _mainWindow.Show();
 
@@ -84,13 +83,13 @@ namespace CustomKey
             }
             else if (Utility.IsInputEnabled && !IsCtrlAltPressed)
             {
-                foreach (var entry in LayoutLoader.KeyVal)
+                foreach (var entry in LayoutManager.KeyVal)
                 {
                     var (_, _, keyId) = entry.Value;
                     
                     if (e.Data.KeyCode.ToString().Equals(keyId, StringComparison.OrdinalIgnoreCase))
                     {
-                        string inputChar = LayoutLoader.GetChar(entry.Key);
+                        string inputChar = LayoutManager.GetChar(entry.Key);
 
                         if (!string.IsNullOrEmpty(inputChar))
                         {

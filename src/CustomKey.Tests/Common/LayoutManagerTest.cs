@@ -49,7 +49,7 @@ namespace CustomKey.Tests.Common
         [Test]
         public void GetChar_Uppercase_If_ShiftChar_Is_ReturnCode()
         {
-            LayoutManager.KeyVal["Key1"] = ("b", "\r", "id1");
+            LayoutManager.KeyVal["Key1"] = ("b", null, "id1");
             Utility.IsShift = true;
 
             string result = LayoutManager.GetChar("Key1");

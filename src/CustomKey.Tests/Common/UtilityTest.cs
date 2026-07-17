@@ -12,7 +12,7 @@ namespace CustomKey.Tests.Common
         public void Setup()
         {
             // Reset state before each test
-            Utility.IsShiftPending = false;
+            Utility.IsShift = false;
             Utility.IsInputEnabled = true;
             _eventTriggered = false;
         }

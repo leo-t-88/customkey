@@ -17,10 +17,10 @@ CustomKey is a customizable keyboard, written in C# for Windows, macOS and Linux
 <img src="https://github.com/leo-t-88/customkey/blob/main/captures.png" alt="Captures">
 
 ### Features
-- Load Custom keyboard layout (saved in json format)
+- Load and create your own custom keyboard layout (saved in json format)
 - Global hook which allows you to enter custom characters in any application (For Windows and macOS only)
 - Enable or disable input modified by the custom keyboard if you wish to use your default keyboard.
-- Visual keyboard (with touch support) with basic Dark and light color theme and image backgrounds
+- Visual keyboard (with touch support) with basic dark and light color theme and image backgrounds
 - The application interface is functional for all these languages are available : *Chinese (Simplified), German, Spanish, English, French, Italian, Japanese, Russian*
 
 *View and Download the [latest version here](https://github.com/leo-t-88/customkey/releases/latest)*

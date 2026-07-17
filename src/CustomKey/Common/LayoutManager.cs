@@ -10,10 +10,9 @@ namespace CustomKey.Common
         public static string? CurrentLayoutJson { get; private set; }
         private static readonly Dictionary<string, string> LayoutFileMap = new();
         
-        // Dictionnaire statique contenant les données du layout
+        // Dictionary with all current layout data
         public static Dictionary<string, (string keyChar, string shiftChar, string keyId)> KeyVal { get; private set; } = new();
         
-        // Retourne une liste des noms des layouts (propriété "Name" dans les fichiers JSON)
         public static Dictionary<string, string> GetLayouts()
         {
             string keyDir = Path.Combine(AppContext.BaseDirectory, "key");
@@ -76,10 +75,10 @@ namespace CustomKey.Common
                     rawDict?.TryGetValue($"Shift{i}_Char", out shiftVal);
                     rawDict?.TryGetValue($"{keyName}_ID", out idVal);
 
-                    // If no value : set to ASCII code "\r", which result to do a toUpperCase of the charVal when shift/caps is on
-                    // For exemple if you set Key1_Char to "m" and don't set Shift1_Char in the json when shift is enable it will show "M" and not "\r" or ""
+                    // If no value: shiftChar is null, which results in doing an uppercase of the charVal when shift/caps is on
+                    // For exemple if you set Key1_Char to "m" and don't set Shift1_Char in the json when shift is enable it will show "M"
                     // In order to don't do a ToUpperCase you should set a value to "" for Shift_Char in json layout
-                    KeyVal[keyName] = (charVal ?? "", shiftVal ?? "\r", idVal ?? "");
+                    KeyVal[keyName] = (charVal ?? "", shiftVal, idVal ?? "")!;
                 }
             }
             catch (Exception e)
@@ -116,7 +115,7 @@ namespace CustomKey.Common
 
             if (Utility.IsShift)
             {
-                if (keyInfo.shiftChar == "\r") return keyInfo.keyChar.ToUpper();
+                if (keyInfo.shiftChar == null) return keyInfo.keyChar.ToUpper();
                 return keyInfo.shiftChar;
             }
 
@@ -163,7 +162,7 @@ namespace CustomKey.Common
             LayoutFileMap[newName] = CurrentLayoutJson;
         }
         
-        public static void UpdateKey(string keyName, string keyChar, string shiftChar, string keyId)
+        public static void UpdateKey(string keyName, string keyChar, string? shiftChar, string keyId)
         {
             KeyVal[keyName] = (keyChar, shiftChar, keyId);
         }
@@ -187,7 +186,13 @@ namespace CustomKey.Common
                 }
             }
             
-            for (int i = 1; i <= 47; i++) dict[$"Shift{i}_Char"] = KeyVal.TryGetValue($"Key{i}", out var data) ? data.shiftChar : "";
+            for (int i = 1; i <= 47; i++)
+            {
+                if (KeyVal.TryGetValue($"Key{i}", out var data))
+                {
+                    if (data.shiftChar != null) dict[$"Shift{i}_Char"] = data.shiftChar;
+                }
+            }
 
             string filepath = Path.Combine(Path.Combine(AppContext.BaseDirectory, "key"), CurrentLayoutJson);
             var json = JsonSerializer.Serialize(dict, new JsonSerializerOptions { WriteIndented = true });

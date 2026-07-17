@@ -7,7 +7,6 @@ namespace CustomKey.Common
     public static class Utility
     {
         public static event Action? GlobalRefresh, EditModeChanged;
-        public static bool IsShiftPending;
         public static bool IsInputEnabled = true;
         
         public static string GetAssemblyVersion()
@@ -20,14 +19,15 @@ namespace CustomKey.Common
             return string.Join(".", versionParts.Take(3));
         }
         
+        private static bool _isShiftPending;
         public static bool IsShift
         {
-            get => IsShiftPending;
+            get => _isShiftPending;
             set
             {
-                if (IsShiftPending != value)
+                if (_isShiftPending != value)
                 {
-                    IsShiftPending = value;
+                    _isShiftPending = value;
                     GlobalRefresh?.Invoke();
                 }
             }

@@ -15,11 +15,11 @@ namespace CustomKey
     public partial class App : Application
     {
         // Windows and macOS - Not use on Linux
-        private IEventSimulator _outputInjector = new EventSimulator();
-        private SimpleGlobalHook _hook = new();
+        private readonly EventSimulator _outputInjector = new();
+        private readonly SimpleGlobalHook _hook = new();
         // =================================
         private MainWindow? _mainWindow;
-        public static bool IsCtrlAltPressed;
+        private bool _isCtrlAltPressed;
 
         public override void Initialize()
         {
@@ -79,9 +79,9 @@ namespace CustomKey
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||
                      e.Data.KeyCode == KeyCode.VcLeftMeta || e.Data.KeyCode == KeyCode.VcRightMeta)
             {
-                IsCtrlAltPressed = true;
+                _isCtrlAltPressed = true;
             }
-            else if (Utility.IsInputEnabled && !IsCtrlAltPressed)
+            else if (Utility.IsInputEnabled && !_isCtrlAltPressed)
             {
                 foreach (var entry in LayoutManager.KeyVal)
                 {
@@ -117,7 +117,7 @@ namespace CustomKey
                      e.Data.KeyCode == KeyCode.VcLeftAlt || e.Data.KeyCode == KeyCode.VcRightAlt ||
                      e.Data.KeyCode == KeyCode.VcLeftMeta || e.Data.KeyCode == KeyCode.VcRightMeta)
             {
-                IsCtrlAltPressed = false;
+                _isCtrlAltPressed = false;
             }
         }
     }

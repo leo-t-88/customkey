@@ -39,7 +39,7 @@ namespace CustomKey.ViewModels
         public bool IsInputOn
         {
             get => _isInputOn;
-            private set
+            set
             {
                 _isInputOn = value;
                 Utility.IsInputEnabled = value;
@@ -92,6 +92,11 @@ namespace CustomKey.ViewModels
             SelectedLayoutIndex = index;
 
             OnPropertyChanged(string.Empty);
+        }
+        
+        public void NotifyKeyChanged()
+        {
+            OnPropertyChanged("Item");
         }
 
         public string VersionNumber => "Version " + Utility.GetAssemblyVersion();

@@ -6,8 +6,11 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using System;
 using System.IO;
+using Avalonia;
+using Avalonia.Layout;
 using CustomKey.Common;
 using CustomKey.ViewModels;
+using FluentAvalonia.UI.Controls;
 
 namespace CustomKey.Views
 {
@@ -15,6 +18,7 @@ namespace CustomKey.Views
     {
         public static bool IsCapsLockActive;
         public static bool IsShiftPressed;
+        private bool _isCtrlAltPressed;
         private MainWindowViewModel _viewModel;
 
         public MainWindow()
@@ -34,7 +38,7 @@ namespace CustomKey.Views
             LoadBackgroundSettings();
             
             // Add click event to most of all Keyboard Buttons
-            for (int i = 1; i < 47; i++)
+            for (int i = 1; i <= 47; i++)
             {
                 var keyName = $"Key{i}";
                 var btn = this.FindControl<Button>(keyName);
@@ -74,8 +78,9 @@ namespace CustomKey.Views
 
             foreach (var (btn, normalText) in keys) btn.Content = _viewModel.IsEditMode ? "\uE72E" : normalText;
             
-            LayoutNameEditor.IsVisible = _viewModel.IsEditMode;
+            LayoutEditor.IsVisible = _viewModel.IsEditMode;
             LayoutsList.IsVisible = !_viewModel.IsEditMode;
+            InputState.IsEnabled = !_viewModel.IsEditMode;
         }
 
         public void CapsDown()
@@ -122,6 +127,11 @@ namespace CustomKey.Views
                     OutputBox.CaretIndex += 1;
                     break;
                 default:
+                    if (_viewModel.IsEditMode)
+                    {
+                        OpenEditDialog(btnName);
+                        break;
+                    }
                     var charToInsert = LayoutManager.GetChar(btnName);
                     InsertText(charToInsert);
                     break;
@@ -193,9 +203,9 @@ namespace CustomKey.Views
                      e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
                      e.Key == Key.LWin || e.Key == Key.RWin)
             {
-                App.IsCtrlAltPressed = true;
+                _isCtrlAltPressed = true;
             }
-            else if (Utility.IsInputEnabled && !App.IsCtrlAltPressed)
+            else if (Utility.IsInputEnabled && !_isCtrlAltPressed)
             {
                 string? vcKey = LayoutManager.ConvertToVcKey(e.Key.ToString());
 
@@ -236,7 +246,58 @@ namespace CustomKey.Views
                      e.Key == Key.LeftAlt || e.Key == Key.RightAlt ||
                      e.Key == Key.LWin || e.Key == Key.RWin)
             {
-                App.IsCtrlAltPressed = false;
+                _isCtrlAltPressed = false;
+            }
+        }
+        
+        private async void OpenEditDialog(string keyName)
+        {
+            var (currentChar, currentShift, currentId) = LayoutManager.KeyVal[keyName];
+
+            Button btnId = new Button { Content = currentId };
+            btnId.Click += (_, _) =>
+            {
+                this.KeyDown += OnDetectKey;
+                void OnDetectKey(object? s, KeyEventArgs e)
+                {
+                    this.KeyDown -= OnDetectKey;
+                    var vc = LayoutManager.ConvertToVcKey(e.Key.ToString());
+                    if (vc != null) btnId.Content = vc;
+                }
+            };
+
+            TextBox tbVal = new TextBox { Text = currentChar, Height = 32, TextWrapping = TextWrapping.NoWrap }; 
+            TextBox tbShift = new TextBox { Text = currentShift, Height = 32, TextWrapping = TextWrapping.NoWrap };
+            TextBlock lblId = new TextBlock { Text = "Key ID" };
+            TextBlock lblVal = new TextBlock { Text = "Value" };
+            TextBlock lblShift = new TextBlock { Text = "Caps Lock Value" };
+            CheckBox cbUpShift = new CheckBox { Content = $"Uppercase default when Caps Lock", IsChecked = currentShift == null };
+
+            Grid grid = new Grid
+            {
+                RowDefinitions = { new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Auto), new RowDefinition(GridLength.Auto) },
+                ColumnDefinitions = { new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star), new ColumnDefinition(GridLength.Star) },
+                HorizontalAlignment = HorizontalAlignment.Center, ColumnSpacing = 8
+            };
+
+            Grid.SetRow(lblId, 0); Grid.SetColumn(lblId, 0);
+            Grid.SetRow(lblVal, 0); Grid.SetColumn(lblVal, 1);
+            Grid.SetRow(lblShift, 0); Grid.SetColumn(lblShift, 2);
+            Grid.SetRow(btnId, 1); Grid.SetColumn(btnId, 0);
+            Grid.SetRow(tbVal, 1); Grid.SetColumn(tbVal, 1);
+            Grid.SetRow(tbShift, 1); Grid.SetColumn(tbShift, 2);
+            Grid.SetRow(cbUpShift, 2); Grid.SetColumn(cbUpShift, 2);
+
+            grid.Children.Add(lblId); grid.Children.Add(lblVal); grid.Children.Add(lblShift);
+            grid.Children.Add(btnId); grid.Children.Add(tbVal); grid.Children.Add(tbShift);
+            grid.Children.Add(cbUpShift);
+
+            FAContentDialog dialog = new FAContentDialog { Content = grid, PrimaryButtonText = "Save", CloseButtonText = "Cancel" };
+
+            if (await dialog.ShowAsync() == FAContentDialogResult.Primary)
+            {
+                LayoutManager.UpdateKey(keyName, tbVal.Text, cbUpShift.IsChecked == true ? null : tbShift.Text, btnId.Content?.ToString() ?? "");
+                _viewModel.NotifyKeyChanged();
             }
         }
     }
